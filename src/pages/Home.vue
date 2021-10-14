@@ -1,7 +1,7 @@
 <template>
   <h1 class="title">Home Page</h1>
   <section>
-    <H2>Header</H2>
+    <h2>Header</h2>
   </section>
   <div>Filter</div>
 </template>
