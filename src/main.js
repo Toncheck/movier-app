@@ -13,7 +13,8 @@ import App from "./App.vue";
 
 //Import raznih user interface component fileova koji se mogu koristiti bilo gdje u projektu. Neki su samo za styling, a neke mogoćavaju i dodatne stvari
 
-import "./assets/reset.css";
+//import RESET.CSS filea koji pobija određene defaultne css postavke
+import "./assets/_reset.scss";
 
 // Kreiranje same aplikacije
 const app = createApp(App);

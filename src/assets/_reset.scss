@@ -1,0 +1,19 @@
+* {
+  margin: 0; //GLOBAL RESET
+  padding: 0; //GLOBAL RESET
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; //GLOBAL RESET
+}
+
+html {
+  box-sizing: border-box; //GLOBAL RESET
+  font-size: 62.5%; //1rem = 10px, 10px/16px = 62.5%
+
+  /*  @media only screen and (max-width: $bp-large) {
+    font-size: 50%; //8px/16px = 50%
+  } */
+}
