@@ -1,13 +1,17 @@
 <template>
   <h1 class="title">Home Page</h1>
   <section>
-    <H2>Header</H2>
+    <h2 class="title-secondary">Header</h2>
   </section>
   <div>Filter</div>
 </template>
 
 <style lang="scss">
 .title {
-  color: blue;
+  color: var(--color-primary);
+}
+
+.title-secondary {
+  background-color: var(--color-secondary);
 }
 </style>
