@@ -1,6 +1,6 @@
-<!--
-<template>
-  <li class="item">
+<!--<template>
+     <li></li>
+    <li class="item">
     <img src="#" class="item__photo" alt="Movie cover" />
     <p class="item__popularity">Popularity: 40.3</p>
     <h3 class="item__title">Being James Bond</h3>
@@ -8,7 +8,9 @@
   </li>
 </template>
 
-<script></script>
+<script>
+
+</script>
 
 <style lang="scss">
 .content {
@@ -32,5 +34,4 @@
     }
   }
 }
-</style>
--->
+</style>-->

@@ -1,10 +1,21 @@
 <template>
-  <h1 class="title">Home Page</h1>
-  <section>
-    <h2 class="title-secondary">Header</h2>
-  </section>
-  <div>Filter</div>
+  <ul class="content">
+    <li v-for="record in content" :key="record.id">
+      {{ record.title }}
+    </li>
+  </ul>
 </template>
+
+<script>
+export default {
+  computed: {
+    content() {
+      //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
+      return this.$store.getters["content/content"];
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 .title {
