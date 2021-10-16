@@ -7,7 +7,7 @@
       class="search__input"
       placeholder="Type to search"
       id="searchinput"
-      v-model.trim.lazy="searchInput"
+      v-model.trim.lazy="searchInput.val"
     />
     <button class="search__button">
       <svg class="search__icon">
@@ -15,6 +15,7 @@
       </svg>
     </button>
   </form>
+  <p v-if="!formIsValid">Please enter corect term</p>
 </template>
 
 <script>
@@ -22,13 +23,30 @@ export default {
   emits: ["save-data"],
   data() {
     return {
-      searchInput: "",
+      searchInput: {
+        val: "",
+        isValid: true,
+      },
+      formIsValid: true,
     };
   },
   methods: {
+    validateForm() {
+      this.formIsValid = true;
+      if (this.searchInput.val === "") {
+        this.searchInput.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     submitForm() {
-      this.$emit("save-data", this.searchInput);
-      console.log(this.searchInput);
+      this.validateForm();
+
+      if (!this.formIsValid) {
+        console.log("not valid");
+        return;
+      }
+      console.log(this.searchInput.val);
+      /* this.$emit("save-data", this.searchInput.val); */
     },
   },
 };
