@@ -1,15 +1,18 @@
 <template>
   <the-header class="header"></the-header>
   <router-view></router-view>
+  <the-footer></the-footer>
 </template>
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
+import TheFooter from "./components/layout/TheFooter.vue";
 
 export default {
   //Registracija kao local component in App.vue, jer se samo ovdje to i koristi. Ostalo što se vidi je dio <router-view></router-view>
   components: {
     TheHeader,
+    TheFooter,
   },
 };
 </script>
@@ -23,27 +26,36 @@ body {
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-grey-dark-2);
-  background-image: linear-gradient(
-    to right bottom,
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  );
   background-size: cover;
-  background-repeat: no-repeat;
   min-height: 100vh;
 }
 
-#nav {
-  padding: 30px;
+///////////////////////////////////////////////////////////////////////
+//Styling za određene komponente kako bi se moglo promijenit centralno sve
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: red;
-    }
+.btn {
+  opacity: 1;
+  /* ovaj & je za dohvaćanje svih elemenata .btn koji nemaju nijednu pseudoclass */
+  &,
+  &:link,
+  &:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    /* element je postavljen kao inline-block jer je po defaultu inline te bi s namještenim paddingom prekrivao tekst gore */
+    display: inline-block;
+    margin: 1rem 0;
+    font-size: 0.8rem;
+    cursor: pointer;
   }
+
+  &--orange {
+    color: var(--color-secondary-dark);
+    background-color: none;
+  }
+}
+
+.color {
+  background-color: var(--color-black-dark-1);
 }
 
 //Pitanje je: Stavit ono što je u #app u body ili je bolje da je u #app?
