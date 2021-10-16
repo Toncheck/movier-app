@@ -21,18 +21,28 @@
       <h1 class="header-text__title">Movie database</h1>
     </div>
 
-    <!-- Block = search, Element = input -->
-    <!-- SEARCH BAR -->
-    <form action="#" class="search">
-      <input type="text" class="search__input" placeholder="Type to search" />
-      <button class="search__button">
-        <svg class="search__icon">
-          <use xlink:href="@/assets/img/sprite.svg#icon-magnifying-glass"></use>
-        </svg>
-      </button>
-    </form>
+    <search-bar @save-data="saveData"></search-bar>
   </header>
 </template>
+
+<script>
+import SearchBar from "../ui/SearchBar.vue";
+
+export default {
+  components: {
+    SearchBar,
+  },
+  methods: {
+    saveData(data) {
+      this.$store.dispatch("content/saveContent", data);
+
+      //Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. The Header je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha
+      //Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti
+      this.$router.replace("/home");
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 ///////////////////////////////////////////////////////////////////////
@@ -105,65 +115,6 @@
 
   &__title {
     color: var(--color-white);
-  }
-}
-
-///////////////////////////////////////////////////////////////////////
-//SEARCH
-.search {
-  /* background-color: blue; */
-  /* align-self: center; */
-  /* flex: 0 0 120px; */
-
-  /* centriranje search bara */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &__input {
-    font-family: inherit;
-    font-size: inherit;
-    background-color: var(--color-grey-light-2);
-    border: none;
-    padding: 0.7rem 2rem;
-    border-radius: 100px;
-    width: 40%;
-    transition: all 0.2s;
-    margin-right: -3.25rem;
-
-    &:focus {
-      outline: none;
-      width: 50%;
-      background-color: var(--color-grey-light-3);
-    }
-
-    &::-webkit-input-placeholder {
-      font-weight: 100;
-      color: var(color-grey-light-4);
-    }
-  }
-
-  &__input:focus + &__button {
-    background-color: var(--color-grey-light-3);
-  }
-
-  &__button {
-    border: none;
-    background-color: var(--color-grey-light-2);
-
-    &:focus {
-      outline: none;
-    }
-
-    &:active {
-      transform: translateY(2px);
-    }
-  }
-
-  &__icon {
-    height: 2rem;
-    width: 2rem;
-    fill: var(--color-secondary-dark);
   }
 }
 </style>

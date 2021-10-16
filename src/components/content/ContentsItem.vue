@@ -14,7 +14,28 @@
 
 <script>
 export default {
-  props: ["id", "popularity", "title", "summary"],
+  props: {
+    id: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    popularity: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    title: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    summary: {
+      type: String,
+      required: false,
+      default: "",
+    },
+  },
 };
 </script>
 
@@ -24,10 +45,6 @@ export default {
   flex: 0 0 100%;
   padding: 2rem 0;
   border-top: 1px solid var(--color-grey-dark-3);
-
-  &__data {
-    /*  */
-  }
 
   &__popularity {
     font-size: 0.8rem;
