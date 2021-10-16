@@ -1,17 +1,16 @@
 <template>
-  <h1 class="title">Home Page</h1>
-  <section>
-    <h2 class="title-secondary">Header</h2>
-  </section>
-  <div>Filter</div>
+  <content-list></content-list>
+  <content-pagination></content-pagination>
 </template>
 
-<style lang="scss">
-.title {
-  color: var(--color-primary);
-}
+<script>
+import ContentList from "../components/content/ContentList.vue";
+import ContentPagination from "../components/content/ContentPagination.vue";
 
-.title-secondary {
-  background-color: var(--color-secondary);
-}
-</style>
+export default {
+  components: {
+    ContentList,
+    ContentPagination,
+  },
+};
+</script>
