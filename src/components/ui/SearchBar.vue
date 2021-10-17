@@ -5,9 +5,11 @@
     <input
       type="text"
       class="search__input"
+      :class="{ invalid: !searchInput.isValid }"
       placeholder="Type to search"
       id="searchinput"
       v-model.trim.lazy="searchInput.val"
+      @blur="clearValidity('searchInput')"
     />
     <button class="search__button">
       <svg class="search__icon">
@@ -15,7 +17,9 @@
       </svg>
     </button>
   </form>
-  <p v-if="!formIsValid">Please enter corect term</p>
+  <p class="search__warning" v-if="!formIsValid">
+    Please fix the term you entered and search again!
+  </p>
 </template>
 
 <script>
@@ -31,8 +35,12 @@ export default {
     };
   },
   methods: {
+    clearValidity(input) {
+      this[input].isValid = true;
+    },
     validateForm() {
       this.formIsValid = true;
+      this.searchInput.isValid = true;
       if (this.searchInput.val === "") {
         this.searchInput.isValid = false;
         this.formIsValid = false;
@@ -40,13 +48,13 @@ export default {
     },
     submitForm() {
       this.validateForm();
+      console.log(this.searchInput.isValid);
 
       if (!this.formIsValid) {
-        console.log("not valid");
         return;
       }
-      console.log(this.searchInput.val);
-      /* this.$emit("save-data", this.searchInput.val); */
+
+      this.$emit("save-data", this.searchInput.val);
     },
   },
 };
@@ -77,6 +85,10 @@ export default {
     transition: all 0.2s;
     margin-right: -3.25rem;
 
+    &.invalid {
+      border: 1px solid var(--color-secondary-dark);
+    }
+
     &:focus {
       outline: none;
       width: 50%;
@@ -87,6 +99,11 @@ export default {
       font-weight: 100;
       color: var(color-grey-light-4);
     }
+  }
+
+  &__warning {
+    color: var(--color-secondary-dark);
+    text-align: center;
   }
 
   &__input:focus + &__button {
