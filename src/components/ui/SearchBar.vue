@@ -54,7 +54,7 @@ export default {
         return;
       }
 
-      this.$emit("save-data", this.searchInput.val);
+      this.$emit("load-data", this.searchInput.val);
     },
   },
 };
@@ -76,14 +76,15 @@ export default {
 
   &__input {
     font-family: inherit;
-    font-size: inherit;
-    background-color: var(--color-grey-light-2);
-    border: none;
-    padding: 0.7rem 2rem;
+    font-size: 1.2rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-grey-dark-3);
+    padding: 0.4rem 2rem;
     border-radius: 100px;
-    width: 40%;
+    width: 94%;
     transition: all 0.2s;
-    margin-right: -3.25rem;
+    margin-right: -2.25rem;
+    margin-left: -1.25rem;
 
     &.invalid {
       border: 1px solid var(--color-secondary-dark);
@@ -91,8 +92,6 @@ export default {
 
     &:focus {
       outline: none;
-      width: 50%;
-      background-color: var(--color-grey-light-3);
     }
 
     &::-webkit-input-placeholder {
@@ -107,12 +106,13 @@ export default {
   }
 
   &__input:focus + &__button {
-    background-color: var(--color-grey-light-3);
+    background-color: var(--color-white);
   }
 
   &__button {
     border: none;
-    background-color: var(--color-grey-light-2);
+    background-color: var(--color-white);
+    cursor: pointer;
 
     &:focus {
       outline: none;
@@ -124,8 +124,8 @@ export default {
   }
 
   &__icon {
-    height: 2rem;
-    width: 2rem;
+    height: 1rem;
+    width: 1rem;
     fill: var(--color-secondary-dark);
   }
 }
