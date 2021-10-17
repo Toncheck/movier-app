@@ -21,7 +21,9 @@
       <h1 class="header-text__title">Movie database</h1>
     </div>
 
-    <search-bar @save-data="saveData"></search-bar>
+    <div class="search-box">
+      <search-bar @load-data="loadData"></search-bar>
+    </div>
   </header>
 </template>
 
@@ -33,8 +35,8 @@ export default {
     SearchBar,
   },
   methods: {
-    saveData(data) {
-      this.$store.dispatch("content/saveContent", data);
+    loadData(data) {
+      this.$store.dispatch("content/loadContent", data);
 
       //Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. The Header je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha
       //Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti
@@ -103,7 +105,7 @@ export default {
   }
 }
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 //HEADER TEXT
 
 .header-text {
@@ -116,5 +118,14 @@ export default {
   &__title {
     color: var(--color-white);
   }
+}
+
+/////////////////////////////////////////////////////////////////
+//HEADER TEXT
+
+.search-box {
+  background-color: var(--color-white);
+  border-radius: 15px 15px 0 0;
+  padding-top: 1rem;
 }
 </style>

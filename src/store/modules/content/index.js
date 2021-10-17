@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      lastSearch: "",
       content: [
         {
           id: "movie1",
