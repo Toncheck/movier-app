@@ -2,17 +2,17 @@
   <div class="filter" v-if="data">
     <h2 class="filter__title">Filter your search!</h2>
     <div class="filter__box">
-      <span class="filter__option" v-for="(value, name) in filters" :key="name">
+      <span class="filter__option" v-for="filter in filterNames" :key="filter">
         <input
           type="checkbox"
           class="filter__checkbox"
-          :id="name"
+          :id="filter"
           @change="setFilter"
           checked
         />
         <span class="filter__checkbox-button"></span>
         <label for="dynamicallyset" class="filter__checkbox-label">
-          {{ name }}</label
+          {{ filter }}</label
         >
       </span>
     </div>
@@ -25,6 +25,8 @@ export default {
   data() {
     return {
       filters: { none: true, test: true },
+      // filters: { movie: { checked: true, ids: [869250, ...] }, tv: { checked: true, ids: [...] } }
+      // moviesById: { 869250: {}
     };
   },
   methods: {
@@ -56,11 +58,30 @@ export default {
     },
   },
   computed: {
+    filterNames() {
+      return this.$store.getters["content/getFilterNames"];
+    },
     data() {
       /* return this.filters.length > 0 ? true : false; */
       //Ako je objekt filters veći od 0 stavi true, inače false. Ta informacija služi za prikaz cijelog filtera na stranici.
       return Object.keys(this.filters).length > 0 ? true : false;
     },
+    //Ovaj filterend content je reducirani objekt koji pokazuje samo podatke koji zadovoljavaju filter postavljen na trenutnoj stranici
+    /* filteredContent() {
+      const content = this.$store.getters["content/content"];
+      return coaches.filter((coach) => {
+        if (this.activeFilters.frontend && coach.areas.includes("frontend")) {
+          return true;
+        }
+        if (this.activeFilters.backend && coach.areas.includes("backend")) {
+          return true;
+        }
+        if (this.activeFilters.career && coach.areas.includes("career")) {
+          return true;
+        }
+        return false;
+      });
+    },*/
   },
 };
 </script>
@@ -110,7 +131,7 @@ export default {
     display: inline-block;
     cursor: pointer;
 
-    /* &::after {
+    &::after {
       content: "";
       display: block;
       height: 1.1rem;
@@ -118,13 +139,9 @@ export default {
       border-radius: 3px;
       background-color: var(--color-secondary-dark);
       transform: translate(0.1rem, 0.1rem);
-      opacity: 0;
+      opacity: 1;
       transition: opacity 0.2s;
-    } */
-  }
-
-  &__checkbox:checked + &__checkbox-label &__checkbox-button::after {
-    opacity: 1;
+    }
   }
 
   &__checkbox-label {
@@ -134,5 +151,9 @@ export default {
     /* position: relative; */
     cursor: pointer;
   }
+
+  /* &__checkbox:checked + &__checkbox-label &__checkbox-button::after {
+    opacity: 1;
+  } */
 }
 </style>

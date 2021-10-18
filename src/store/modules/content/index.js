@@ -7,7 +7,10 @@ export default {
   state() {
     return {
       lastSearch: "",
-      content: [
+      moviesById: {},
+      filters: {},
+      moviesByPage: {},
+      /* content: [
         {
           id: "movie1",
           popularity: 40.3,
@@ -22,7 +25,7 @@ export default {
           summary:
             "The stunts and action set pieces for the 2006 James Bond adventure 'Casino Royale'",
         },
-      ],
+      ], */
     };
   },
   mutations,

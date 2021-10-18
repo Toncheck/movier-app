@@ -8,4 +8,16 @@ export default {
   saveLastSearch(state, payload) {
     state.lastSearch = payload;
   },
+
+  saveMoviesById(state, payload) {
+    state.moviesById = payload;
+  },
+
+  saveFilters(state, payload) {
+    state.filters = payload;
+  },
+
+  saveMoviesByPage(state, payload) {
+    state.moviesByPage = payload;
+  },
 };

@@ -4,12 +4,12 @@
   <!-- CONTENT -->
   <ul v-if="hasContent" class="list">
     <contents-item
-      v-for="record in content"
+      v-for="record in movies"
       :key="record.id"
       :id="record.id"
       :popularity="record.popularity"
       :title="record.title"
-      :summary="record.summary"
+      :summary="record.overview"
     >
     </contents-item>
   </ul>
@@ -41,7 +41,10 @@ export default {
       return this.$store.getters["content/content"];
     },
     hasContent() {
-      return this.$store.getters["content/hasContent"];
+      return this.$store.getters["content/hasMovies"];
+    },
+    movies() {
+      return this.$store.getters["content/getMovies"];
     },
   },
 
