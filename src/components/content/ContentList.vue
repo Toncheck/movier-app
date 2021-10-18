@@ -20,6 +20,12 @@
 import ContentsItem from "./ContentsItem.vue";
 export default {
   components: { ContentsItem },
+  data() {
+    return {
+      //Ovaj isLoading je za loading spinner
+      activeFilters: {},
+    };
+  },
   computed: {
     content() {
       //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
@@ -37,7 +43,7 @@ export default {
   list-style: none;
   margin: auto;
   margin-top: 1rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
   max-width: 70%;
 }
 
