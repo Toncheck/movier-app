@@ -31,57 +31,64 @@ export default {
   },
   methods: {
     initializeFilters() {
-      /* return this.filters.push("movie", "actor", "tv"); */
-      //Neki prop s listom filtera koji dođe iz stranice koja koristi filter (Home ili Favourites)
+      this.filterNames.forEach((element) => {
+        this.filters[element] = this.filters[element] || {};
+        console.log(this.filters);
+      });
     },
 
     setFilter(event) {
       //Ovo je zu dobivanje id-a iz eventa
       const inputId = event.target.id;
-
       console.log(inputId);
 
       //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
       const isActive = event.target.checked;
       console.log(isActive);
-      //Ovo je za update filtera
-      const updatedFilters = {
-        //Ovo kopira sve propertyje iz objekta
-        ...this.filters,
-        //ovo overwrite property preko keya, a key je ono što je spremljeno u inputId
-        [inputId]: isActive,
+
+      const data = {
+        mediaType: inputId,
+        checked: isActive,
       };
+      console.log(data);
+
+      this.$store.dispatch("content/updateFilters", data);
+
+      /* console.log(...this.filterNames);
+
+      const updatedFilters = {};
+
+      this.filterNames.forEach((element) => {
+        updatedFilters[element] = updatedFilters[element] || {};
+        updatedFilters[element] = true;
+      });
+
+      console.log(updatedFilters); */
+
+      //Ovo je za update filtera
+      /* const updatedFilters = { */
+      //Ovo kopira sve propertyje iz objekta
+      /* ...this.filters, */
+      //ovo overwrite property preko keya, a key je ono što je spremljeno u inputId
+      /* [inputId]: isActive, */
+      /* }; */
       //Update filtera
-      this.filters = updatedFilters;
+      /* this.filters = updatedFilters; */
       //emitiranje eventa kako bi komponenta koja koristi <task-filter></task-filter> mogla znati da je došlo do promjene. U ovom slučaju će to koristiti Account.vue component. Ono što emitamo jesu podaci updatedFilters za event change-filter
-      this.$emit("change-filter", updatedFilters);
+      /* this.$emit("change-filter", updatedFilters); */
     },
   },
   computed: {
     filterNames() {
+      //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
       return this.$store.getters["content/getFilterNames"];
     },
+
     data() {
       /* return this.filters.length > 0 ? true : false; */
       //Ako je objekt filters veći od 0 stavi true, inače false. Ta informacija služi za prikaz cijelog filtera na stranici.
-      return Object.keys(this.filters).length > 0 ? true : false;
+      return Object.keys(this.filterNames).length > 0 ? true : false;
     },
-    //Ovaj filterend content je reducirani objekt koji pokazuje samo podatke koji zadovoljavaju filter postavljen na trenutnoj stranici
-    /* filteredContent() {
-      const content = this.$store.getters["content/content"];
-      return coaches.filter((coach) => {
-        if (this.activeFilters.frontend && coach.areas.includes("frontend")) {
-          return true;
-        }
-        if (this.activeFilters.backend && coach.areas.includes("backend")) {
-          return true;
-        }
-        if (this.activeFilters.career && coach.areas.includes("career")) {
-          return true;
-        }
-        return false;
-      });
-    },*/
   },
 };
 </script>

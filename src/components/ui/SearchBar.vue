@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  emits: ["save-data"],
+  emits: ["load-data"],
   data() {
     return {
       searchInput: {

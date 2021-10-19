@@ -35,6 +35,7 @@ export default {
     const moviesByPage = {};
     const filters = {};
 
+    // for (const movie of results)
     results.forEach((movie) => {
       moviesById[movie.id] = {
         title: movie.original_title,
@@ -43,7 +44,11 @@ export default {
         posterPath: movie.poster_path,
       };
 
+      /*  console.log(moviesByPage[page] || []); */
       moviesByPage[page] = moviesByPage[page] || [];
+      /* if (!moviesByPage[page]) {
+        moviesByPage[page] = [];
+      } */
       moviesByPage[page].push(movie.id);
 
       filters[movie.media_type] = filters[movie.media_type] || {};
@@ -58,8 +63,11 @@ export default {
     context.commit("saveMoviesByPage", moviesByPage);
     context.commit("saveFilters", filters);
 
+    console.log("moviesByid:");
     console.log(moviesById);
+    console.log("moviesByPage");
     console.log(moviesByPage);
+    console.log("filters");
     console.log(filters);
 
     //Spremi lastSearch, a to je pojam koji je upisan u searchBar kako bi se mogao eventualno kasnije raditi fetch podataka iz ContentPagination componenta za nove stranice.
@@ -70,4 +78,11 @@ export default {
   },
   //pozivanje mutationa za spremanje id-a
   //pozivanje mutationa za spremanje ostalih podataka koji dođu ...
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  /* ACTION ZA UPDEJTANJE FILTERA NA VUEXU */
+
+  updateFilters(context, data) {
+    context.commit("updateFilters", data);
+  },
 };

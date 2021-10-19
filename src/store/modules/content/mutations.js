@@ -20,4 +20,8 @@ export default {
   saveMoviesByPage(state, payload) {
     state.moviesByPage = payload;
   },
+
+  updateFilters(state, payload) {
+    state.filters[payload.mediaType].checked = payload.checked;
+  },
 };

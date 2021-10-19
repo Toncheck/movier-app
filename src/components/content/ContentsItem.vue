@@ -1,11 +1,11 @@
 <template>
   <li class="item">
-    <img src="#" class="item__photo" alt="Movie cover" />
+    <img :src="imagePath" class="item__photo" alt="Movie cover" />
     <div class="item__data">
       <p class="item__popularity">Popularity: {{ popularity }}</p>
       <h3 class="item__title">{{ title }}</h3>
       <small class="item__summary">{{ summary }}</small>
-      <router-link to="/details" class="btn btn--orange"
+      <router-link to="/details" class="btn btn--orange" @click="openDetails"
         >Full synopsis <span>&gt;</span></router-link
       >
     </div>
@@ -35,6 +35,21 @@ export default {
       required: false,
       default: "",
     },
+    posterPath: {
+      type: String,
+      required: false,
+      default: "",
+    },
+  },
+  methods: {
+    openDetails() {
+      console.log("Open Details");
+    },
+  },
+  computed: {
+    imagePath() {
+      return `https://image.tmdb.org/t/p/w200${this.posterPath}`;
+    },
   },
 };
 </script>
@@ -42,9 +57,17 @@ export default {
 <style lang="scss">
 .item {
   display: flex;
-  flex: 0 0 100%;
+  /* flex: 0 0 90%; */
   padding: 2rem 0;
   border-top: 1px solid var(--color-grey-dark-3);
+  justify-content: space-around;
+
+  &__photo {
+    width: 13rem;
+    height: auto;
+    border-radius: 15px;
+    margin-right: 1rem;
+  }
 
   &__popularity {
     font-size: 0.8rem;
