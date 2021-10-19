@@ -1,57 +1,55 @@
 <template>
+  <!-- FILTER -->
   <content-filter @change-filter="setFilters"></content-filter>
-  <content-list></content-list>
+  <!-- CONTENT -->
+  <ul v-if="hasContent" class="list">
+    <contents-item
+      v-for="record in content"
+      :key="record.id"
+      :id="record.id"
+      :popularity="record.popularity"
+      :title="record.title"
+      :summary="record.summary"
+    >
+    </contents-item>
+  </ul>
+  <h3 v-else>No Content Found</h3>
+  <!-- PAGINATION -->
   <content-pagination></content-pagination>
 </template>
 
 <script>
-import ContentList from "../components/content/ContentList.vue";
+import ContentsItem from "../components/content/ContentsItem.vue";
 import ContentPagination from "../components/content/ContentPagination.vue";
 import ContentFilter from "../components/content/ContentFilter.vue";
 
 export default {
   components: {
-    ContentList,
+    ContentsItem,
     ContentPagination,
     ContentFilter,
   },
   data() {
     return {
       //objekt sa svim aktivnim filterima, koliko god ih ima
-      activeFilters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
+      activeFilters: { none: true, test: true },
     };
   },
   computed: {
-    /* filteredContent() {
-      const content = this.$store.getters['content/content'];
-      return content.filter(content => {
-        if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
-          return true;
-        }
-        if (this.activeFilters.backend && coach.areas.includes('backend')) {
-          return true;
-        }
-        if (this.activeFilters.career && coach.areas.includes('career')) {
-          return true;
-        }
-        return false;
-      });
-    }, */
+    content() {
+      //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
+      return this.$store.getters["content/content"];
+    },
+    hasContent() {
+      return this.$store.getters["content/hasContent"];
+    },
   },
-
-  //loadaj podatke s vuexa ako postoji nešto cacheirano
-  /* created() {
-    this.loadContent();
-  }, */
 
   methods: {
     //metoda setFilters bere iz CoachesList emitirani event kao parametar i koristi ga
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+      console.log(this.activeFilters);
     },
 
     async loadContent() {
@@ -62,3 +60,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.list {
+  list-style: none;
+  margin: auto;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  max-width: 70%;
+}
+
+.title {
+  color: var(--color-primary);
+}
+
+.title-secondary {
+  background-color: var(--color-secondary);
+}
+</style>

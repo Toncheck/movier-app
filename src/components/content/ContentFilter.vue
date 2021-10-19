@@ -2,16 +2,17 @@
   <div class="filter" v-if="data">
     <h2 class="filter__title">Filter your search!</h2>
     <div class="filter__box">
-      <span class="filter__option" v-for="filter in filters" :key="filter">
+      <span class="filter__option" v-for="(value, name) in filters" :key="name">
         <input
-          type="radio"
-          class="filter__radio"
-          :id="filter"
+          type="checkbox"
+          class="filter__checkbox"
+          :id="name"
           @change="setFilter"
+          checked
         />
-        <span class="filter__radio-button"></span>
-        <label for="dynamicallyset" class="filter__radio-label">
-          {{ filter }}</label
+        <span class="filter__checkbox-button"></span>
+        <label for="dynamicallyset" class="filter__checkbox-label">
+          {{ name }}</label
         >
       </span>
     </div>
@@ -27,7 +28,7 @@ export default {
     };
   },
   methods: {
-    showFilters() {
+    initializeFilters() {
       /* return this.filters.push("movie", "actor", "tv"); */
       //Neki prop s listom filtera koji dođe iz stranice koja koristi filter (Home ili Favourites)
     },
@@ -40,6 +41,7 @@ export default {
 
       //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
       const isActive = event.target.checked;
+      console.log(isActive);
       //Ovo je za update filtera
       const updatedFilters = {
         //Ovo kopira sve propertyje iz objekta
@@ -92,14 +94,14 @@ export default {
     cursor: pointer;
     /* position: relative; */
   }
-  &__radio {
+  &__checkbox {
     opacity: 1;
     font-family: inherit;
     cursor: pointer;
     /* display: none; */
   }
 
-  &__radio-button {
+  &__checkbox-button {
     height: 1.5rem;
     width: 1.5rem;
     margin-right: 0.5rem;
@@ -121,11 +123,11 @@ export default {
     } */
   }
 
-  &__radio:checked + &__radio-label &__radio-button::after {
+  &__checkbox:checked + &__checkbox-label &__checkbox-button::after {
     opacity: 1;
   }
 
-  &__radio-label {
+  &__checkbox-label {
     font-size: 1.4rem;
     line-height: 1;
     display: inline-block;
