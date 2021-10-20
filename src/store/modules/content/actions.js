@@ -94,7 +94,7 @@ export default {
   /* Action za fetch podataka za details page */
   async loadContentDetails(context, data) {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${data}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
+      `https://api.themoviedb.org/3/${data.mediaType}/${data.itemId}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
       { method: "GET" }
     );
 
@@ -108,6 +108,11 @@ export default {
 
     const movieLoadedDetails = { ...responseData };
     console.log(movieLoadedDetails);
+
+    const test = {
+      title: movieLoadedDetails.original_title,
+    };
+    console.log(test);
 
     function selectSomeProperties(account) {
       return Object.keys(account).reduce(function(obj, k) {
@@ -137,7 +142,9 @@ export default {
       popularity: selectedProperties.popularity,
       posterPath: selectedProperties.poster_path,
       backdropPath: selectedProperties.backdrop_path,
-      productionCompanies: selectedProperties.production_companies,
+      productionCompanies: selectedProperties.production_companies.map(
+        (productionCompany) => productionCompany.name
+      ),
       runtime: selectedProperties.runtime,
       voteAverage: selectedProperties.vote_average,
     };
