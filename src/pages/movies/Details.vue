@@ -6,6 +6,11 @@
         class="details__photo"
         alt="Movie cover"
       />
+      <img
+        src="https://image.tmdb.org/t/p/w300/8Bcm0qBnS6yjwTFad8eI6thzRub.jpg"
+        class="details__photo"
+        alt="Movie cover"
+      />
       <small class="details__summary"
         >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque veniam
         porro et laudantium error. Vero cupiditate, eveniet suscipit ipsa totam
@@ -51,6 +56,23 @@ import SearchBar from "../../components/ui/SearchBar.vue";
 export default {
   components: {
     SearchBar,
+  },
+
+  computed: {
+    detailsId() {
+      return this.$store.getters.loadDetailsId;
+    },
+  },
+  methods: {
+    loadContentDetails() {
+      const itemId = this.$route.params.id;
+      console.log("The id is: " + itemId);
+      this.$store.dispatch("content/loadContentDetails", itemId);
+    },
+  },
+
+  created() {
+    this.loadContentDetails();
   },
 };
 </script>

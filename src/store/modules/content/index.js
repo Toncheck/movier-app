@@ -6,10 +6,11 @@ export default {
   namespaced: true,
   state() {
     return {
-      lastSearch: "",
+      detailsId: null,
       moviesById: {},
       filters: {},
       moviesByPage: {},
+      contentDetails: {},
       /* content: [
         {
           id: "movie1",
