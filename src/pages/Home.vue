@@ -2,21 +2,25 @@
   <!-- FILTER -->
   <content-filter></content-filter>
   <!-- CONTENT -->
-  <ul v-if="hasContent" class="list">
-    <contents-item
-      v-for="record in filteredContent"
-      :key="record.id"
-      :id="record.id"
-      :posterPath="record.posterPath"
-      :popularity="record.popularity"
-      :title="record.title"
-      :summary="record.overview"
-    >
-    </contents-item>
-  </ul>
-  <div v-else class="no-content">
-    <h3 class="no-content__title">Welcome to Movie database!</h3>
-    <p class="no-content__message">Make a search and find what You need.</p>
+  <div class="home">
+    <ul v-if="hasContent" class="home__list">
+      <contents-item
+        v-for="record in filteredContent"
+        :key="record.id"
+        :id="record.id"
+        :posterPath="record.posterPath"
+        :popularity="record.popularity"
+        :title="record.title"
+        :summary="record.overview"
+      >
+      </contents-item>
+    </ul>
+    <div v-else class="home__no-content">
+      <h3 class="home__no-content--title">Welcome to Movie database!</h3>
+      <p class="home__no-content--message">
+        Make a search and find what You need.
+      </p>
+    </div>
   </div>
 
   <!-- PAGINATION -->
@@ -64,7 +68,43 @@ export default {
 </script>
 
 <style lang="scss">
-.list {
+.home {
+  &__list {
+    list-style: none;
+    margin: auto;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    max-width: 70%;
+  }
+
+  &__no-content {
+    min-height: 58vh;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+
+    &--title {
+      font-size: 4rem;
+      /* display: block; */
+    }
+
+    &--message {
+      font-size: 1.2rem;
+    }
+  }
+
+  .title {
+    color: var(--color-primary);
+  }
+
+  .title-secondary {
+    background-color: var(--color-secondary);
+  }
+}
+
+/* .list {
   list-style: none;
   margin: auto;
   margin-top: 1rem;
@@ -82,7 +122,7 @@ export default {
 
 .no-content {
   min-height: 58vh;
-  /* text-align: center; */
+  
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -90,11 +130,11 @@ export default {
 
   &__title {
     font-size: 4rem;
-    /* display: block; */
+    
   }
 
   &__message {
     font-size: 1.2rem;
   }
-}
+}  */
 </style>
