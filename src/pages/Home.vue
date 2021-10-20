@@ -1,6 +1,6 @@
 <template>
   <!-- FILTER -->
-  <content-filter @change-filter="setFilters"></content-filter>
+  <content-filter></content-filter>
   <!-- CONTENT -->
   <ul v-if="hasContent" class="list">
     <contents-item
@@ -55,19 +55,9 @@ export default {
             },
         ...
       }*/
-      const content = this.$store.getters["content/getContent"];
+      const content = this.$store.getters["content/getContentTwo"];
 
-      //ovdje ide reduciranje tog sadržaja prema statusima filtera
-      console.log(content);
       return content;
-    },
-  },
-
-  methods: {
-    //metoda setFilters bere iz ContentsList emitirani event kao parametar i koristi ga za update filtera
-    setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-      console.log(this.activeFilters);
     },
   },
 };

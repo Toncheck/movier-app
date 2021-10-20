@@ -85,4 +85,62 @@ export default {
   updateFilters(context, data) {
     context.commit("updateFilters", data);
   },
+
+  /* Action za pospremanje id-a za detailsPage*/
+  saveDetailsId(context, data) {
+    context.commit("saveDetailsId", data);
+  },
+
+  /* Action za fetch podataka za details page */
+  async loadContentDetails(context, data) {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${data}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
+      { method: "GET" }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      //error ...
+    }
+
+    /* console.log({ ...responseData }); */
+
+    const movieLoadedDetails = { ...responseData };
+    console.log(movieLoadedDetails);
+
+    function selectSomeProperties(account) {
+      return Object.keys(account).reduce(function(obj, k) {
+        if (
+          [
+            "original_title",
+            "overview",
+            "popularity",
+            "poster_path",
+            "backdrop_path",
+            "production_companies",
+            "runtime",
+            "vote_average",
+          ].includes(k)
+        ) {
+          obj[k] = account[k];
+        }
+        return obj;
+      }, {});
+    }
+    const selectedProperties = selectSomeProperties(movieLoadedDetails);
+    /* console.log(JSON.stringify(selectedProperties)); */
+
+    const movieDetails = {
+      title: selectedProperties.original_title,
+      overview: selectedProperties.overview,
+      popularity: selectedProperties.popularity,
+      posterPath: selectedProperties.poster_path,
+      backdropPath: selectedProperties.backdrop_path,
+      productionCompanies: selectedProperties.production_companies,
+      runtime: selectedProperties.runtime,
+      voteAverage: selectedProperties.vote_average,
+    };
+    context.commit("saveContentDetails", movieDetails);
+  },
 };

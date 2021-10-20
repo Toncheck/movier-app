@@ -5,8 +5,12 @@
       <p class="item__popularity">Popularity: {{ popularity }}</p>
       <h3 class="item__title">{{ title }}</h3>
       <small class="item__summary">{{ summary }}</small>
-      <router-link to="/details" class="btn btn--orange" @click="openDetails"
-        >Full synopsis <span>&gt;</span></router-link
+      <router-link
+        :to="pagePath"
+        class="btn btn--orange"
+        :id="id"
+        @click="getId"
+        >Full synopsis {{ id }}<span>&gt;</span></router-link
       >
     </div>
   </li>
@@ -16,9 +20,9 @@
 export default {
   props: {
     id: {
-      type: String,
+      type: Number,
       required: false,
-      default: "",
+      default: null,
     },
     popularity: {
       type: Number,
@@ -41,14 +45,28 @@ export default {
       default: "",
     },
   },
+  data() {
+    return {
+      /*  testId: 234567, */
+      itemId: this.id,
+    };
+  },
   methods: {
     openDetails() {
       console.log("Open Details");
+    },
+    //metoda koja služi za pospremanje podatka o tome koji je id itema na kojem je kliknuto next. To je potrebno kako bi se mogao pronaći media_type i onda kasnije kreirati path za fetch s API-ja
+    getId() {
+      //spremi id na vuex
+      this.$store.dispatch("content/saveDetailsId", this.itemId);
     },
   },
   computed: {
     imagePath() {
       return `https://image.tmdb.org/t/p/w200${this.posterPath}`;
+    },
+    pagePath() {
+      return `/details/${this.itemId}`;
     },
   },
 };

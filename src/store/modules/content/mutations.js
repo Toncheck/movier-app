@@ -24,4 +24,12 @@ export default {
   updateFilters(state, payload) {
     state.filters[payload.mediaType].checked = payload.checked;
   },
+
+  saveDetailsId(state, payload) {
+    state.detailsId = payload;
+  },
+
+  saveContentDetails(state, payload) {
+    state.contentDetails = payload;
+  },
 };
