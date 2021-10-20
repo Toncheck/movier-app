@@ -29,7 +29,12 @@ export default {
         movieIds.push(...filterValue.movieIds);
       }
     }
-    console.log(movieIds);
+    // console.log(movieIds);
+    console.log("========================");
+    console.log(Object.keys(state.filters));
+    console.log(Object.values(state.filters));
+    console.log(Object.entries(state.filters));
+    console.log("========================");
 
     //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
     console.log(state.moviesById);
@@ -63,6 +68,14 @@ export default {
   hasContent(_, getters) {
     const movies = getters.getContent;
     return movies.length > 0;
+  },
+
+  getFilters(state) {
+    return state.filters;
+  },
+
+  getContentDetails(state) {
+    return state.contentDetails;
   },
 
   //Ovo ne treba, ali sam ostavio za postaviti pitanje: Zašto se to ne loada prilikom created

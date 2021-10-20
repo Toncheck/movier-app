@@ -6,17 +6,12 @@
         class="details__photo"
         alt="Movie cover"
       />
-      <img
+      <!-- <img
         src="https://image.tmdb.org/t/p/w300/8Bcm0qBnS6yjwTFad8eI6thzRub.jpg"
         class="details__photo"
         alt="Movie cover"
-      />
-      <small class="details__summary"
-        >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque veniam
-        porro et laudantium error. Vero cupiditate, eveniet suscipit ipsa totam
-        cum excepturi veritatis, vitae id ducimus expedita eaque, illum
-        dolorum?</small
-      >
+      /> -->
+      <small class="details__summary">{{ contentDetails.overview }}</small>
     </div>
     <div class="details__aside">
       <search-bar></search-bar>
@@ -26,11 +21,16 @@
 
       <h5 class="details__production-companies">Production companies:</h5>
       <ul>
-        <li class="details__list-item">Production company 1</li>
-        <li class="details__list-item">Production company 2</li>
+        <li
+          class="details__list-item"
+          :v-for="contentDetails.productionCompanies"
+        >
+          {{ contentDetails.productionCompanies }}
+        </li>
+        <!-- <li class="details__list-item">Production company 2</li>
         <li class="details__list-item">Production company 3</li>
         <li class="details__list-item">Production company 4</li>
-        <li class="details__list-item">Production company 5</li>
+        <li class="details__list-item">Production company 5</li> -->
       </ul>
       <div class="details__aside--small-box">
         <h5 class="details__additional-info">Runtime</h5>
@@ -46,7 +46,7 @@
         <h5 class="details__additional-info">Vote average</h5>
       </div>
 
-      <small class="item__summary">{{ summary }}</small>
+      <small class="item__summary"></small>
     </div>
   </div>
 </template>
@@ -58,16 +58,47 @@ export default {
     SearchBar,
   },
 
+  /* data() {
+    return {};
+  }, */
+
   computed: {
-    detailsId() {
+    //ovo ne radi
+    /* detailsId() {
       return this.$store.getters.loadDetailsId;
+    }, */
+    contentDetails() {
+      return this.$store.getters["content/getContentDetails"];
+    },
+    getFilters() {
+      return this.$store.getters["content/getFilters"];
     },
   },
   methods: {
     loadContentDetails() {
-      const itemId = this.$route.params.id;
-      console.log("The id is: " + itemId);
-      this.$store.dispatch("content/loadContentDetails", itemId);
+      const data = {
+        itemId: this.$route.params.id,
+        mediaType: "",
+      };
+
+      /* console.log("ITEM ID", itemId, typeof itemId); */
+
+      //kao data šalje se id, prema tom id-u treba pronaći media_type koji određuje na koji endpoint se vrši upit, mogući su movie, tv ili person
+
+      /* console.log(this.getFilters); */
+
+      //Prolazak kroz sve vrijednosti za objekt filters. Ako je u određenom filteru pronađen id znači da imamo media_type
+
+      for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
+        // console.log(filterValue.movieIds[0], typeof filterValue.movieIds[0]);
+        if (filterValue.movieIds.includes(+data.itemId)) {
+          data.mediaType = mediaType;
+        }
+      }
+
+      //////////////////////////////////////////////////////////////
+
+      this.$store.dispatch("content/loadContentDetails", data);
     },
   },
 
