@@ -30,11 +30,11 @@ export default {
       }
     }
     // console.log(movieIds);
-    console.log("========================");
+    /* console.log("========================");
     console.log(Object.keys(state.filters));
     console.log(Object.values(state.filters));
     console.log(Object.entries(state.filters));
-    console.log("========================");
+    console.log("========================"); */
 
     //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
     console.log(state.moviesById);
