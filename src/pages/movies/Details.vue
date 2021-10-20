@@ -38,8 +38,7 @@
           Vote average: {{ contentDetails.voteAverage }}
         </h5>
       </div>
-
-      <small class="item__summary"></small>
+      <button class="">Add to favourites</button>
     </div>
   </div>
 </template>
