@@ -114,7 +114,7 @@ export default {
     };
     console.log(test);
 
-    function selectSomeProperties(account) {
+    /* function selectSomeProperties(account) {
       return Object.keys(account).reduce(function(obj, k) {
         if (
           [
@@ -133,21 +133,25 @@ export default {
         return obj;
       }, {});
     }
-    const selectedProperties = selectSomeProperties(movieLoadedDetails);
+    const selectedProperties = selectSomeProperties(movieLoadedDetails); */
     /* console.log(JSON.stringify(selectedProperties)); */
 
     const movieDetails = {
-      title: selectedProperties.original_title,
-      overview: selectedProperties.overview,
-      popularity: selectedProperties.popularity,
-      posterPath: selectedProperties.poster_path,
-      backdropPath: selectedProperties.backdrop_path,
-      productionCompanies: selectedProperties.production_companies.map(
+      title: movieLoadedDetails.original_title,
+      overview: movieLoadedDetails.overview,
+      popularity: movieLoadedDetails.popularity,
+      posterPath: movieLoadedDetails.poster_path,
+      backdropPath: movieLoadedDetails.backdrop_path,
+      productionCompanies: movieLoadedDetails.production_companies.map(
         (productionCompany) => productionCompany.name
       ),
-      runtime: selectedProperties.runtime,
-      voteAverage: selectedProperties.vote_average,
+      runtime: movieLoadedDetails.runtime,
+      voteAverage: movieLoadedDetails.vote_average,
     };
+
+    //Kako vraća typeof da je object
+    console.log(typeof movieDetails.productionCompanies);
+    console.log(movieDetails.productionCompanies);
     context.commit("saveContentDetails", movieDetails);
   },
 };

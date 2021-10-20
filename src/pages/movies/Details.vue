@@ -1,22 +1,15 @@
 <template>
   <div class="details">
     <div class="details__box">
-      <img
-        src="https://image.tmdb.org/t/p/w200/kKG9gieki5wgEcVXLfnX1lbOcrO.jpg"
-        class="details__photo"
-        alt="Movie cover"
-      />
-      <!-- <img
-        src="https://image.tmdb.org/t/p/w300/8Bcm0qBnS6yjwTFad8eI6thzRub.jpg"
-        class="details__photo"
-        alt="Movie cover"
-      /> -->
+      <img :src="posterPath" class="details__photo" alt="Movie cover" />
       <small class="details__summary">{{ contentDetails.overview }}</small>
     </div>
     <div class="details__aside">
       <search-bar></search-bar>
       <div class="details__aside--small-box">
-        <p class="details__additional-info">Popularity: 78.2</p>
+        <p class="details__additional-info">
+          Popularity: {{ contentDetails.popularity }}
+        </p>
       </div>
 
       <h5 class="details__production-companies">Production companies:</h5>
@@ -33,17 +26,17 @@
         <li class="details__list-item">Production company 5</li> -->
       </ul>
       <div class="details__aside--small-box">
-        <h5 class="details__additional-info">Runtime</h5>
+        <h5 class="details__additional-info">
+          Runtime: {{ contentDetails.runtime }}M
+        </h5>
       </div>
       <ul>
-        <li class="details__list-item">Production company 1</li>
-        <li class="details__list-item">Production company 2</li>
-        <li class="details__list-item">Production company 3</li>
-        <li class="details__list-item">Production company 4</li>
-        <li class="details__list-item">Production company 5</li>
+        <li class="details__list-item">ŠTO JE OVO?</li>
       </ul>
       <div class="details__aside--small-box">
-        <h5 class="details__additional-info">Vote average</h5>
+        <h5 class="details__additional-info">
+          Vote average: {{ contentDetails.voteAverage }}
+        </h5>
       </div>
 
       <small class="item__summary"></small>
@@ -67,6 +60,13 @@ export default {
     /* detailsId() {
       return this.$store.getters.loadDetailsId;
     }, */
+
+    posterPath() {
+      const imagePath = this.$store.getters["content/getContentDetails"]
+        .posterPath;
+      return `https://image.tmdb.org/t/p/w200${imagePath}`;
+    },
+
     contentDetails() {
       return this.$store.getters["content/getContentDetails"];
     },
