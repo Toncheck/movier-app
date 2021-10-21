@@ -10,10 +10,14 @@
           @change="setFilter"
           checked
         />
-        <span class="filter__checkbox-button"></span>
-        <label for="dynamicallyset" class="filter__checkbox-label">
-          {{ filter }}</label
-        >
+
+        <label class="filter__label" :for="filter">
+          <span class="filter__button"></span>
+          <div class="filter__text">{{ filter }}</div>
+        </label>
+
+        <!-- <span class="filter__button"></span>
+        <label :for="filter" class="filter__label"> {{ filter }}</label> -->
       </span>
     </div>
   </div>
@@ -33,49 +37,22 @@ export default {
     initializeFilters() {
       this.filterNames.forEach((element) => {
         this.filters[element] = this.filters[element] || {};
-        console.log(this.filters);
       });
     },
 
     setFilter(event) {
       //Ovo je zu dobivanje id-a iz eventa
       const inputId = event.target.id;
-      console.log(inputId);
 
       //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
       const isActive = event.target.checked;
-      console.log(isActive);
 
       const data = {
         mediaType: inputId,
         checked: isActive,
       };
-      console.log(data);
 
       this.$store.dispatch("content/updateFilters", data);
-
-      /* console.log(...this.filterNames);
-
-      const updatedFilters = {};
-
-      this.filterNames.forEach((element) => {
-        updatedFilters[element] = updatedFilters[element] || {};
-        updatedFilters[element] = true;
-      });
-
-      console.log(updatedFilters); */
-
-      //Ovo je za update filtera
-      /* const updatedFilters = { */
-      //Ovo kopira sve propertyje iz objekta
-      /* ...this.filters, */
-      //ovo overwrite property preko keya, a key je ono što je spremljeno u inputId
-      /* [inputId]: isActive, */
-      /* }; */
-      //Update filtera
-      /* this.filters = updatedFilters; */
-      //emitiranje eventa kako bi komponenta koja koristi <task-filter></task-filter> mogla znati da je došlo do promjene. U ovom slučaju će to koristiti Account.vue component. Ono što emitamo jesu podaci updatedFilters za event change-filter
-      /* this.$emit("change-filter", updatedFilters); */
     },
   },
   computed: {
@@ -98,6 +75,11 @@ export default {
   margin-top: 2rem;
   text-align: center;
 
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__title {
     font-size: 1.6rem;
   }
@@ -118,18 +100,19 @@ export default {
     margin: 0.5rem 0;
     margin-right: 0.5rem;
     padding: 0.5rem 0;
-    display: inline-flex;
+    display: flex;
     cursor: pointer;
     /* position: relative; */
   }
+
   &__checkbox {
     opacity: 1;
     font-family: inherit;
     cursor: pointer;
-    /* display: none; */
+    display: none;
   }
 
-  &__checkbox-button {
+  &__button {
     height: 1.5rem;
     width: 1.5rem;
     margin-right: 0.5rem;
@@ -151,16 +134,16 @@ export default {
     }
   }
 
-  &__checkbox-label {
+  &__label {
     font-size: 1.4rem;
     line-height: 1;
-    display: inline-block;
+    display: flex;
     /* position: relative; */
     cursor: pointer;
   }
 
-  /* &__checkbox:checked + &__checkbox-label &__checkbox-button::after {
-    opacity: 1;
-  } */
+  &__checkbox:checked ~ &__label > &__button::after {
+    opacity: 0;
+  }
 }
 </style>
