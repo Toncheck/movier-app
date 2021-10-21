@@ -1,28 +1,23 @@
 <template>
   <div class="pagination-container">
     <div class="pagination-container--withpages" v-if="currentPage">
-      <div>{{ currentSearch }}</div>
+      <div>Your search: {{ currentSearch }}</div>
       <p>We found more results - check them out</p>
-      <!-- <ul class="pagination-container__pages">
-        <li
-          href="#"
-          v-for="page in totalPages"
-          :key="page"
-          class="pagination-container__page"
-          @click="jumpOnPage(page)"
-        >
-          {{ page }}
-        </li>
-      </ul> -->
       <ul class="pagination-container__pages">
-        <div v-show="!firstPageDummy">
-          <li @click="goToFirstPage" class="pagination-container__page">
-            &laquo;
-          </li>
-          <li @click="goToPreviousPage" class="pagination-container__page">
-            &lsaquo;
-          </li>
-        </div>
+        <li
+          v-show="!firstPage"
+          @click="goToFirstPage"
+          class="pagination-container__page"
+        >
+          &laquo;
+        </li>
+        <li
+          v-show="!firstPage"
+          @click="goToPreviousPage"
+          class="pagination-container__page"
+        >
+          &lsaquo;
+        </li>
 
         <li
           href="#"
@@ -32,14 +27,21 @@
         >
           {{ currentPage }}
         </li>
-        <div v-show="!lastPageDummy">
-          <li @click="goToNextPage" class="pagination-container__page">
-            &rsaquo;
-          </li>
-          <li @click="goToLastPage" class="pagination-container__page">
-            &raquo;
-          </li>
-        </div>
+
+        <li
+          v-show="!lastPage"
+          @click="goToNextPage"
+          class="pagination-container__page"
+        >
+          &rsaquo;
+        </li>
+        <li
+          v-show="!lastPage"
+          @click="goToLastPage"
+          class="pagination-container__page"
+        >
+          &raquo;
+        </li>
       </ul>
     </div>
     <p class="pagination-container--nopages" v-else>
@@ -53,11 +55,11 @@ export default {
   data() {
     return {
       //currentPage je podatak koji treba pobrati iz VUEX-a. Na početku je to 0, što znači da nema ništa za prikazati. To je iskorišteno u HTML-u kako bi se korisniku dao feedback, da se nema što prikazati.
-      currentPageDummy: 3,
+      /* currentPageDummy: 3,
       lastPageDummy: false,
       firstPageDummy: false,
       totalPagesDummy: 6,
-      jumpToPageDummy: null,
+      jumpToPageDummy: null, */
     };
   },
   methods: {
@@ -65,8 +67,6 @@ export default {
       this.$store.dispatch("content/loadContent", page);
     },
     goToPage(page) {
-      console.log(this.currentSearch);
-      console.log(page);
       const searchData = {
         search: this.currentSearch,
         page,
@@ -104,7 +104,6 @@ export default {
       );
     },
     currentSearch() {
-      console.log(this.$store.getters["content/currentSearch"]);
       return this.$store.getters["content/getCurrentSearch"];
     },
   },

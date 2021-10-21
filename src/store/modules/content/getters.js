@@ -72,7 +72,6 @@ export default {
   },
 
   getMediaType(state) {
-    console.log(state.detailsAboutRecord.mediaType);
     return state.detailsAboutRecord.mediaType;
   },
 

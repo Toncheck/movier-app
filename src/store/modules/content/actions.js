@@ -48,7 +48,7 @@ export default {
       filters[movie.media_type].movieIds.push(movie.id);
     });
 
-    console.log(page, results, total_pages, total_results);
+    /* console.log(page, results, total_pages, total_results); */
 
     context.commit("saveMoviesById", moviesById);
     context.commit("saveMoviesByPage", moviesByPage);
@@ -65,8 +65,8 @@ export default {
 
     /* console.log("moviesByid:");
     console.log(moviesById); */
-    console.log("moviesByPage");
-    console.log(moviesByPage);
+    /* console.log("moviesByPage");
+    console.log(moviesByPage); */
     /* console.log("filters");
     console.log(filters); */
 

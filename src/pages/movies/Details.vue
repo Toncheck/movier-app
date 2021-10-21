@@ -65,7 +65,7 @@ export default {
     posterPath() {
       const imagePath = this.$store.getters["content/getContentDetails"]
         .posterPath;
-      console.log(imagePath);
+
       return `https://image.tmdb.org/t/p/w200${imagePath}`;
     },
 
@@ -86,8 +86,6 @@ export default {
         mediaType: this.mediaType,
       };
 
-      /* console.log("ITEM ID", itemId, typeof itemId); */
-
       //kao data šalje se id, prema tom id-u treba pronaći media_type koji određuje na koji endpoint se vrši upit, mogući su movie, tv ili person
 
       /* console.log(this.getFilters); */
@@ -101,9 +99,6 @@ export default {
           data.mediaType = mediaType;
         }
       }
-      console.log(JSON.stringify(this.getFilters));
-      console.log(this.getFilters);
-      console.log(data);
 
       //////////////////////////////////////////////////////////////
 
@@ -112,25 +107,22 @@ export default {
 
     saveToFavourite() {
       const itemId = this.$route.params.id;
-      console.log("Save to favourite");
-      console.log(this.contentDetails);
+
       /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
       const expandedContentDetails = {
         ...this.contentDetails,
         mediaType: this.mediaType,
       };
 
-      console.log(expandedContentDetails);
       //Dohvati podatke s localStorage, ako nema ništa onda kreiraj novi prazni objekt u koji će se spremati budući podaci
 
       const record = JSON.parse(localStorage.getItem("favourites")) || {};
-      console.log(record);
+
       const favourites = {
         ...record,
         [itemId]: expandedContentDetails,
-        /* [mediaType]: this.mediaType, */
       };
-      console.log(favourites);
+
       localStorage.setItem("favourites", JSON.stringify(favourites));
     },
 

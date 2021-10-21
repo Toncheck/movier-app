@@ -27,7 +27,6 @@ export default {
 
   saveDetailsAboutRecord(state, payload) {
     state.detailsAboutRecord = payload;
-    console.log(state.detailsAboutRecord);
   },
 
   saveContentDetails(state, payload) {
@@ -49,6 +48,5 @@ export default {
 
   saveCurrentSearch(state, payload) {
     state.currentSearch = payload;
-    console.log(state.currentSearch);
   },
 };
