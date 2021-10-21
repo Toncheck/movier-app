@@ -84,7 +84,9 @@ export default {
       return `/details/${this.itemId}`;
     },
     popularityFixed() {
-      return this.popularity.toFixed(1);
+      return Math.round(this.popularity * 10) / 10;
+      /* Ovo neće raditi */
+      /* return this.popularity.toFixed(1); */
     },
   },
 };

@@ -18,6 +18,7 @@ export default {
     //raspakiraj podatke dobivene s API-ja
     const { page, results, total_pages, total_results } = responseData;
 
+    console.log(total_results);
     //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
 
     const moviesById = {};
