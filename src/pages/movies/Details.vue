@@ -39,8 +39,10 @@
           Vote average: {{ contentDetails.voteAverage }}
         </h5>
       </div>
-      <button class="" @click="saveToFavourite">Add to favourites</button>
-      <button class="" @click="clearStorage">Clear Storage</button>
+      <button class="details__button" @click="saveToFavourite">
+        Add to favourites
+      </button>
+      <!-- <button class="" @click="clearStorage">Clear Storage</button> -->
     </div>
   </div>
 </template>
@@ -126,9 +128,9 @@ export default {
       localStorage.setItem("favourites", JSON.stringify(favourites));
     },
 
-    clearStorage() {
+    /* clearStorage() {
       localStorage.clear();
-    },
+    }, */
   },
 
   created() {
@@ -143,6 +145,7 @@ export default {
   max-width: 70%;
   margin: 0 auto;
   margin-top: 3rem;
+  min-height: 70vh;
 
   &__box {
     display: flex;
@@ -166,6 +169,20 @@ export default {
       min-width: 75%;
       margin: 1rem 0;
     }
+  }
+
+  &__button {
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    background-color: var(--color-secondary-dark);
+    color: var(--color-white);
+    width: 90%;
+    height: 3rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 
   &__additional-info {
