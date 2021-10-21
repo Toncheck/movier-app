@@ -12,18 +12,27 @@ export default {
   },
 
   //izvuci sadržaj s vuexa
+  getContentTwo(state) {
+    const movieIds = [];
+
+    for (const filterValue of Object.values(state.filters)) {
+      if (filterValue.checked) {
+        movieIds.push(...filterValue.movieIds);
+      }
+    }
+
+    //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
+    //console.log(state.moviesById);
+    //console.log(movieIds.map((movieId) => state.moviesById[movieId]));
+
+    return movieIds.map((movieId) => state.moviesById[movieId]);
+  },
+
   getContent(state) {
     //kreiraj prazan array koji će sadržavati samo movieIds za filmove koji su označeni filterom
     const movieIds = [];
 
-    //Zašto prolazak kroz value, a ne kroz key?
-    /*  console.log(Object.keys(state.filters)); */
-    // Zašto dva puta ispište na konzolu?
-    /*  console.log(Object.values(state.filters)); */
-    /* Zašto je ispis na konzolu u actions normalan, a u getters veli Proxy */
-    /* console.log(state.filters); */
-
-    //Prolazak kroz sve vrijednosti za objekt filters. Ako je filter checke = true tada se pusha u taj array za filter tog imena u movieIds = [];
+    //Prolazak kroz sve values za objekt filters. Ako je filter checked = true tada se pusha u taj array za filter tog imena u movieIds = [];
     for (const filterValue of Object.values(state.filters)) {
       if (filterValue.checked) {
         movieIds.push(...filterValue.movieIds);
@@ -36,33 +45,17 @@ export default {
     console.log(Object.entries(state.filters));
     console.log("========================"); */
 
-    //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
-    /* console.log(state.moviesById);
-    console.log(movieIds.map((movieId) => state.moviesById[movieId])); */
-    return movieIds.map((movieId) => state.moviesById[movieId]);
-  },
-
-  getContentTwo(state) {
-    const movieIds = [];
-
-    for (const filterValue of Object.values(state.filters)) {
-      if (filterValue.checked) {
-        movieIds.push(...filterValue.movieIds);
-      }
-    }
-
-    const result2 = movieIds.map((movieId) => {
+    const result = movieIds.map((movieId) => {
       return { id: movieId, ...state.moviesById[movieId] };
     });
 
-    console.log(result2);
     /* const result = state.moviesById.map((movie) => {
       const movieId = Object.keys(movie)[0];
       return { id: movieId, ...movie[movieId] };
     });
     */
 
-    return result2;
+    return result;
   },
 
   hasContent(_, getters) {
@@ -76,6 +69,19 @@ export default {
 
   getContentDetails(state) {
     return state.contentDetails;
+  },
+
+  getMediaType(state) {
+    console.log(state.detailsAboutRecord.mediaType);
+    return state.detailsAboutRecord.mediaType;
+  },
+
+  getCurrentPage(state) {
+    return state.currentPage;
+  },
+
+  getTotalPages(state) {
+    return state.totalPages;
   },
 
   //Ovo ne treba, ali sam ostavio za postaviti pitanje: Zašto se to ne loada prilikom created

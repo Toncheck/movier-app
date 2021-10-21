@@ -1,7 +1,7 @@
 export default {
-  //Transformiranje dobivenih podataka i uzimanje potrebnoga kako bi se moglo spremiti tamo gdje treba
-  //pozivanje mutationa samo za spremanje u content
-  async loadContent(context, data) {
+  //ACTION za dobavu podataka nakon searcha u SearchBar
+  //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
+  async saveContent(context, data) {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data}&page=1&include_adult=false`,
       { method: "GET" }
@@ -13,23 +13,12 @@ export default {
       //error ...
     }
 
-    /* const content = []; */
-    /*
-    for (const key in responseData) {
-      const 
-    } */
-    /* const page = { ...responseData }.page;
-    const totalPages = { ...responseData }.total_pages;
-    const results = { ...responseData }.results;
-    
-    console.log(typeof responseData);
-    console.log(page);
-    console.log(totalPages);
-    console.log(results); */
+    /* console.log({ ...responseData }); */
 
-    console.log({ ...responseData });
-
+    //raspakiraj podatke dobivene s API-ja
     const { page, results, total_pages, total_results } = responseData;
+
+    //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
 
     const moviesById = {};
     const moviesByPage = {};
@@ -42,6 +31,7 @@ export default {
         overview: movie.overview,
         popularity: movie.popularity,
         posterPath: movie.poster_path,
+        mediaType: movie.media_type,
       };
 
       /*  console.log(moviesByPage[page] || []); */
@@ -57,18 +47,25 @@ export default {
         filters[movie.media_type].movieIds || [];
       filters[movie.media_type].movieIds.push(movie.id);
     });
+
     console.log(page, results, total_pages, total_results);
 
     context.commit("saveMoviesById", moviesById);
     context.commit("saveMoviesByPage", moviesByPage);
     context.commit("saveFilters", filters);
 
-    console.log("moviesByid:");
-    console.log(moviesById);
+    //Spremi podatake o trenutnoj stranici za paginaciju
+    context.commit("saveCurrentPage", +Object.keys(moviesByPage));
+
+    //Spremi podatke o ukupnom broju stranica za paginaciju
+    context.commit("saveTotalPages", total_pages);
+
+    /* console.log("moviesByid:");
+    console.log(moviesById); */
     console.log("moviesByPage");
     console.log(moviesByPage);
-    console.log("filters");
-    console.log(filters);
+    /* console.log("filters");
+    console.log(filters); */
 
     //Spremi lastSearch, a to je pojam koji je upisan u searchBar kako bi se mogao eventualno kasnije raditi fetch podataka iz ContentPagination componenta za nove stranice.
     //context.commit("saveLastSearch", data);
@@ -87,8 +84,8 @@ export default {
   },
 
   /* Action za pospremanje id-a za detailsPage*/
-  saveDetailsId(context, data) {
-    context.commit("saveDetailsId", data);
+  saveDetailsAboutRecord(context, data) {
+    context.commit("saveDetailsAboutRecord", data);
   },
 
   /* Action za fetch podataka za details page */
@@ -107,12 +104,6 @@ export default {
     /* console.log({ ...responseData }); */
 
     const movieLoadedDetails = { ...responseData };
-    console.log(movieLoadedDetails);
-
-    const test = {
-      title: movieLoadedDetails.original_title,
-    };
-    console.log(test);
 
     /* function selectSomeProperties(account) {
       return Object.keys(account).reduce(function(obj, k) {
@@ -126,6 +117,7 @@ export default {
             "production_companies",
             "runtime",
             "vote_average",
+            "media_type",
           ].includes(k)
         ) {
           obj[k] = account[k];
@@ -150,8 +142,13 @@ export default {
     };
 
     //Kako vraća typeof da je object
-    console.log(typeof movieDetails.productionCompanies);
-    console.log(movieDetails.productionCompanies);
+    /* console.log(typeof movieDetails.productionCompanies);
+    console.log(movieDetails.mediaType); */
+
     context.commit("saveContentDetails", movieDetails);
+  },
+
+  resetFilter(context, data) {
+    context.commit("resetFilter", data);
   },
 };

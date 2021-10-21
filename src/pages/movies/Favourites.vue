@@ -2,13 +2,14 @@
   <div class="favourites">
     <ul v-if="hasContent" class="favourites__list">
       <contents-item
-        v-for="record in filteredContent"
-        :key="record.id"
-        :id="record.id"
-        :posterPath="record.posterPath"
-        :popularity="record.popularity"
-        :title="record.title"
-        :summary="record.overview"
+        v-for="(value, record) in favourites"
+        :key="+record"
+        :id="+record"
+        :posterPath="value.posterPath"
+        :popularity="value.popularity"
+        :title="value.title"
+        :summary="value.overview"
+        :mediaType="value.mediaType"
       >
       </contents-item>
     </ul>
@@ -30,19 +31,28 @@ export default {
   components: {
     ContentsItem,
   },
+  data() {
+    return {
+      favourites: null,
+    };
+  },
 
   computed: {
     hasContent() {
       //provjeri ima li kakvog sadržaja u listi za favourites
-      return this.$store.getters["content/hasContent"];
+      return JSON.parse(localStorage.getItem("favourites")) || {};
     },
   },
 
   methods: {
     loadFavourites() {
-      const record = JSON.parse(localStorage.getItem("869250"));
-      console.log(typeof record);
-      console.log(record);
+      //dohvati object movies s local storage
+      /* const record = JSON.parse(localStorage.getItem("869250")); */
+      this.favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+      console.log(typeof this.favourites);
+      console.log(this.favourites);
+
+      //prepakiravanje podataka
     },
   },
 

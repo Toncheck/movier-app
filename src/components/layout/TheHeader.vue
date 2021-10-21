@@ -4,7 +4,7 @@
     <nav class="user-nav">
       <ul class="user-nav__list">
         <li class="user-nav__item">
-          <router-link class="user-nav__link" to="/home" @click="reset"
+          <router-link class="user-nav__link" to="/home" @click="resetFilter"
             >Search</router-link
           >
         </li>
@@ -22,7 +22,8 @@
     </div>
 
     <div class="search-box">
-      <search-bar @load-data="loadData"></search-bar>
+      <!-- @load-data="loadData" -->
+      <search-bar></search-bar>
     </div>
   </header>
 </template>
@@ -35,12 +36,9 @@ export default {
     SearchBar,
   },
   methods: {
-    loadData(data) {
-      this.$store.dispatch("content/loadContent", data);
-
-      //Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. The Header je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha
-      //Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti
-      this.$router.replace("/home");
+    //metoda koja se poziva ako je kliknuto na searc gore u headeru pa da bi se maknuo filter sa stranice
+    resetFilter() {
+      this.$store.dispatch("content/resetFilter", {});
     },
   },
 };

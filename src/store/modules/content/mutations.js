@@ -25,11 +25,25 @@ export default {
     state.filters[payload.mediaType].checked = payload.checked;
   },
 
-  saveDetailsId(state, payload) {
-    state.detailsId = payload;
+  saveDetailsAboutRecord(state, payload) {
+    state.detailsAboutRecord = payload;
+    console.log(state.detailsAboutRecord);
   },
 
   saveContentDetails(state, payload) {
     state.contentDetails = payload;
+  },
+
+  resetFilter(state, payload) {
+    state.filters = payload;
+  },
+
+  //Pagination
+  saveCurrentPage(state, payload) {
+    state.currentPage = payload;
+  },
+
+  saveTotalPages(state, payload) {
+    state.totalPages = payload;
   },
 };

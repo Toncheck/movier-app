@@ -12,6 +12,7 @@
         :popularity="record.popularity"
         :title="record.title"
         :summary="record.overview"
+        :mediaType="record.mediaType"
       >
       </contents-item>
     </ul>
@@ -59,7 +60,7 @@ export default {
             },
         ...
       }*/
-      const content = this.$store.getters["content/getContentTwo"];
+      const content = this.$store.getters["content/getContent"];
 
       return content;
     },

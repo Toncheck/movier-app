@@ -64,6 +64,7 @@ export default {
     posterPath() {
       const imagePath = this.$store.getters["content/getContentDetails"]
         .posterPath;
+      console.log(imagePath);
       return `https://image.tmdb.org/t/p/w200${imagePath}`;
     },
 
@@ -72,6 +73,9 @@ export default {
     },
     getFilters() {
       return this.$store.getters["content/getFilters"];
+    },
+    getMediaType() {
+      return this.$store.getters["content/getMediaType"];
     },
   },
   methods: {
@@ -89,6 +93,7 @@ export default {
 
       //Prolazak kroz sve vrijednosti za objekt filters. Ako je u određenom filteru pronađen id znači da imamo media_type
 
+      //Ovo je bila prva ideja, uzeti media type iz filters. I to radi ako se na details page skoči s home gdje je su bili prikazani itemi. No ako se na details page skoči s favourites, a prije toga nijedan search nije bio napravljen, neće se moći dohvatiti media type. Zbog toga je potrebno utrpati i media type kao podatak koji putuje zajedno sa svim podacima o filmu.
       for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
         // console.log(filterValue.movieIds[0], typeof filterValue.movieIds[0]);
         if (filterValue.movieIds.includes(+data.itemId)) {
@@ -106,7 +111,23 @@ export default {
       console.log("Save to favourite");
       console.log(this.contentDetails);
       /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
-      localStorage.setItem(itemId, JSON.stringify(this.contentDetails));
+      const expandedContentDetails = {
+        ...this.contentDetails,
+        mediaType: this.mediaType,
+      };
+
+      console.log(expandedContentDetails);
+      //Dohvati podatke s localStorage, ako nema ništa onda kreiraj novi prazni objekt u koji će se spremati budući podaci
+
+      const record = JSON.parse(localStorage.getItem("favourites")) || {};
+      console.log(record);
+      const favourites = {
+        ...record,
+        [itemId]: expandedContentDetails,
+        /* [mediaType]: this.mediaType, */
+      };
+      console.log(favourites);
+      localStorage.setItem("favourites", JSON.stringify(favourites));
     },
 
     clearStorage() {
