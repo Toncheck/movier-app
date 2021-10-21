@@ -1,7 +1,7 @@
 export default {
-  //Transformiranje dobivenih podataka i uzimanje potrebnoga kako bi se moglo spremiti tamo gdje treba
-  //pozivanje mutationa samo za spremanje u content
-  async loadContent(context, data) {
+  //ACTION za dobavu podataka nakon searcha u SearchBar
+  //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
+  async saveContent(context, data) {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data}&page=1&include_adult=false`,
       { method: "GET" }
@@ -13,7 +13,7 @@ export default {
       //error ...
     }
 
-    console.log({ ...responseData });
+    /* console.log({ ...responseData }); */
 
     //raspakiraj podatke dobivene s API-ja
     const { page, results, total_pages, total_results } = responseData;
@@ -31,6 +31,7 @@ export default {
         overview: movie.overview,
         popularity: movie.popularity,
         posterPath: movie.poster_path,
+        mediaType: movie.media_type,
       };
 
       /*  console.log(moviesByPage[page] || []); */
@@ -53,12 +54,18 @@ export default {
     context.commit("saveMoviesByPage", moviesByPage);
     context.commit("saveFilters", filters);
 
-    console.log("moviesByid:");
-    console.log(moviesById);
+    //Spremi podatake o trenutnoj stranici za paginaciju
+    context.commit("saveCurrentPage", +Object.keys(moviesByPage));
+
+    //Spremi podatke o ukupnom broju stranica za paginaciju
+    context.commit("saveTotalPages", total_pages);
+
+    /* console.log("moviesByid:");
+    console.log(moviesById); */
     console.log("moviesByPage");
     console.log(moviesByPage);
-    console.log("filters");
-    console.log(filters);
+    /* console.log("filters");
+    console.log(filters); */
 
     //Spremi lastSearch, a to je pojam koji je upisan u searchBar kako bi se mogao eventualno kasnije raditi fetch podataka iz ContentPagination componenta za nove stranice.
     //context.commit("saveLastSearch", data);
@@ -77,8 +84,8 @@ export default {
   },
 
   /* Action za pospremanje id-a za detailsPage*/
-  saveDetailsId(context, data) {
-    context.commit("saveDetailsId", data);
+  saveDetailsAboutRecord(context, data) {
+    context.commit("saveDetailsAboutRecord", data);
   },
 
   /* Action za fetch podataka za details page */
@@ -135,8 +142,13 @@ export default {
     };
 
     //Kako vraća typeof da je object
-    console.log(typeof movieDetails.productionCompanies);
-    console.log(movieDetails.mediaType);
+    /* console.log(typeof movieDetails.productionCompanies);
+    console.log(movieDetails.mediaType); */
+
     context.commit("saveContentDetails", movieDetails);
+  },
+
+  resetFilter(context, data) {
+    context.commit("resetFilter", data);
   },
 };

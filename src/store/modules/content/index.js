@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
-      detailsId: null,
+      detailsAboutRecord: {},
 
       //setovi podataka za home page
       moviesById: {},
@@ -14,6 +14,10 @@ export default {
       moviesByPage: {},
       //set podatka za details page
       contentDetails: {},
+
+      //Pagination
+      currentPage: null,
+      totalPages: null,
 
       //dummy data
       /* content: [

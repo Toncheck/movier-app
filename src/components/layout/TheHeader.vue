@@ -4,7 +4,7 @@
     <nav class="user-nav">
       <ul class="user-nav__list">
         <li class="user-nav__item">
-          <router-link class="user-nav__link" to="/home" @click="reset"
+          <router-link class="user-nav__link" to="/home" @click="resetFilter"
             >Search</router-link
           >
         </li>
@@ -36,10 +36,10 @@ export default {
     SearchBar,
   },
   methods: {
-    /* loadData(data) { */
-    /* this.$store.dispatch("content/loadContent", data); */
-    /*  this.$router.replace("/home");
-    }, */
+    //metoda koja se poziva ako je kliknuto na searc gore u headeru pa da bi se maknuo filter sa stranice
+    resetFilter() {
+      this.$store.dispatch("content/resetFilter", {});
+    },
   },
 };
 </script>

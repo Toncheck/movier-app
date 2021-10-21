@@ -10,7 +10,8 @@
         :to="pagePath"
         class="btn btn--orange"
         :id="id"
-        @click="getId"
+        :mediaType="mediaType"
+        @click="saveDetailsAboutRecord"
         >Full synopsis<span>&gt;</span></router-link
       >
     </div>
@@ -45,6 +46,11 @@ export default {
       required: false,
       default: "",
     },
+    mediaType: {
+      type: String,
+      required: true,
+      default: "",
+    },
   },
   data() {
     return {
@@ -57,9 +63,12 @@ export default {
       console.log("Open Details");
     },
     //metoda koja služi za pospremanje podatka o tome koji je id itema na kojem je kliknuto next. To je potrebno kako bi se mogao pronaći media_type i onda kasnije kreirati path za fetch s API-ja
-    getId() {
+    saveDetailsAboutRecord() {
       //spremi id na vuex
-      this.$store.dispatch("content/saveDetailsId", this.itemId);
+      this.$store.dispatch("content/saveDetailsAboutRecord", {
+        itemId: this.id,
+        mediaType: this.mediaType,
+      });
     },
   },
   computed: {

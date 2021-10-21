@@ -45,18 +45,17 @@ export default {
     console.log(Object.entries(state.filters));
     console.log("========================"); */
 
-    const result2 = movieIds.map((movieId) => {
+    const result = movieIds.map((movieId) => {
       return { id: movieId, ...state.moviesById[movieId] };
     });
 
-    /* console.log(result2); */
     /* const result = state.moviesById.map((movie) => {
       const movieId = Object.keys(movie)[0];
       return { id: movieId, ...movie[movieId] };
     });
     */
 
-    return result2;
+    return result;
   },
 
   hasContent(_, getters) {
@@ -70,6 +69,19 @@ export default {
 
   getContentDetails(state) {
     return state.contentDetails;
+  },
+
+  getMediaType(state) {
+    console.log(state.detailsAboutRecord.mediaType);
+    return state.detailsAboutRecord.mediaType;
+  },
+
+  getCurrentPage(state) {
+    return state.currentPage;
+  },
+
+  getTotalPages(state) {
+    return state.totalPages;
   },
 
   //Ovo ne treba, ali sam ostavio za postaviti pitanje: Zašto se to ne loada prilikom created

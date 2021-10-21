@@ -12,6 +12,7 @@
         :popularity="record.popularity"
         :title="record.title"
         :summary="record.overview"
+        :mediaType="record.mediaType"
       >
       </contents-item>
     </ul>

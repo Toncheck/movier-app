@@ -53,7 +53,7 @@ export default {
       }
       /*Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. Search Bar je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha. Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti*/
 
-      this.$store.dispatch("content/loadContent", this.searchInput.val);
+      this.$store.dispatch("content/saveContent", this.searchInput.val);
       this.$router.replace("/home");
     },
   },

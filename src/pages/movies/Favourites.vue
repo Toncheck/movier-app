@@ -9,6 +9,7 @@
         :popularity="value.popularity"
         :title="value.title"
         :summary="value.overview"
+        :mediaType="value.mediaType"
       >
       </contents-item>
     </ul>
