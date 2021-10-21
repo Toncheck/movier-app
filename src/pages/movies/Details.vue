@@ -38,7 +38,8 @@
           Vote average: {{ contentDetails.voteAverage }}
         </h5>
       </div>
-      <button class="">Add to favourites</button>
+      <button class="" @click="saveToFavourite">Add to favourites</button>
+      <button class="" @click="clearStorage">Clear Storage</button>
     </div>
   </div>
 </template>
@@ -98,6 +99,18 @@ export default {
       //////////////////////////////////////////////////////////////
 
       this.$store.dispatch("content/loadContentDetails", data);
+    },
+
+    saveToFavourite() {
+      const itemId = this.$route.params.id;
+      console.log("Save to favourite");
+      console.log(this.contentDetails);
+      /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
+      localStorage.setItem(itemId, JSON.stringify(this.contentDetails));
+    },
+
+    clearStorage() {
+      localStorage.clear();
     },
   },
 

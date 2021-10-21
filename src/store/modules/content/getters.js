@@ -21,7 +21,7 @@ export default {
     // Zašto dva puta ispište na konzolu?
     /*  console.log(Object.values(state.filters)); */
     /* Zašto je ispis na konzolu u actions normalan, a u getters veli Proxy */
-    console.log(state.filters);
+    /* console.log(state.filters); */
 
     //Prolazak kroz sve vrijednosti za objekt filters. Ako je filter checke = true tada se pusha u taj array za filter tog imena u movieIds = [];
     for (const filterValue of Object.values(state.filters)) {
@@ -37,8 +37,8 @@ export default {
     console.log("========================"); */
 
     //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
-    console.log(state.moviesById);
-    console.log(movieIds.map((movieId) => state.moviesById[movieId]));
+    /* console.log(state.moviesById);
+    console.log(movieIds.map((movieId) => state.moviesById[movieId])); */
     return movieIds.map((movieId) => state.moviesById[movieId]);
   },
 
