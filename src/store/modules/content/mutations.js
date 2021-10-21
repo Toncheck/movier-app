@@ -46,4 +46,9 @@ export default {
   saveTotalPages(state, payload) {
     state.totalPages = payload;
   },
+
+  saveCurrentSearch(state, payload) {
+    state.currentSearch = payload;
+    console.log(state.currentSearch);
+  },
 };

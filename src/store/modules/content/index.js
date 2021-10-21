@@ -16,8 +16,10 @@ export default {
       contentDetails: {},
 
       //Pagination
+
       currentPage: null,
       totalPages: null,
+      currentSearch: "",
 
       //dummy data
       /* content: [

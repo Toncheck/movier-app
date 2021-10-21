@@ -16,9 +16,10 @@
       <ul>
         <li
           class="details__list-item"
-          :v-for="contentDetails.productionCompanies"
+          v-for="company in contentDetails.productionCompanies"
+          :key="company"
         >
-          {{ contentDetails.productionCompanies }}
+          {{ company }}
         </li>
         <!-- <li class="details__list-item">Production company 2</li>
         <li class="details__list-item">Production company 3</li>
@@ -74,7 +75,7 @@ export default {
     getFilters() {
       return this.$store.getters["content/getFilters"];
     },
-    getMediaType() {
+    mediaType() {
       return this.$store.getters["content/getMediaType"];
     },
   },
@@ -82,7 +83,7 @@ export default {
     loadContentDetails() {
       const data = {
         itemId: this.$route.params.id,
-        mediaType: "",
+        mediaType: this.mediaType,
       };
 
       /* console.log("ITEM ID", itemId, typeof itemId); */
@@ -100,6 +101,9 @@ export default {
           data.mediaType = mediaType;
         }
       }
+      console.log(JSON.stringify(this.getFilters));
+      console.log(this.getFilters);
+      console.log(data);
 
       //////////////////////////////////////////////////////////////
 
