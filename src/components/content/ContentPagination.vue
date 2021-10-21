@@ -1,6 +1,7 @@
 <template>
   <div class="pagination-container">
     <div class="pagination-container--withpages" v-if="currentPage">
+      <div>{{ currentSearch }}</div>
       <p>We found more results - check them out</p>
       <!-- <ul class="pagination-container__pages">
         <li
@@ -15,8 +16,12 @@
       </ul> -->
       <ul class="pagination-container__pages">
         <div v-show="!firstPageDummy">
-          <li class="pagination-container__page">&laquo;</li>
-          <li class="pagination-container__page">&lsaquo;</li>
+          <li @click="goToFirstPage" class="pagination-container__page">
+            &laquo;
+          </li>
+          <li @click="goToPreviousPage" class="pagination-container__page">
+            &lsaquo;
+          </li>
         </div>
 
         <li
@@ -25,14 +30,17 @@
           class="pagination-container__page"
           @click="jumpOnPage(page)"
         >
-          {{ currentPageDummy }}
+          {{ currentPage }}
         </li>
         <div v-show="!lastPageDummy">
-          <li class="pagination-container__page">&rsaquo;</li>
-          <li class="pagination-container__page">&raquo;</li>
+          <li @click="goToNextPage" class="pagination-container__page">
+            &rsaquo;
+          </li>
+          <li @click="goToLastPage" class="pagination-container__page">
+            &raquo;
+          </li>
         </div>
       </ul>
-      <div>{{ currentPage }}</div>
     </div>
     <p class="pagination-container--nopages" v-else>
       No data to render. Please make a search. :)
@@ -46,8 +54,8 @@ export default {
     return {
       //currentPage je podatak koji treba pobrati iz VUEX-a. Na početku je to 0, što znači da nema ništa za prikazati. To je iskorišteno u HTML-u kako bi se korisniku dao feedback, da se nema što prikazati.
       currentPageDummy: 3,
-      lastPageDummy: true,
-      firstPageDummy: true,
+      lastPageDummy: false,
+      firstPageDummy: false,
       totalPagesDummy: 6,
       jumpToPageDummy: null,
     };
@@ -56,24 +64,48 @@ export default {
     jumpOnPage(page) {
       this.$store.dispatch("content/loadContent", page);
     },
+    goToPage(page) {
+      console.log(this.currentSearch);
+      console.log(page);
+      const searchData = {
+        search: this.currentSearch,
+        page,
+      };
+      this.$store.dispatch("content/saveContent", searchData);
+    },
+    goToFirstPage() {
+      this.goToPage(1);
+    },
+    goToLastPage() {
+      this.goToPage(this.totalPages);
+    },
+    goToNextPage() {
+      this.goToPage(this.currentPage + 1);
+    },
+    goToPreviousPage() {
+      this.goToPage(this.currentPage - 1);
+    },
   },
   computed: {
     currentPage() {
-      /* return this.$store.getters["content/getCurrentPage"]; */
-      return 5;
+      return this.$store.getters["content/getCurrentPage"];
+      /*   return 5; */
     },
     firstPage() {
-      return false || this.$store.getters["content/getCurrentPage"] === 1;
+      return this.$store.getters["content/getCurrentPage"] === 1;
     },
     totalPages() {
       return this.$store.getters["content/getTotalPages"];
     },
     lastPage() {
       return (
-        false ||
         this.$store.getters["content/getCurrentPage"] ===
-          this.$store.getters["content/getTotalPages"]
+        this.$store.getters["content/getTotalPages"]
       );
+    },
+    currentSearch() {
+      console.log(this.$store.getters["content/currentSearch"]);
+      return this.$store.getters["content/getCurrentSearch"];
     },
   },
 };

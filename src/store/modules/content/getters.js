@@ -84,6 +84,10 @@ export default {
     return state.totalPages;
   },
 
+  getCurrentSearch(state) {
+    return state.currentSearch;
+  },
+
   //Ovo ne treba, ali sam ostavio za postaviti pitanje: Zašto se to ne loada prilikom created
   /* loadDetailsId(state) {
     console.log(state.detailsId);

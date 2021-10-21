@@ -3,7 +3,7 @@ export default {
   //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
   async saveContent(context, data) {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data}&page=1&include_adult=false`,
+      `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data.search}&page=${data.page}&include_adult=false`,
       { method: "GET" }
     );
 
@@ -59,6 +59,9 @@ export default {
 
     //Spremi podatke o ukupnom broju stranica za paginaciju
     context.commit("saveTotalPages", total_pages);
+
+    //Spremi podatak o trenutnom searchu
+    context.commit("saveCurrentSearch", data.search);
 
     /* console.log("moviesByid:");
     console.log(moviesById); */
