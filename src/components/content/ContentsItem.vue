@@ -2,15 +2,16 @@
   <li class="item">
     <img :src="imagePath" class="item__photo" alt="Movie cover" />
     <div class="item__data">
-      <p class="item__popularity">Popularity: {{ popularity }}</p>
+      <p class="item__popularity">Popularity: {{ popularityFixed }}</p>
       <h3 class="item__title">{{ title }}</h3>
       <small class="item__summary">{{ summary }}</small>
       <router-link
+        v-if="id"
         :to="pagePath"
         class="btn btn--orange"
         :id="id"
         @click="getId"
-        >Full synopsis {{ id }}<span>&gt;</span></router-link
+        >Full synopsis<span>&gt;</span></router-link
       >
     </div>
   </li>
@@ -67,6 +68,9 @@ export default {
     },
     pagePath() {
       return `/details/${this.itemId}`;
+    },
+    popularityFixed() {
+      return this.popularity.toFixed(1);
     },
   },
 };

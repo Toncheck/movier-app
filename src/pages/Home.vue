@@ -59,7 +59,7 @@ export default {
             },
         ...
       }*/
-      const content = this.$store.getters["content/getContentTwo"];
+      const content = this.$store.getters["content/getContent"];
 
       return content;
     },

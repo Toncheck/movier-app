@@ -22,7 +22,8 @@
     </div>
 
     <div class="search-box">
-      <search-bar @load-data="loadData"></search-bar>
+      <!-- @load-data="loadData" -->
+      <search-bar></search-bar>
     </div>
   </header>
 </template>
@@ -35,13 +36,10 @@ export default {
     SearchBar,
   },
   methods: {
-    loadData(data) {
-      this.$store.dispatch("content/loadContent", data);
-
-      //Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. The Header je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha
-      //Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti
-      this.$router.replace("/home");
-    },
+    /* loadData(data) { */
+    /* this.$store.dispatch("content/loadContent", data); */
+    /*  this.$router.replace("/home");
+    }, */
   },
 };
 </script>

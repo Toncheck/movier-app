@@ -13,23 +13,12 @@ export default {
       //error ...
     }
 
-    /* const content = []; */
-    /*
-    for (const key in responseData) {
-      const 
-    } */
-    /* const page = { ...responseData }.page;
-    const totalPages = { ...responseData }.total_pages;
-    const results = { ...responseData }.results;
-    
-    console.log(typeof responseData);
-    console.log(page);
-    console.log(totalPages);
-    console.log(results); */
-
     console.log({ ...responseData });
 
+    //raspakiraj podatke dobivene s API-ja
     const { page, results, total_pages, total_results } = responseData;
+
+    //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
 
     const moviesById = {};
     const moviesByPage = {};
@@ -57,6 +46,7 @@ export default {
         filters[movie.media_type].movieIds || [];
       filters[movie.media_type].movieIds.push(movie.id);
     });
+
     console.log(page, results, total_pages, total_results);
 
     context.commit("saveMoviesById", moviesById);
@@ -107,12 +97,6 @@ export default {
     /* console.log({ ...responseData }); */
 
     const movieLoadedDetails = { ...responseData };
-    console.log(movieLoadedDetails);
-
-    const test = {
-      title: movieLoadedDetails.original_title,
-    };
-    console.log(test);
 
     /* function selectSomeProperties(account) {
       return Object.keys(account).reduce(function(obj, k) {
@@ -126,6 +110,7 @@ export default {
             "production_companies",
             "runtime",
             "vote_average",
+            "media_type",
           ].includes(k)
         ) {
           obj[k] = account[k];
@@ -151,7 +136,7 @@ export default {
 
     //Kako vraća typeof da je object
     console.log(typeof movieDetails.productionCompanies);
-    console.log(movieDetails.productionCompanies);
+    console.log(movieDetails.mediaType);
     context.commit("saveContentDetails", movieDetails);
   },
 };
