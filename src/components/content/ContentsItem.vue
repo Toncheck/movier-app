@@ -113,7 +113,7 @@ export default {
   }
 
   &__popularity {
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
     color: var(--color-secondary-dark);
     text-transform: uppercase;
   }

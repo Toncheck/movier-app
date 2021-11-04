@@ -44,7 +44,7 @@ body {
     /* element je postavljen kao inline-block jer je po defaultu inline te bi s namještenim paddingom prekrivao tekst gore */
     display: inline-block;
     margin: 1rem 0;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
     cursor: pointer;
   }
 

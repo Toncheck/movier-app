@@ -49,7 +49,6 @@ export default {
 //HEADER
 
 .header {
-  font-size: 1.4rem;
   display: flex;
   flex-direction: column;
   /* background-color: black; */
@@ -72,6 +71,7 @@ export default {
 .user-nav {
   /* background-color: chartreuse; */
   align-self: flex-end;
+  /* font-size: 1.4rem; */
 
   &__list {
     display: flex;
@@ -91,7 +91,7 @@ export default {
     &:link,
     &:visited {
       color: var(--color-white);
-      font-size: 1rem;
+      /* font-size: 1rem; */
 
       text-decoration: none;
       text-transform: uppercase;
@@ -107,17 +107,20 @@ export default {
 //HEADER TEXT
 
 .header-text {
+  :last-child {
+    margin: 0.5rem 0;
+  }
+
   &__moto {
     color: var(--color-secondary-light);
     text-transform: uppercase;
-    font-size: 0.8rem;
   }
 
   &__title {
     color: var(--color-white);
+    /* font-size: 2rem; */
   }
 }
-
 /////////////////////////////////////////////////////////////////
 //HEADER TEXT
 

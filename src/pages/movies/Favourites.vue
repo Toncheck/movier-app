@@ -79,12 +79,14 @@ export default {
     flex-direction: column;
 
     &--title {
-      font-size: 4rem;
+      font-size: 1rem;
+      /* font-size: 4rem; */
       /* display: block; */
     }
 
     &--message {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      /* font-size: 1.2rem; */
     }
   }
 

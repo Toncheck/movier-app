@@ -80,7 +80,7 @@ export default {
 
   &__input {
     font-family: inherit;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
     background-color: var(--color-white);
     border: 1px solid var(--color-grey-dark-3);
     padding: 0.4rem 2rem;
@@ -90,12 +90,21 @@ export default {
     margin-right: -2.25rem;
     margin-left: -1.25rem;
 
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:hover {
+      box-shadow: 0 0 0 50px var(--color-white) inset;
+      -webkit-box-shadow: 0 0 0 50px var(--color-white) inset; /* Change the color to your own background color */
+      -webkit-text-fill-color: var(--color-black-dark-3);
+    }
+
     &.invalid {
       border: 1px solid var(--color-secondary-dark);
     }
 
     &:focus {
       outline: none;
+      /*    background-color: var(--color-white); */
     }
 
     &::-webkit-input-placeholder {

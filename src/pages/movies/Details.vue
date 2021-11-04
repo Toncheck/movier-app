@@ -175,7 +175,7 @@ export default {
     text-decoration: none;
     border: none;
     background: transparent;
-    font-size: 1rem;
+    /* font-size: 1rem; */
     background-color: var(--color-secondary-dark);
     color: var(--color-white);
     width: 90%;
@@ -188,14 +188,14 @@ export default {
   &__additional-info {
     display: block;
     padding: 0.6rem 0;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
     color: var(--color-secondary-dark);
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-grey-dark-2);
   }
 
   &__production-companies {
-    font-size: 1rem;
+    /* font-size: 1rem; */
     color: var(--color-secondary-dark);
   }
 

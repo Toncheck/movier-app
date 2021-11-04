@@ -81,7 +81,8 @@ export default {
   }
 
   &__title {
-    font-size: 1.6rem;
+    font-size: 1rem;
+    /* font-size: 1.6rem; */
   }
 
   &__box {
@@ -135,7 +136,7 @@ export default {
   }
 
   &__label {
-    font-size: 1.4rem;
+    /* font-size: 1.4rem; */
     line-height: 1;
     display: flex;
     /* position: relative; */
