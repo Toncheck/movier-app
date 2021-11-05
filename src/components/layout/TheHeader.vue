@@ -71,7 +71,7 @@ export default {
 .user-nav {
   /* background-color: chartreuse; */
   align-self: flex-end;
-  /* font-size: 1.4rem; */
+  /* font-size: 1.2rem; */
 
   &__list {
     display: flex;
@@ -118,7 +118,7 @@ export default {
 
   &__title {
     color: var(--color-white);
-    /* font-size: 2rem; */
+    font-size: 2rem;
   }
 }
 /////////////////////////////////////////////////////////////////

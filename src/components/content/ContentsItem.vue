@@ -10,7 +10,7 @@
       <img v-else src="../../assets/img/no-poster.png" class="item__photo" />
     </div>
     <div class="item__data">
-      <p class="item__popularity">Popularity: {{ popularityFixed }}</p>
+      <h5 class="item__popularity">Popularity: {{ popularityFixed }}</h5>
       <h3 class="item__title">{{ title }}</h3>
       <small class="item__summary">{{ summary }}</small>
       <router-link
@@ -101,6 +101,10 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
+  &__data :not(:first-child) {
+    margin-top: 0.5rem;
+  }
+
   &__left-box {
     min-width: 15rem;
   }
@@ -114,12 +118,14 @@ export default {
 
   &__popularity {
     /* font-size: 0.8rem; */
+    font-weight: 500;
     color: var(--color-secondary-dark);
     text-transform: uppercase;
   }
 
   &__title {
-    margin-bottom: 0.5rem;
+    font-weight: 900;
+    font-size: 1.3rem;
   }
 
   &__summary {

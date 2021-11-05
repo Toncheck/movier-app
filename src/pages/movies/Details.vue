@@ -7,13 +7,13 @@
     <div class="details__aside">
       <search-bar></search-bar>
       <div class="details__aside--small-box">
-        <p class="details__additional-info">
+        <h5 class="details__additional-info">
           Popularity: {{ contentDetails.popularity }}
-        </p>
+        </h5>
       </div>
 
-      <h5 class="details__production-companies">Production companies:</h5>
-      <ul>
+      <h6 class="details__production-companies">Production companies:</h6>
+      <ul class="details__list">
         <li
           class="details__list-item"
           v-for="company in contentDetails.productionCompanies"
@@ -175,7 +175,6 @@ export default {
     text-decoration: none;
     border: none;
     background: transparent;
-    /* font-size: 1rem; */
     background-color: var(--color-secondary-dark);
     color: var(--color-white);
     width: 90%;
@@ -186,22 +185,25 @@ export default {
   }
 
   &__additional-info {
+    font-weight: 500;
     display: block;
     padding: 0.6rem 0;
-    /* font-size: 0.8rem; */
     color: var(--color-secondary-dark);
     text-transform: uppercase;
     border-bottom: 1px solid var(--color-grey-dark-2);
   }
 
   &__production-companies {
-    /* font-size: 1rem; */
+    margin-bottom: 0.4rem;
     color: var(--color-secondary-dark);
   }
 
   &__list-item {
-    list-style: none;
     font-weight: 700;
+
+    &:not(:last-child) {
+      margin-bottom: 0.3em;
+    }
   }
   &__summary {
     max-width: 60%;

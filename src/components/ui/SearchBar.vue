@@ -80,7 +80,7 @@ export default {
 
   &__input {
     font-family: inherit;
-    /* font-size: 1.2rem; */
+    font-size: 1.1rem;
     background-color: var(--color-white);
     border: 1px solid var(--color-grey-dark-3);
     padding: 0.4rem 2rem;

@@ -46,6 +46,7 @@ body {
     margin: 1rem 0;
     /* font-size: 0.8rem; */
     cursor: pointer;
+    font-size: 0.8rem;
   }
 
   &--orange {

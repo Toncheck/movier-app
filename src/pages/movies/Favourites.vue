@@ -15,7 +15,7 @@
     </ul>
     <div v-else class="favourites__no-content">
       <h3 class="favourites__no-content--title">
-        You do not have any faovurite saved.
+        You do not have any favourite saved.
       </h3>
       <p class="favourites__no-content--message">
         Make a search and pick your favourites.
@@ -40,7 +40,7 @@ export default {
   computed: {
     hasContent() {
       //provjeri ima li kakvog sadržaja u listi za favourites
-      return JSON.parse(localStorage.getItem("favourites")) || {};
+      return JSON.parse(localStorage.getItem("favourites"));
     },
   },
 
@@ -79,14 +79,12 @@ export default {
     flex-direction: column;
 
     &--title {
-      font-size: 1rem;
-      /* font-size: 4rem; */
+      font-size: 2rem;
       /* display: block; */
     }
 
     &--message {
-      font-size: 1rem;
-      /* font-size: 1.2rem; */
+      font-size: 1.2rem;
     }
   }
 

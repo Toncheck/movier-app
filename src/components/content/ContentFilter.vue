@@ -82,7 +82,6 @@ export default {
 
   &__title {
     font-size: 1rem;
-    /* font-size: 1.6rem; */
   }
 
   &__box {
@@ -125,26 +124,26 @@ export default {
     &::after {
       content: "";
       display: block;
-      height: 1.1rem;
-      width: 1.1rem;
+      height: 1.2rem;
+      width: 1.2rem;
       border-radius: 3px;
       background-color: var(--color-secondary-dark);
       transform: translate(0.1rem, 0.1rem);
-      opacity: 1;
+      opacity: 0;
       transition: opacity 0.2s;
     }
   }
 
   &__label {
-    /* font-size: 1.4rem; */
     line-height: 1;
     display: flex;
     /* position: relative; */
     cursor: pointer;
+    align-items: center;
   }
 
   &__checkbox:checked ~ &__label > &__button::after {
-    opacity: 0;
+    opacity: 1;
   }
 }
 </style>
