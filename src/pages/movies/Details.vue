@@ -140,6 +140,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.details__aside::v-deep .search__input {
+  width: 100%;
+  font-size: 0.5rem;
+}
+
 .details {
   display: flex;
   max-width: 70%;
@@ -178,10 +183,11 @@ export default {
     background-color: var(--color-secondary-dark);
     color: var(--color-white);
     width: 90%;
-    height: 3rem;
+    height: 2rem;
     border-radius: 50px;
     text-transform: uppercase;
     cursor: pointer;
+    font-size: 0.7rem;
   }
 
   &__additional-info {

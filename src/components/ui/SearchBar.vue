@@ -1,22 +1,24 @@
 <template>
   <!-- Block = search, Element = input -->
   <!-- SEARCH BAR -->
-  <form @submit.prevent="submitForm" class="search">
-    <input
-      type="text"
-      class="search__input"
-      :class="{ invalid: !searchInput.isValid }"
-      placeholder="Type to search"
-      id="searchinput"
-      v-model.trim.lazy="searchInput.val"
-      @blur="clearValidity('searchInput')"
-    />
-    <button class="search__button">
-      <svg class="search__icon">
-        <use xlink:href="@/assets/img/sprite.svg#icon-magnifying-glass"></use>
-      </svg>
-    </button>
-  </form>
+  <div>
+    <form @submit.prevent="submitForm" class="search">
+      <input
+        type="text"
+        class="search__input"
+        :class="{ invalid: !searchInput.isValid }"
+        placeholder="Type to search"
+        id="searchinput"
+        v-model.trim.lazy="searchInput.val"
+        @blur="clearValidity('searchInput')"
+      />
+      <button class="search__button">
+        <svg class="search__icon">
+          <use xlink:href="@/assets/img/sprite.svg#icon-magnifying-glass"></use>
+        </svg>
+      </button>
+    </form>
+  </div>
   <p class="search__warning" v-if="!formIsValid">
     Please fix the term you entered and search again!
   </p>
@@ -68,6 +70,11 @@ export default {
 ///////////////////////////////////////////////////////////////////////
 //SEARCH
 
+type1 {
+  margin-right: -2.25rem;
+  margin-left: -1.25rem;
+}
+
 .search {
   /* background-color: blue; */
   /* align-self: center; */
@@ -89,6 +96,10 @@ export default {
     transition: all 0.2s;
     margin-right: -2.25rem;
     margin-left: -1.25rem;
+
+    &--full-width {
+      width: 100%;
+    }
 
     &:-webkit-autofill,
     &:-webkit-autofill:focus,
