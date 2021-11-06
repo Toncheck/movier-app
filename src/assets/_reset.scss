@@ -152,21 +152,21 @@ html {
 
   /*  >600 */
   @include respond(phone) {
-    font-size: 125%; // 1rem = 16px/16px = 100%
+    font-size: 120%; // 1.2rem = x/16px = 120%
   }
 
   /*  >900 */
   @include respond(tab-port) {
-    font-size: 150%; // 1.25rem = 20/16px = 125%
+    font-size: 140%; // 1.4rem = x/16px = 140%
   }
 
   /* >1200 */
   @include respond(tab-land) {
-    font-size: 175%; // 1.5rem = 24/16px = 150%
+    font-size: 160%; // 1.6rem = x/16px = 160%
   }
 
   /*  >1800 */
   @include respond(big-desktop) {
-    font-size: 200%; // 1.75rem = 28px/16px = 175%
+    font-size: 180%; // 1.8rem = x/16px = 180%
   }
 }

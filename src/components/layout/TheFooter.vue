@@ -4,8 +4,13 @@
   </section>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+//fixed position of footer
 .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   background-color: var(--color-black-dark-3);
   color: var(--color-white);
   padding: 1rem 0;

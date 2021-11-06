@@ -2,7 +2,7 @@
   <li class="item">
     <div class="item__left-box">
       <img
-        v-if="!!imagePath"
+        v-if="!!posterPath"
         :src="imagePath"
         class="item__photo"
         alt="Movie cover"
@@ -22,6 +22,8 @@
         @click="saveDetailsAboutRecord"
         >Full synopsis<span>&gt;</span></router-link
       >
+      <p>Image path: {{ imagePath }}</p>
+      <p>Poster path: {{ posterPath }}</p>
     </div>
   </li>
 </template>
@@ -78,7 +80,17 @@ export default {
   },
   computed: {
     imagePath() {
-      return `https://image.tmdb.org/t/p/w200${this.posterPath}`;
+      //base url + file size + file path
+      /*  "poster_sizes": [
+      "w92",
+      "w154",
+      "w185",
+      "w342",
+      "w500",
+      "w780",
+      "original"
+    ] */
+      return `https://image.tmdb.org/t/p/w342${this.posterPath}`;
     },
     pagePath() {
       return `/details/${this.itemId}`;
