@@ -154,5 +154,8 @@ export default {
 
   resetFilter(context, data) {
     context.commit("resetFilter", data);
+    context.commit("saveCurrentPage", null);
+    context.commit("saveTotalPages", null);
+    context.commit("saveCurrentSearch", "");
   },
 };

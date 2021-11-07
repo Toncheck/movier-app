@@ -113,9 +113,16 @@ export default {
 <style lang="scss">
 .pagination-container {
   text-align: center;
-  padding: 1.5rem 0;
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
   border-top: 1px solid var(--color-grey-dark-3);
   margin-bottom: 2rem;
+
+  &--withpages {
+    :nth-child(-n + 2) {
+      margin-bottom: 0.2rem;
+    }
+  }
 
   &__pages {
     display: flex;

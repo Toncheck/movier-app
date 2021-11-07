@@ -79,7 +79,7 @@ export default {
   }
 
   &__no-content {
-    min-height: 58vh;
+    min-height: 50vh;
     /* text-align: center; */
     display: flex;
     align-items: center;
