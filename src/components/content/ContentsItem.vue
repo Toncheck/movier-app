@@ -22,8 +22,6 @@
         @click="saveDetailsAboutRecord"
         >Full synopsis<span>&gt;</span></router-link
       >
-      <p>Image path: {{ imagePath }}</p>
-      <p>Poster path: {{ posterPath }}</p>
     </div>
   </li>
 </template>

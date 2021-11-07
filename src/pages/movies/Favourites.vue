@@ -66,6 +66,7 @@ export default {
     list-style: none;
     margin: auto;
     margin-top: 1rem;
+    margin-bottom: 3rem;
     padding-top: 1rem;
     max-width: 70%;
   }
