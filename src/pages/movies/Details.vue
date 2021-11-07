@@ -4,23 +4,20 @@
       <div class="details__photo-box">
         <img :src="imagePath" class="details__photo" alt="Movie cover" />
       </div>
-
-      <small class="details__summary">{{ contentDetails.overview }}</small>
+      <small class="details__summary">{{ overview }}</small>
     </div>
     <div class="details__aside">
       <div class="details__search"><search-bar></search-bar></div>
 
       <div class="details__aside--small-box">
-        <h5 class="details__additional-info">
-          Popularity: {{ contentDetails.popularity }}
-        </h5>
+        <h5 class="details__additional-info">Popularity: {{ popularity }}</h5>
       </div>
 
       <h6 class="details__production-companies">Production companies:</h6>
       <ul class="details__list">
         <li
           class="details__list-item"
-          v-for="company in contentDetails.productionCompanies"
+          v-for="company in productionCompanies"
           :key="company"
         >
           {{ company }}
@@ -31,16 +28,14 @@
         <li class="details__list-item">Production company 5</li> -->
       </ul>
       <div class="details__aside--small-box">
-        <h5 class="details__additional-info">
-          Runtime: {{ contentDetails.runtime }}M
-        </h5>
+        <h5 class="details__additional-info">Runtime: {{ runtime }}</h5>
       </div>
       <ul>
         <li class="details__list-item">ŠTO JE OVO?</li>
       </ul>
       <div class="details__aside--small-box">
         <h5 class="details__additional-info">
-          Vote average: {{ contentDetails.voteAverage }}
+          Vote average: {{ voteAverage }}
         </h5>
       </div>
       <button class="details__button" @click="saveToFavourite">
@@ -68,6 +63,7 @@ export default {
       return this.$store.getters.loadDetailsId;
     }, */
 
+    //ako nema posterPatha, loadaj zamjensu sliku iz assets
     imagePath() {
       const posterPath = this.$store.getters["content/getContentDetails"]
         .posterPath;
@@ -75,6 +71,46 @@ export default {
       return posterPath
         ? `https://image.tmdb.org/t/p/w500${posterPath}`
         : require(`../../assets/img/no-poster.png`);
+    },
+
+    //computed property za svaki pojedini podatak zbog boljeg UX-a
+    overview() {
+      return (
+        this.$store.getters["content/getContentDetails"].overview ||
+        `Unfortunately we do not have overview data`
+      );
+    },
+
+    popularity() {
+      /* return Math.round(this.popularity * 10) / 10; */
+      return (
+        Math.round(
+          this.$store.getters["content/getContentDetails"].popularity * 10
+        ) / 10 || [`No data`]
+      );
+    },
+
+    productionCompanies() {
+      const companies = [
+        ...this.$store.getters["content/getContentDetails"].productionCompanies,
+      ];
+
+      return companies.length > 0 ? companies : ["No data"];
+      /* return this.$store.getters["content/getContentDetails"]
+        .productionCompanies; */
+    },
+
+    runtime() {
+      let temp = this.$store.getters["content/getContentDetails"].runtime;
+      return temp ? temp.toString() + `M` : `No data`;
+      /* return this.$store.getters["content/getContentDetails"].runtime; */
+    },
+
+    voteAverage() {
+      return (
+        this.$store.getters["content/getContentDetails"].voteAverage ||
+        "No data"
+      );
     },
 
     contentDetails() {
@@ -160,6 +196,7 @@ export default {
   max-width: 70%;
   margin: 0 auto;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 
   &__box {
     display: flex;
