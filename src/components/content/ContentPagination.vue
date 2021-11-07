@@ -115,6 +115,7 @@ export default {
   text-align: center;
   padding: 1.5rem 0;
   border-top: 1px solid var(--color-grey-dark-3);
+  margin-bottom: 2rem;
 
   &__pages {
     display: flex;

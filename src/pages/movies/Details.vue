@@ -1,11 +1,15 @@
 <template>
   <div class="details">
     <div class="details__box">
-      <img :src="posterPath" class="details__photo" alt="Movie cover" />
+      <div class="details__photo-box">
+        <img :src="imagePath" class="details__photo" alt="Movie cover" />
+      </div>
+
       <small class="details__summary">{{ contentDetails.overview }}</small>
     </div>
     <div class="details__aside">
-      <search-bar></search-bar>
+      <div class="details__search"><search-bar></search-bar></div>
+
       <div class="details__aside--small-box">
         <h5 class="details__additional-info">
           Popularity: {{ contentDetails.popularity }}
@@ -64,11 +68,13 @@ export default {
       return this.$store.getters.loadDetailsId;
     }, */
 
-    posterPath() {
-      const imagePath = this.$store.getters["content/getContentDetails"]
+    imagePath() {
+      const posterPath = this.$store.getters["content/getContentDetails"]
         .posterPath;
 
-      return `https://image.tmdb.org/t/p/w200${imagePath}`;
+      return posterPath
+        ? `https://image.tmdb.org/t/p/w500${posterPath}`
+        : require(`../../assets/img/no-poster.png`);
     },
 
     contentDetails() {
@@ -140,6 +146,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* .details__aside::v-deep h6 {
+  background-color: red;
+} */
+
 .details__aside::v-deep .search__input {
   width: 100%;
   font-size: 0.5rem;
@@ -149,19 +159,43 @@ export default {
   display: flex;
   max-width: 70%;
   margin: 0 auto;
-  margin-top: 3rem;
-  min-height: 70vh;
+  margin-top: 2rem;
 
   &__box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     max-width: 70%;
   }
 
+  &__photo-box {
+    align-self: center;
+    width: 80%;
+    height: auto;
+    margin-bottom: 1rem;
+
+    /*  >900 */
+    @include respond(tab-port) {
+      width: 50%;
+      height: auto;
+    }
+  }
+
   &__photo {
-    margin-bottom: 2rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    @include respond(tab-port) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__search {
+    align-self: stretch;
   }
 
   &__aside {
@@ -171,7 +205,7 @@ export default {
     align-items: flex-start;
 
     &--small-box {
-      min-width: 75%;
+      width: 100%;
       margin: 1rem 0;
     }
   }
@@ -188,6 +222,7 @@ export default {
     text-transform: uppercase;
     cursor: pointer;
     font-size: 0.7rem;
+    width: 100%;
   }
 
   &__additional-info {
@@ -212,7 +247,9 @@ export default {
     }
   }
   &__summary {
-    max-width: 60%;
+    max-width: 80%;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
   }
 }
 </style>
