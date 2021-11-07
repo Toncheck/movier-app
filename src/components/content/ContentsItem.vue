@@ -90,7 +90,7 @@ export default {
       "w780",
       "original"
     ] */
-      return `https://image.tmdb.org/t/p/w342${this.posterPath}`;
+      return `https://image.tmdb.org/t/p/w500${this.posterPath}`;
     },
     pagePath() {
       return `/details/${this.itemId}`;
