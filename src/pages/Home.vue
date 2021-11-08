@@ -80,7 +80,6 @@ export default {
 
   &__no-content {
     min-height: 50vh;
-    /* text-align: center; */
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -88,7 +87,6 @@ export default {
 
     &--title {
       font-size: 2rem;
-      /* display: block; */
     }
 
     &--message {
@@ -104,38 +102,4 @@ export default {
     background-color: var(--color-secondary);
   }
 }
-
-/* .list {
-  list-style: none;
-  margin: auto;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  max-width: 70%;
-}
-
-.title {
-  color: var(--color-primary);
-}
-
-.title-secondary {
-  background-color: var(--color-secondary);
-}
-
-.no-content {
-  min-height: 58vh;
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-
-  &__title {
-    font-size: 4rem;
-    
-  }
-
-  &__message {
-    font-size: 1.2rem;
-  }
-}  */
 </style>

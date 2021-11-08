@@ -22,6 +22,7 @@
         @click="saveDetailsAboutRecord"
         >Full synopsis<span>&gt;</span></router-link
       >
+      <p>{{ id }}</p>
     </div>
   </li>
 </template>

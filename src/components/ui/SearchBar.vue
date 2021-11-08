@@ -9,7 +9,8 @@
         :class="{ invalid: !searchInput.isValid }"
         placeholder="Type to search"
         id="searchinput"
-        v-model.trim.lazy="searchInput.val"
+        v-model.trim="searchInput.val"
+        autocomplete="off"
         @blur="clearValidity('searchInput')"
       />
       <button class="search__button">
@@ -60,6 +61,7 @@ export default {
         page: 1,
       };
       this.$store.dispatch("content/saveContent", searchData);
+      this.searchInput.val = "";
       this.$router.replace("/home");
     },
   },

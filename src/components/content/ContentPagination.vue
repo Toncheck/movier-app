@@ -1,8 +1,12 @@
 <template>
   <div class="pagination-container">
     <div class="pagination-container--withpages" v-if="currentPage">
-      <div>Your search: {{ currentSearch }}</div>
-      <p>We found more results - check them out</p>
+      <div class="pagination-container__current-search">
+        Your search: {{ currentSearch }}
+      </div>
+      <p class="pagination-container__message">
+        We found more results - check them out
+      </p>
       <ul class="pagination-container__pages">
         <li
           v-show="!firstPage"
@@ -115,13 +119,21 @@ export default {
   text-align: center;
   padding-top: 0.5rem;
   padding-bottom: 1.5rem;
-  border-top: 1px solid var(--color-grey-dark-3);
   margin-bottom: 2rem;
 
+  &__current-search {
+    margin: 0.2rem 0;
+  }
+
+  &__message {
+    margin-bottom: 0.2rem;
+  }
+
   &--withpages {
-    :nth-child(-n + 2) {
+    /* :nth-child(-n + 2) {
       margin-bottom: 0.2rem;
-    }
+    } */
+    border-top: 1px solid var(--color-grey-dark-3);
   }
 
   &__pages {
@@ -138,6 +150,7 @@ export default {
   }
 
   &--nopages {
+    margin-top: 2.5rem;
     color: var(--color-secondary-dark);
   }
 }
