@@ -57,7 +57,15 @@ export default {
     var(--color-grey-dark-1),
     var(--color-black-dark-3)
   );
-  padding: 0 15%;
+  padding: 0 0;
+
+  @include respond(phone-small) {
+    padding: 0 5%;
+  }
+
+  @include respond(phone) {
+    padding: 0 15%;
+  }
   /* flex-wrap: wrap; */
 
   /* & > * {
@@ -70,23 +78,74 @@ export default {
 
 .user-nav {
   /* background-color: chartreuse; */
-  align-self: flex-end;
+  align-self: center;
+  min-width: 100%;
+  margin-bottom: 1rem;
   /* font-size: 1.2rem; */
+
+  @include respond(tab-port) {
+    align-self: flex-end;
+    margin-bottom: 0;
+    min-width: 0;
+  }
 
   &__list {
     display: flex;
     list-style: none;
     /* text-align: center; */
+    justify-content: center;
+    min-width: 100%;
+    flex-direction: column;
+
+    @include respond(phone-small) {
+      flex-direction: row;
+    }
+
+    :first-child {
+      min-width: 40%;
+
+      @include respond(tab-port) {
+        min-width: 0;
+      }
+    }
+
+    &:last-child {
+      min-width: 60%;
+
+      @include respond(tab-port) {
+        min-width: 0;
+      }
+    }
+
+    @include respond(tab-port) {
+      justify-content: flex-start;
+    }
   }
 
   &__item {
     padding-top: 0.5rem;
+    text-align: center;
+    min-width: 50%;
+    border-bottom: 1px solid var(--color-grey-dark-2);
+
+    @include respond(tab-port) {
+      min-width: 0;
+      border-bottom: 0;
+    }
+  }
+
+  &__link:hover .user-nav__item {
+    background-color: red;
   }
 
   &__link {
     display: inline-block;
     padding: 0.5rem 2rem;
-    border-bottom: 1px solid var(--color-grey-dark-2);
+    border-bottom: 0;
+
+    @include respond(tab-port) {
+      border-bottom: 1px solid var(--color-grey-dark-2);
+    }
 
     &:link,
     &:visited {
@@ -98,7 +157,9 @@ export default {
     }
 
     &:hover {
-      border-bottom: 1px solid var(--color-secondary-dark);
+      @include respond(tab-port) {
+        border-bottom: 1px solid var(--color-secondary-dark);
+      }
     }
   }
 }
@@ -107,6 +168,11 @@ export default {
 //HEADER TEXT
 
 .header-text {
+  padding-left: 1rem;
+  @include respond(phone-small) {
+    padding-left: 0;
+  }
+
   :last-child {
     margin: 0.5rem 0;
   }
@@ -126,7 +192,10 @@ export default {
 
 .search-box {
   background-color: var(--color-white);
-  border-radius: 15px 15px 0 0;
   padding-top: 1rem;
+
+  @include respond(phone-small) {
+    border-radius: 15px 15px 0 0;
+  }
 }
 </style>

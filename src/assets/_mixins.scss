@@ -21,6 +21,13 @@ ORDER: Base . typography > general layout + grid > page layout > components
 /* Media queries rade tako da se primjenjuje zadnji napisani za ostvareni uvjet. Npr. ako je trenutna vrijednost dobivena od browsera width = 750 px, biti će ispunjen uvjet media query za tab-land  i za tab-port no primjenit će se samo za tab port jer je on zadnji napisan u skripti. S time se postiglo da radi baš kako treba . Ovdje je napisano po tom redoslijedu kako bi se uvijek moglo osvrnuti na redoslijed prilikom pisanja koda tamo gdje se pozivaju mixini za definirane media queryje*/
 
 @mixin respond($breakpoint) {
+  //witdh > 400px
+  @if $breakpoint == phone-small {
+    @media only screen and (min-width: $bp-phone-small) {
+      @content;
+    } //600px/16px=37.5em
+  }
+
   //witdh > 600px
   @if $breakpoint == phone {
     @media only screen and (min-width: $bp-phone) {

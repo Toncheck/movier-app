@@ -73,9 +73,13 @@ export default {
   &__list {
     list-style: none;
     margin: auto;
-    margin-top: 1rem;
-    padding-top: 1rem;
+
     max-width: 70%;
+
+    @include respond(tab-port) {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
   }
 
   &__no-content {

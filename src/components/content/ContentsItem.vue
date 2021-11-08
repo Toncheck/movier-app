@@ -22,7 +22,6 @@
         @click="saveDetailsAboutRecord"
         >Full synopsis<span>&gt;</span></router-link
       >
-      <p>{{ id }}</p>
     </div>
   </li>
 </template>
@@ -107,10 +106,16 @@ export default {
 .item {
   display: flex;
   /* flex: 0 0 90%; */
-  padding: 2rem 0;
+  padding-top: 1rem;
   border-top: 1px solid var(--color-grey-dark-3);
   justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
+
+  @include respond(tab-port) {
+    flex-direction: row;
+    padding: 2rem 0;
+  }
 
   &__data :not(:first-child) {
     margin-top: 0.5rem;
@@ -118,13 +123,23 @@ export default {
 
   &__left-box {
     min-width: 15rem;
+    margin-bottom: 1rem;
+    text-align: center;
+
+    @include respond(tab-port) {
+      min-width: 15rem;
+    }
+
+    @include respond(tab-port) {
+      margin-bottom: 0;
+    }
   }
 
   &__photo {
-    width: 13rem;
+    width: 70%;
     height: auto;
+    object-fit: cover;
     border-radius: 15px;
-    margin-right: 1rem;
   }
 
   &__popularity {

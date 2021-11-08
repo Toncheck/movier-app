@@ -90,6 +90,12 @@ export default {
     align-items: center;
     flex-wrap: wrap;
 
+    /* @include respond(phone) {
+      flex-direction: row;
+      padding-left: 0;
+      align-items: center;
+    }
+ */
     //Zašto mi ovo ne radi ovaj selektor?
     /* &:not(:last-child) {
       margin-right: 0.5rem;
@@ -103,6 +109,7 @@ export default {
     display: flex;
     cursor: pointer;
     /* position: relative; */
+    min-width: 9%;
   }
 
   &__checkbox {

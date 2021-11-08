@@ -194,11 +194,15 @@ export default {
 .details {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  max-width: 85%;
   margin: 0 auto;
   margin-top: 2rem;
   margin-bottom: 2rem;
   align-items: center;
+
+  @include respond(phone-small) {
+    max-width: 70%;
+  }
 
   @include respond(tab-port) {
     flex-direction: row;
@@ -218,13 +222,21 @@ export default {
 
   &__photo-box {
     align-self: center;
-    width: 80%;
+    width: 100%;
     height: auto;
     margin-bottom: 1rem;
 
+    @include respond(phone-small) {
+      width: 80%;
+    }
+
+    @include respond(phone) {
+      width: 55%;
+    }
+
     /*  >900 */
     @include respond(tab-port) {
-      width: 50%;
+      width: 55%;
       height: auto;
     }
   }
@@ -233,11 +245,12 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 15px;
 
     @include respond(tab-port) {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      /* object-fit: cover; */
     }
   }
 
@@ -252,11 +265,16 @@ export default {
     align-items: flex-start;
     margin-bottom: 2rem;
     align-self: center;
-    min-width: 80%;
+    min-width: 100%;
+
+    @include respond(phone-small) {
+      min-width: 80%;
+    }
 
     @include respond(tab-port) {
       max-width: 80%;
       min-width: 0;
+      align-self: flex-start;
     }
 
     &--small-box {
@@ -302,8 +320,11 @@ export default {
     }
   }
   &__summary {
-    max-width: 80%;
     padding-bottom: 1rem;
+
+    @include respond(phone-small) {
+      max-width: 80%;
+    }
 
     @include respond(tab-port) {
       margin-bottom: 3rem;
