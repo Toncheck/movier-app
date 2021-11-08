@@ -193,17 +193,27 @@ export default {
 
 .details {
   display: flex;
+  flex-direction: column;
   max-width: 70%;
   margin: 0 auto;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  align-items: center;
+
+  @include respond(tab-port) {
+    flex-direction: row;
+  }
 
   &__box {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    max-width: 70%;
+    max-width: 100%;
+
+    @include respond(tab-port) {
+      max-width: 70%;
+    }
   }
 
   &__photo-box {
@@ -240,6 +250,14 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: 2rem;
+    align-self: center;
+    min-width: 80%;
+
+    @include respond(tab-port) {
+      max-width: 80%;
+      min-width: 0;
+    }
 
     &--small-box {
       width: 100%;
@@ -286,7 +304,10 @@ export default {
   &__summary {
     max-width: 80%;
     padding-bottom: 1rem;
-    margin-bottom: 3rem;
+
+    @include respond(tab-port) {
+      margin-bottom: 3rem;
+    }
   }
 }
 </style>
