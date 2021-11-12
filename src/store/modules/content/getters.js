@@ -6,7 +6,7 @@ export default {
     return state.content && state.content.length > 0;
   }, */
 
-  //izvuci imena svih postojećih filtera s vuex-a koliko god ih ima
+  //izvuci imena svih postojećih filtera s vuex-a koliko god ih ima. Imena su jednaka keyevima.
   getFilterNames(state) {
     return Object.keys(state.filters);
   },
@@ -45,9 +45,13 @@ export default {
     console.log(Object.entries(state.filters));
     console.log("========================"); */
 
+    // Dohvati za sve id-eve koji su označeni filterom. Znači kreira se za svaki item Object u koji je izgleda id: 11331 , mediaType: 'movie', overview: 'DAniel Craig candidly reflects on his ...', popularity: 19.844, posterPath: '/ksfhadhlfasflasfasl', title: 'Being James Bond'. Upravo taj sadržaj će koristiti pozivanjem ovog gettersa koristiti Page home koji će te informacije kroz props slati komponenti ContentsItem koja služi za prikaz podataka o pojedinom Itemu.
+
     const result = movieIds.map((movieId) => {
       return { id: movieId, ...state.moviesById[movieId] };
     });
+
+    /*  console.log(result); */
 
     /* const result = state.moviesById.map((movie) => {
       const movieId = Object.keys(movie)[0];

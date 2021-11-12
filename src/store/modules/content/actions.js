@@ -13,17 +13,21 @@ export default {
       //error ...
     }
 
-    /* console.log({ ...responseData }); */
+    console.log({ ...responseData });
 
     //raspakiraj podatke dobivene s API-ja
-    const { page, results, total_pages, total_results } = responseData;
+    const { page, results, total_pages } = responseData;
 
-    console.log(total_results);
+    /* console.log(total_results); */
     //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
 
     const moviesById = {};
     const moviesByPage = {};
     const filters = {};
+
+    console.log(moviesByPage);
+    console.log(moviesByPage.page);
+    console.log(moviesByPage[page]);
 
     // for (const movie of results)
     results.forEach((movie) => {
@@ -35,13 +39,13 @@ export default {
         mediaType: movie.media_type,
       };
 
-      /*  console.log(moviesByPage[page] || []); */
       moviesByPage[page] = moviesByPage[page] || [];
       /* if (!moviesByPage[page]) {
         moviesByPage[page] = [];
       } */
       moviesByPage[page].push(movie.id);
 
+      /* filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.  */
       filters[movie.media_type] = filters[movie.media_type] || {};
       filters[movie.media_type].checked = true;
       filters[movie.media_type].movieIds =
@@ -49,8 +53,8 @@ export default {
       filters[movie.media_type].movieIds.push(movie.id);
     });
 
-    /* console.log(page, results, total_pages, total_results); */
-
+    console.log(filters);
+    // Spremi podatke u tri različita Objecta
     context.commit("saveMoviesById", moviesById);
     context.commit("saveMoviesByPage", moviesByPage);
     context.commit("saveFilters", filters);
@@ -63,26 +67,9 @@ export default {
 
     //Spremi podatak o trenutnom searchu
     context.commit("saveCurrentSearch", data.search);
-
-    /* console.log("moviesByid:");
-    console.log(moviesById); */
-    /* console.log("moviesByPage");
-    console.log(moviesByPage); */
-    /* console.log("filters");
-    console.log(filters); */
-
-    //Spremi lastSearch, a to je pojam koji je upisan u searchBar kako bi se mogao eventualno kasnije raditi fetch podataka iz ContentPagination componenta za nove stranice.
-    //context.commit("saveLastSearch", data);
-
-    //Spremi loadani sadržaj s API-ja na VUEX -> prepakirani responseData sa API-ja
-    //context.commit("saveContent", data);
   },
-  //pozivanje mutationa za spremanje id-a
-  //pozivanje mutationa za spremanje ostalih podataka koji dođu ...
 
-  ///////////////////////////////////////////////////////////////////////////////////////
-  /* ACTION ZA UPDEJTANJE FILTERA NA VUEXU */
-
+  // Action za updejtanje filtera
   updateFilters(context, data) {
     context.commit("updateFilters", data);
   },
@@ -152,6 +139,7 @@ export default {
     context.commit("saveContentDetails", movieDetails);
   },
 
+  //Action za resetiranje filtera
   resetFilter(context, data) {
     context.commit("resetFilter", data);
     context.commit("saveCurrentPage", null);
