@@ -1,4 +1,37 @@
 export default {
+  ////////////////////////////////////////////////////////////////////////NEW//////////////////////////////////////////////////////////////////////////////////////////
+
+  // Action za dohvaćanje podataka prema searchu s API-ja
+
+  async getContentAPI(context, data) {
+    // Resetiraj podatke za currentContent i curentContentList jer je napravljen novi search
+    context.commit("saveCurrentContent", {});
+    context.commit("saveCurrentContentList", []);
+
+    // Dohvati podatke s API-ja
+
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data.search}&page=${data.page}&include_adult=false`,
+      { method: "GET" }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      //error ...
+    }
+
+    /* console.log(responseData); */
+
+    // Pozovi mutation koji sprema dohvaćene podatke na Vuex u currentContent Object
+    context.commit("saveCurrentContent", responseData);
+
+    // Pozovi mutation koji sprema dohvaćene podatke na Vuex u listu svih do sada dohvaćenih currentContenta za navedeni pojam
+    context.commit("saveCurrentContentList", responseData);
+  },
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////
+
   //ACTION za dobavu podataka nakon searcha u SearchBar
   //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
   async saveContent(context, data) {
@@ -13,9 +46,40 @@ export default {
       //error ...
     }
 
-    console.log({ ...responseData });
+    /* Podaci dođu u obliku
+    {page: 1,
+    results: [ 
+        {
+        "poster_path": null,
+        "popularity": 1,
+        "id": 24511,
+        "overview": "",
+        "backdrop_path": null,
+        "vote_average": 0,
+        "media_type": "tv",
+        "first_air_date": "",
+        "origin_country": ["GB"],
+        "genre_ids": [],
+        "original_language": "en",
+        "vote_count": 0,
+        "name": "Bradley",
+        "original_name": "Bradley"
+        }, 
+        {...},
+        {...}, ... ],
+    total_results: 382,
+    total_pages: 20
+    } */
 
+    /* console.log({ ...responseData }); */
+
+    ///////////////////////////////////////////////// NOVI KOD  ///////////////////////////////////////////////////////////////////////////////////
+
+    // pospremi podatke onakve kakvi su došli direktno na vuex u neku listu
+
+    ///////////////////////////////////////////////// STARI KOD ///////////////////////////////////////////////////////////////////////////////////
     //raspakiraj podatke dobivene s API-ja
+
     const { page, results, total_pages } = responseData;
 
     /* console.log(total_results); */
@@ -55,8 +119,11 @@ export default {
 
     console.log(filters);
     // Spremi podatke u tri različita Objecta
+    console.log(moviesById);
     context.commit("saveMoviesById", moviesById);
+    console.log(moviesByPage);
     context.commit("saveMoviesByPage", moviesByPage);
+    console.log(filters);
     context.commit("saveFilters", filters);
 
     //Spremi podatake o trenutnoj stranici za paginaciju
@@ -79,6 +146,7 @@ export default {
     context.commit("saveDetailsAboutRecord", data);
   },
 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* Action za fetch podataka za details page */
   async loadContentDetails(context, data) {
     const response = await fetch(

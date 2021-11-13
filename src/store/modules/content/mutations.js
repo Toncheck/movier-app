@@ -1,4 +1,17 @@
 export default {
+  ////////////////////////////////////////////////////////////////////NEW//////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Mutation za spremanje dohvaćenih podataka s API-ja u currentContent za trenutni search pojam
+  saveCurrentContent(state, payload) {
+    state.currentContent = payload;
+  },
+
+  // Mutation za spremanje dohvaćenih podataka u listu svih do sada dohvaćenih podataka s API-ja za currentContent za trenutni search pojam
+  saveCurrentContentList(state, payload) {
+    state.currentContentList.push(payload);
+  },
+
+  /////////////////////////////////////////////////////////////////////OLD/////////////////////////////////////////////////////////////////////////////////////////////
   //Mutation za spremanje podataka o itemima(filmovi, serije itd. u listu).
   saveContent(state, payload) {
     state.content.push(payload);

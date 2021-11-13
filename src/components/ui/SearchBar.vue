@@ -9,7 +9,7 @@
         :class="{ invalid: !searchInput.isValid }"
         placeholder="Type to search"
         id="searchinput"
-        v-model.trim="searchInput.val"
+        v-model.trim="searchInput.value"
         autocomplete="off"
         @blur="clearValidity('searchInput')"
       />
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       searchInput: {
-        val: "",
+        value: "",
         isValid: true,
       },
       formIsValid: true,
@@ -43,25 +43,38 @@ export default {
     validateForm() {
       this.formIsValid = true;
       this.searchInput.isValid = true;
-      if (this.searchInput.val === "") {
+      if (this.searchInput.value === "") {
         this.searchInput.isValid = false;
         this.formIsValid = false;
       }
     },
     submitForm() {
+
+      /* Validacija unesenog pojma */
       this.validateForm();
 
       if (!this.formIsValid) {
         return;
       }
-      /*Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. Search Bar je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha. Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti*/
+     
+     /* Pozovi action za dohvaćanje podataka s API-ja te izbriši search pojam*/
 
       const searchData = {
-        search: this.searchInput.val,
+        search: this.searchInput.value,
         page: 1,
       };
+
+
+      /* OLD */
       this.$store.dispatch("content/saveContent", searchData);
-      this.searchInput.val = "";
+
+      /* NEW -> dispatchaj action koji vuče podatke s API-ja*/
+      this.$store.dispatch('content/getContentAPI', searchData);
+
+      this.searchInput.value = "";
+
+      /*Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. Search Bar je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha. Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti*/
+      
       this.$router.replace("/home");
     },
   },
