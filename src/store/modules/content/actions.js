@@ -73,13 +73,6 @@ export default {
 
     /* console.log({ ...responseData }); */
 
-    ///////////////////////////////////////////////// NOVI KOD  ///////////////////////////////////////////////////////////////////////////////////
-
-    // pospremi podatke onakve kakvi su došli direktno na vuex u neku listu
-
-    ///////////////////////////////////////////////// STARI KOD ///////////////////////////////////////////////////////////////////////////////////
-    //raspakiraj podatke dobivene s API-ja
-
     const { page, results, total_pages } = responseData;
 
     /* console.log(total_results); */
@@ -89,6 +82,7 @@ export default {
     const moviesByPage = {};
     const filters = {};
 
+    console.log(page);
     console.log(moviesByPage);
     console.log(moviesByPage.page);
     console.log(moviesByPage[page]);
@@ -103,11 +97,14 @@ export default {
         mediaType: movie.media_type,
       };
 
+      /* Stvori key imena prema pageu koji je dohvaćen. Ako taj key nema nikakvu vrijednost onda mu zadaj da je to prazna lista */
       moviesByPage[page] = moviesByPage[page] || [];
       /* if (!moviesByPage[page]) {
         moviesByPage[page] = [];
       } */
+      /* Dodaj id za prvi movie u gore kreirani Array */
       moviesByPage[page].push(movie.id);
+      console.log(moviesByPage);
 
       /* filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.  */
       filters[movie.media_type] = filters[movie.media_type] || {};

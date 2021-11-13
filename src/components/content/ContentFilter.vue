@@ -1,8 +1,12 @@
 <template>
-  <div class="filter" v-if="data">
+  <div class="filter" v-if="hasFilters">
     <h2 class="filter__title">Filter your search!</h2>
     <div class="filter__box">
-      <span class="filter__option" v-for="filter in filterNames" :key="filter">
+      <span
+        class="filter__option"
+        v-for="filter in filterNamesNew"
+        :key="filter"
+      >
         <input
           type="checkbox"
           class="filter__checkbox"
@@ -21,6 +25,10 @@
       </span>
     </div>
   </div>
+  <div>{{ filterNames }}</div>
+  <div>{{ hasFilters }}</div>
+  <div>{{ filterNamesNew }}</div>
+  <div>{{ data }}</div>
 </template>
 
 <script>
@@ -34,11 +42,13 @@ export default {
     };
   },
   methods: {
-    initializeFilters() {
-      this.filterNames.forEach((element) => {
+    // METHOD NOT USED
+    /* initializeFilters() {
+      this.filterNamesNew.forEach((element) => {
         this.filters[element] = this.filters[element] || {};
       });
-    },
+      console.log(this.filters);
+    }, */
 
     setFilter(event) {
       //Ovo je zu dobivanje id-a iz eventa
@@ -51,11 +61,26 @@ export default {
         mediaType: inputId,
         checked: isActive,
       };
+      console.log(data);
 
       this.$store.dispatch("content/updateFilters", data);
     },
   },
   computed: {
+    /////////////////////////////////////////////////////////////////////////////NEW///////////////////////////////////////////////////////////////////////////////////
+
+    // Computed property za dobivanje svih mogućih filtera prema media_type u currentContent
+    filterNamesNew() {
+      //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
+      return this.$store.getters["content/createFilterNames"];
+    },
+
+    hasFilters() {
+      return this.filterNamesNew.length > 0;
+    },
+
+    /////////////////////////////////////////////////////////////////////////////OLD///////////////////////////////////////////////////////////////////////////////////
+
     filterNames() {
       //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
       return this.$store.getters["content/getFilterNames"];
