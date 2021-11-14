@@ -38,7 +38,7 @@ export default {
   methods: {
     //metoda koja se poziva ako je kliknuto na searc gore u headeru pa da bi se maknuo filter sa stranice
     resetFilter() {
-      this.$store.dispatch("content/resetFilter", {});
+      this.$store.dispatch("content/resetFilter", []);
     },
   },
 };

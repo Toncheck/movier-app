@@ -1,7 +1,7 @@
 export default {
   ////////////////////////////////////////////////////////////////////////NEW//////////////////////////////////////////////////////////////////////////////////////////
 
-  // Action za dohvaćanje podataka prema searchu s API-ja
+  // ACTION za dohvaćanje podataka prema searchu s API-ja
 
   async getContentAPI(context, data) {
     // Resetiraj podatke za currentContent i curentContentList jer je napravljen novi search
@@ -28,6 +28,41 @@ export default {
 
     // Pozovi mutation koji sprema dohvaćene podatke na Vuex u listu svih do sada dohvaćenih currentContenta za navedeni pojam
     context.commit("saveCurrentContentList", responseData);
+
+    //Kreiranje liste svih filtera prema media_type za svaki rezultat iz results. Zadatkom je zadano postavljanje samo prvog na kojeg se naišlo u status iscActive: true.
+    /* activeFilters na Vuex je predviđen ovakvog izgleda: [ {mediaType: "tv", isActive: true }, {mediaType: "movie", isActive: false}, {mediaType: "person", isActive: false}, ...] */
+
+    //Raspakiraj results
+    const { results } = responseData;
+    //Kreiraj prazan Array
+    const filters = [];
+
+    //Izvuci media_type od svakog rezultata(itema)
+    results.forEach((item) => {
+      filters.push(item.media_type);
+    });
+
+    // Izvuci uniqe vrijednosti
+    const uniqeFilters = [...new Set(filters)];
+
+    //Kreiraj Array u kojem će biti za prvi element isActive = true, a za ostale false
+    const filtersFirstActive = [];
+    uniqeFilters.forEach((item, index) => {
+      filtersFirstActive[index] = filtersFirstActive[index] || {};
+      filtersFirstActive[index].mediaType = item;
+      filtersFirstActive[index].isActive = false;
+      filtersFirstActive[0].isActive = true;
+    });
+
+    // Pozovi mutation za spremanje novog stanja na Vuexu
+    context.commit("initializeActiveFilters", filtersFirstActive);
+    //
+  },
+
+  // ACTION za updejtanje activeFilters
+
+  updateFiltersNew(context, data) {
+    context.commit("updateFiltersNew", data);
   },
 
   ////////////////////////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////
@@ -133,18 +168,18 @@ export default {
     context.commit("saveCurrentSearch", data.search);
   },
 
-  // Action za updejtanje filtera
+  // ACTION za updejtanje filtera
   updateFilters(context, data) {
     context.commit("updateFilters", data);
   },
 
-  /* Action za pospremanje id-a za detailsPage*/
+  /* ACTION za pospremanje id-a za detailsPage*/
   saveDetailsAboutRecord(context, data) {
     context.commit("saveDetailsAboutRecord", data);
   },
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /* Action za fetch podataka za details page */
+  /* ACTION za fetch podataka za details page */
   async loadContentDetails(context, data) {
     const response = await fetch(
       `https://api.themoviedb.org/3/${data.mediaType}/${data.itemId}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
@@ -204,9 +239,13 @@ export default {
     context.commit("saveContentDetails", movieDetails);
   },
 
-  //Action za resetiranje filtera
+  ////////////////////////////////////////////////////UPDATED////////////////////////////////////////
+  //ACTION za resetiranje filtera
   resetFilter(context, data) {
+    //DA
     context.commit("resetFilter", data);
+
+    //MOŽDA
     context.commit("saveCurrentPage", null);
     context.commit("saveTotalPages", null);
     context.commit("saveCurrentSearch", "");

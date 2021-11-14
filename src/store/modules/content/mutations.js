@@ -11,6 +11,28 @@ export default {
     state.currentContentList.push(payload);
   },
 
+  // Mutation za inicijalizaciju filtera. U početku je to samo prvi media_type koji je pronađen u responseData npr. activeFilters = [tv]
+  initializeActiveFilters(state, payload) {
+    state.activeFilters = payload;
+    console.log(state.activeFilters);
+  },
+
+  // Mutation za update activeFilters prema onome što je kliknuto na pojedinom filteru u ContentFilter
+  updateFiltersNew(state, payload) {
+    /* console.log(payload); */
+    /* console.log("activeFilters prije promjene: ", state.activeFilters); */
+
+    // Nađi index za mediaType čiji se status promijenio
+    const index = state.activeFilters.findIndex(
+      (obj) => obj.mediaType === payload.mediaType
+    );
+    /* console.log(state.activeFilters[index]); */
+
+    // Promijeni isActive status
+    state.activeFilters[index].isActive = payload.checked;
+    /* console.log("activeFilters nakon promjene: ", state.activeFilters); */
+  },
+
   /////////////////////////////////////////////////////////////////////OLD/////////////////////////////////////////////////////////////////////////////////////////////
   //Mutation za spremanje podataka o itemima(filmovi, serije itd. u listu).
   saveContent(state, payload) {
@@ -46,10 +68,6 @@ export default {
     state.contentDetails = payload;
   },
 
-  resetFilter(state, payload) {
-    state.filters = payload;
-  },
-
   //Pagination
   saveCurrentPage(state, payload) {
     state.currentPage = payload;
@@ -61,5 +79,10 @@ export default {
 
   saveCurrentSearch(state, payload) {
     state.currentSearch = payload;
+  },
+
+  ////////////////////////////////////////UPDATED/////////////////////////////////////
+  resetFilter(state, payload) {
+    state.activeFilters = payload;
   },
 };

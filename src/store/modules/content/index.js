@@ -13,6 +13,9 @@ export default {
       currentContentList: [],
 
       // Podaci za filtriranje sadržaja
+      /* Oblik podatkaa filters = [ { checked: "true", mediaType: "tv" }, {...}, {...}, ... ] */
+
+      //
       activeFilters: [],
 
       // Podaci za paginaciju

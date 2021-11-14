@@ -5,19 +5,19 @@
       <span
         class="filter__option"
         v-for="filter in filterNamesNew"
-        :key="filter"
+        :key="filter.mediaType"
       >
         <input
           type="checkbox"
           class="filter__checkbox"
-          :id="filter"
-          @change="setFilter"
-          checked
+          :id="filter.mediaType"
+          @change="setFilterNew"
+          :checked="filter.isActive"
         />
 
-        <label class="filter__label" :for="filter">
+        <label class="filter__label" :for="filter.mediaType">
           <span class="filter__button"></span>
-          <div class="filter__text">{{ filter }}</div>
+          <div class="filter__text">{{ filter.mediaType }}</div>
         </label>
 
         <!-- <span class="filter__button"></span>
@@ -50,6 +50,27 @@ export default {
       console.log(this.filters);
     }, */
 
+    /////////////////////////////////////////////////////////////////////////////NEW///////////////////////////////////////////////////////////////////////////////////
+    setFilterNew(event) {
+      // Dohvati ime filtera čija je vrijednost promijenjena
+      const inputId = event.target.id;
+
+      //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
+      const isActive = event.target.checked;
+
+      /* const data = { [inputId]: isActive }; */
+
+      const data = {
+        mediaType: inputId,
+        checked: isActive,
+      };
+      console.log(data);
+      // Dispatchaj action i pošalji podatak oblika npr. {tv:true}
+      this.$store.dispatch("content/updateFiltersNew", data);
+    },
+
+    /////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////
+
     setFilter(event) {
       //Ovo je zu dobivanje id-a iz eventa
       const inputId = event.target.id;
@@ -66,6 +87,7 @@ export default {
       this.$store.dispatch("content/updateFilters", data);
     },
   },
+
   computed: {
     /////////////////////////////////////////////////////////////////////////////NEW///////////////////////////////////////////////////////////////////////////////////
 

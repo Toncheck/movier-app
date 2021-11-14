@@ -4,15 +4,14 @@ export default {
   // Stvori imena filtera prema media_type iz podataka u currentContent
 
   createFilterNames(state) {
-    const { results = [] } = state.currentContent;
-    const filters = [];
-
-    results.forEach((item) => {
-      filters.push(item.media_type);
+    /* //DRUGA IDEJA PREKO LISTE OBJEKATA
+    const filterNames = [];
+    // Prođi kroz Array of Objects activeFilters koja se nalazi na Vuexu i izvadi samo mediaType koji će biti ime FIltera pojedinog
+    state.activeFIlters.array.forEach((element, index) => {
+      filterNames[index] = element.mediaType;
     });
-
-    // Izvuci uniqe vrijednosti
-    return [...new Set(filters)];
+    return filterNames; */
+    return state.activeFilters;
   },
 
   //////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////////
