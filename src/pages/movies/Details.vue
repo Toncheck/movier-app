@@ -116,14 +116,18 @@ export default {
     contentDetails() {
       return this.$store.getters["content/getContentDetails"];
     },
-    getFilters() {
-      return this.$store.getters["content/getFilters"];
-    },
+
+    ////////// Dohvati pohranjeni mediaType s Vuexa kako bi se mogao napraviti fetch sadržaja za ovaj Details page
     mediaType() {
       return this.$store.getters["content/getMediaType"];
     },
+
+    getFilters() {
+      return this.$store.getters["content/getFilters"];
+    },
   },
   methods: {
+    ////////// Metoda za loadanje sadržaja za ovaj Details page
     loadContentDetails() {
       const data = {
         itemId: this.$route.params.id,
@@ -136,7 +140,7 @@ export default {
 
       //Prolazak kroz sve vrijednosti za objekt filters. Ako je u određenom filteru pronađen id znači da imamo media_type
 
-      //Ovo je bila prva ideja, uzeti media type iz filters. I to radi ako se na details page skoči s home gdje je su bili prikazani itemi. No ako se na details page skoči s favourites, a prije toga nijedan search nije bio napravljen, neće se moći dohvatiti media type. Zbog toga je potrebno utrpati i media type kao podatak koji putuje zajedno sa svim podacima o filmu.
+      //Ovo je bila prva ideja, uzeti media type iz filters. I to radi ako se na details page skoči s home gdje je su bili prikazani itemi. No ako se na details page skoči s favourites, a prije toga nijedan search nije bio napravljen, neće se moći dohvatiti media type. Zbog toga je potrebno utrpati i media type kao podatak koji putuje zajedno sa svim podacima o itemu.
       for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
         // console.log(filterValue.movieIds[0], typeof filterValue.movieIds[0]);
         if (filterValue.movieIds.includes(+data.itemId)) {

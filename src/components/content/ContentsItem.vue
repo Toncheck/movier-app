@@ -67,7 +67,7 @@ export default {
     };
   },
   methods: {
-    //metoda koja služi za pospremanje podatka o tome koji je id itema na kojem je kliknuto next. To je potrebno kako bi se mogao pronaći media_type i onda kasnije kreirati path za fetch s API-ja
+    //metoda koja služi za pospremanje podatka o tome koji je id itema na kojem je kliknuto Full synopsis. To je potrebno kako bi se mogao pronaći media_type i onda kasnije kreirati path za fetch s API-ja
     saveDetailsAboutRecord() {
       //spremi id na vuex
       this.$store.dispatch("content/saveDetailsAboutRecord", {

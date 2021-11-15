@@ -1,16 +1,17 @@
 export default {
   //////////////////////////////////////////////////////////////////////////////NEW//////////////////////////////////////////////////////////////////////////////////////
 
-  // Stvori imena filtera prema media_type iz podataka u currentContent
-
+  ////////// Dohvati Array activeFilters
   createFilterNames(state) {
     return state.activeFilters;
   },
 
+  ////////// Dohvati Object currentContent
   getCurrentContent(state) {
     return state.currentContent;
   },
 
+  ////////// Filtriraj dohvaćeni sadržaj currentContent sukladno odabranim filterima na komponenti ContentFilter
   getFilteredCurrentContent(_, getters) {
     const activeFilters = getters.createFilterNames;
 
@@ -30,27 +31,35 @@ export default {
     return filteredCurrentContent;
   },
 
+  ////////// Provjeri ima li sadržaja za currentSearch
   hasContent(_, getters) {
     const originalContent = getters.getCurrentContent;
     return originalContent.results.length > 0;
   },
 
+  //////////////////////////////////////////////////////////////////////////////OLD BUT USEED//////////////////////////
+
+  ////////// Dohvati mediaType kako bi se mogao napraviti fetch za Details page
+  getMediaType(state) {
+    return state.detailsAboutRecord.mediaType;
+  },
+
   //////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////////
 
-  content(state) {
+  /* content(state) {
     return state.content;
-  },
+  }, */
   /* hasContent(state) {
     return state.content && state.content.length > 0;
   }, */
 
   //izvuci imena svih postojećih filtera s Vuex-a koliko god ih ima. Imena su jednaka keyevima.
-  getFilterNames(state) {
+  /*  getFilterNames(state) {
     return Object.keys(state.filters);
-  },
+  }, */
 
   //izvuci sadržaj s vuexa
-  getContentTwo(state) {
+  /* getContentTwo(state) {
     const movieIds = [];
 
     for (const filterValue of Object.values(state.filters)) {
@@ -64,9 +73,9 @@ export default {
     //console.log(movieIds.map((movieId) => state.moviesById[movieId]));
 
     return movieIds.map((movieId) => state.moviesById[movieId]);
-  },
+  }, */
 
-  getContent(state) {
+  /* getContent(state) {
     //kreiraj prazan array koji će sadržavati samo movieIds za filmove koji su označeni filterom
     const movieIds = [];
 
@@ -77,11 +86,11 @@ export default {
       }
     }
     // console.log(movieIds);
-    /* console.log("========================");
-    console.log(Object.keys(state.filters));
-    console.log(Object.values(state.filters));
-    console.log(Object.entries(state.filters));
-    console.log("========================"); */
+    // console.log("========================");
+    // console.log(Object.keys(state.filters));
+    // console.log(Object.values(state.filters));
+    // console.log(Object.entries(state.filters));
+    // console.log("========================");
 
     // Dohvati za sve id-eve koji su označeni filterom. Znači kreira se za svaki item Object u koji je izgleda id: 11331 , mediaType: 'movie', overview: 'DAniel Craig candidly reflects on his ...', popularity: 19.844, posterPath: '/ksfhadhlfasflasfasl', title: 'Being James Bond'. Upravo taj sadržaj će koristiti pozivanjem ovog gettersa koristiti Page home koji će te informacije kroz props slati komponenti ContentsItem koja služi za prikaz podataka o pojedinom Itemu.
 
@@ -89,15 +98,15 @@ export default {
       return { id: movieId, ...state.moviesById[movieId] };
     });
 
-    /*  console.log(result); */
+    //  console.log(result);
 
-    /* const result = state.moviesById.map((movie) => {
-      const movieId = Object.keys(movie)[0];
-      return { id: movieId, ...movie[movieId] };
-    });
-    */
+    // const result = state.moviesById.map((movie) => {
+    //   const movieId = Object.keys(movie)[0];
+    //   return { id: movieId, ...movie[movieId] };
+    // });
+   
     return result;
-  },
+  }, */
 
   /* hasContent(_, getters) {
     const movies = getters.getContent;
@@ -105,15 +114,12 @@ export default {
   }, */
 
   getFilters(state) {
+    console.log(state.filters);
     return state.filters;
   },
 
   getContentDetails(state) {
     return state.contentDetails;
-  },
-
-  getMediaType(state) {
-    return state.detailsAboutRecord.mediaType;
   },
 
   getCurrentPage(state) {

@@ -1,7 +1,7 @@
 export default {
   ////////////////////////////////////////////////////////////////////////NEW//////////////////////////////////////////////////////////////////////////////////////////
 
-  // ACTION za dohvaćanje podataka prema searchu s API-ja
+  ////////// ACTION za dohvaćanje podataka prema searchu s API-ja
 
   async getContentAPI(context, data) {
     // Dohvati podatke s API-ja
@@ -17,7 +17,7 @@ export default {
       //error ...
     }
 
-    /* console.log(responseData); */
+    // console.log(responseData);
 
     // Pozovi mutation koji sprema dohvaćene podatke na Vuex u currentContent Object
     context.commit("saveCurrentContent", responseData);
@@ -54,8 +54,7 @@ export default {
     context.commit("initializeActiveFilters", filtersFirstActive);
     //
   },
-
-  // ACTION za updejtanje activeFilters
+  ////////// ACTION za updejtanje activeFilters
 
   updateFiltersNew(context, data) {
     context.commit("updateFiltersNew", data);
@@ -101,8 +100,6 @@ export default {
     total_results: 382,
     total_pages: 20
     } */
-
-    /* console.log({ ...responseData }); */
 
     const { page, results, total_pages } = responseData;
 
@@ -156,19 +153,18 @@ export default {
     //Spremi podatak o trenutnom searchu
     context.commit("saveCurrentSearch", data.search);
   },
-
-  // ACTION za updejtanje filtera
-  updateFilters(context, data) {
+  ////////// ACTION za updejtanje filtera
+  /* updateFilters(context, data) {
     context.commit("updateFilters", data);
-  },
-
-  /* ACTION za pospremanje id-a za detailsPage*/
+  }, */
+  ////////// ACTION za pospremanje id-a za detailsPage
   saveDetailsAboutRecord(context, data) {
     context.commit("saveDetailsAboutRecord", data);
   },
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /* ACTION za fetch podataka za details page */
+  //////////////////////////////////////////////////////////////UPDATED//////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////// ACTION za fetch podataka za details page
   async loadContentDetails(context, data) {
     const response = await fetch(
       `https://api.themoviedb.org/3/${data.mediaType}/${data.itemId}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
@@ -181,32 +177,7 @@ export default {
       //error ...
     }
 
-    /* console.log({ ...responseData }); */
-
     const movieLoadedDetails = { ...responseData };
-
-    /* function selectSomeProperties(account) {
-      return Object.keys(account).reduce(function(obj, k) {
-        if (
-          [
-            "original_title",
-            "overview",
-            "popularity",
-            "poster_path",
-            "backdrop_path",
-            "production_companies",
-            "runtime",
-            "vote_average",
-            "media_type",
-          ].includes(k)
-        ) {
-          obj[k] = account[k];
-        }
-        return obj;
-      }, {});
-    }
-    const selectedProperties = selectSomeProperties(movieLoadedDetails); */
-    /* console.log(JSON.stringify(selectedProperties)); */
 
     const movieDetails = {
       title: movieLoadedDetails.original_title,
@@ -228,8 +199,9 @@ export default {
     context.commit("saveContentDetails", movieDetails);
   },
 
-  ////////////////////////////////////////////////////UPDATED////////////////////////////////////////
-  //ACTION za resetiranje filtera
+  //////////////////////////////////////////////////////////////UPDATED///////////////////////////////////////////////
+
+  ////////// ACTION za resetiranje filtera
   resetFilter(context, data) {
     //DA
     context.commit("resetFilter", data);
