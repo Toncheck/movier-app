@@ -5,14 +5,14 @@
   <div class="home">
     <ul v-if="hasContent" class="home__list">
       <contents-item
-        v-for="record in filteredContent"
+        v-for="record in filteredCurrentContent"
         :key="record.id"
         :id="record.id"
-        :posterPath="record.posterPath"
+        :posterPath="record.poster_path"
         :popularity="record.popularity"
-        :title="record.title"
+        :title="record.original_title"
         :summary="record.overview"
-        :mediaType="record.mediaType"
+        :mediaType="record.media_type"
       >
       </contents-item>
     </ul>
@@ -23,7 +23,6 @@
       </p>
     </div>
   </div>
-
   <!-- PAGINATION -->
   <content-pagination></content-pagination>
 </template>
@@ -46,6 +45,12 @@ export default {
     };
   },
   computed: {
+    ///////////////////////////////////////////////NEW////////////////////////////////
+    filteredCurrentContent() {
+      return this.$store.getters["content/getFilteredCurrentContent"];
+    },
+
+    ////////////////////////////////////////////////OLD///////////////////////////////
     hasContent() {
       //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
       return this.$store.getters["content/hasContent"];
@@ -106,4 +111,8 @@ export default {
     background-color: var(--color-secondary);
   }
 }
+
+/* .home__list::v-deep .item__left-box {
+  background-color: red;
+} */
 </style>

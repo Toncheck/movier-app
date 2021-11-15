@@ -14,7 +14,6 @@ export default {
   // Mutation za inicijalizaciju filtera. U početku je to samo prvi media_type koji je pronađen u responseData npr. activeFilters = [tv]
   initializeActiveFilters(state, payload) {
     state.activeFilters = payload;
-    console.log(state.activeFilters);
   },
 
   // Mutation za update activeFilters prema onome što je kliknuto na pojedinom filteru u ContentFilter

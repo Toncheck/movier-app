@@ -25,10 +25,6 @@
       </span>
     </div>
   </div>
-  <div>{{ filterNames }}</div>
-  <div>{{ hasFilters }}</div>
-  <div>{{ filterNamesNew }}</div>
-  <div>{{ data }}</div>
 </template>
 
 <script>
@@ -64,7 +60,6 @@ export default {
         mediaType: inputId,
         checked: isActive,
       };
-      console.log(data);
       // Dispatchaj action i pošalji podatak oblika npr. {tv:true}
       this.$store.dispatch("content/updateFiltersNew", data);
     },
@@ -82,8 +77,6 @@ export default {
         mediaType: inputId,
         checked: isActive,
       };
-      console.log(data);
-
       this.$store.dispatch("content/updateFilters", data);
     },
   },

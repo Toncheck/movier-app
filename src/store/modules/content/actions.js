@@ -4,10 +4,6 @@ export default {
   // ACTION za dohvaćanje podataka prema searchu s API-ja
 
   async getContentAPI(context, data) {
-    // Resetiraj podatke za currentContent i curentContentList jer je napravljen novi search
-    context.commit("saveCurrentContent", {});
-    context.commit("saveCurrentContentList", []);
-
     // Dohvati podatke s API-ja
 
     const response = await fetch(
@@ -117,11 +113,6 @@ export default {
     const moviesByPage = {};
     const filters = {};
 
-    console.log(page);
-    console.log(moviesByPage);
-    console.log(moviesByPage.page);
-    console.log(moviesByPage[page]);
-
     // for (const movie of results)
     results.forEach((movie) => {
       moviesById[movie.id] = {
@@ -139,7 +130,6 @@ export default {
       } */
       /* Dodaj id za prvi movie u gore kreirani Array */
       moviesByPage[page].push(movie.id);
-      console.log(moviesByPage);
 
       /* filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.  */
       filters[movie.media_type] = filters[movie.media_type] || {};
@@ -149,13 +139,12 @@ export default {
       filters[movie.media_type].movieIds.push(movie.id);
     });
 
-    console.log(filters);
     // Spremi podatke u tri različita Objecta
-    console.log(moviesById);
+    /* console.log(moviesById); */
     context.commit("saveMoviesById", moviesById);
-    console.log(moviesByPage);
+    /*   console.log(moviesByPage); */
     context.commit("saveMoviesByPage", moviesByPage);
-    console.log(filters);
+    /*  console.log(filters); */
     context.commit("saveFilters", filters);
 
     //Spremi podatake o trenutnoj stranici za paginaciju

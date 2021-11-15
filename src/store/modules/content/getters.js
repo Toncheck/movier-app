@@ -4,14 +4,35 @@ export default {
   // Stvori imena filtera prema media_type iz podataka u currentContent
 
   createFilterNames(state) {
-    /* //DRUGA IDEJA PREKO LISTE OBJEKATA
-    const filterNames = [];
-    // Prođi kroz Array of Objects activeFilters koja se nalazi na Vuexu i izvadi samo mediaType koji će biti ime FIltera pojedinog
-    state.activeFIlters.array.forEach((element, index) => {
-      filterNames[index] = element.mediaType;
-    });
-    return filterNames; */
     return state.activeFilters;
+  },
+
+  getCurrentContent(state) {
+    return state.currentContent;
+  },
+
+  getFilteredCurrentContent(_, getters) {
+    const activeFilters = getters.createFilterNames;
+
+    const { results } = getters.getCurrentContent;
+
+    const listOfActiveFilters = [];
+    // Lista aktivnih filtera samo s njihovim mediaTypeom
+    activeFilters.forEach((element, index) => {
+      if (element.isActive) listOfActiveFilters[index] = element.mediaType;
+    });
+
+    const filteredCurrentContent = results.filter((obj) =>
+      // idi po svakom rezultatu i provjeri sadrži li lista aktivnih filtera taj media_type
+      listOfActiveFilters.includes(obj.media_type)
+    );
+
+    return filteredCurrentContent;
+  },
+
+  hasContent(_, getters) {
+    const originalContent = getters.getCurrentContent;
+    return originalContent.results.length > 0;
   },
 
   //////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////////
@@ -75,14 +96,13 @@ export default {
       return { id: movieId, ...movie[movieId] };
     });
     */
-
     return result;
   },
 
-  hasContent(_, getters) {
+  /* hasContent(_, getters) {
     const movies = getters.getContent;
     return movies.length > 0;
-  },
+  }, */
 
   getFilters(state) {
     return state.filters;

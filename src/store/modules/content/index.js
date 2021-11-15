@@ -8,8 +8,13 @@ export default {
     return {
       //////////////////////////////////////////////////////////////////////////////////NEW////////////////////////////////////////////////////////////////////////////
 
-      // Podaci za prikaz sadržaja
-      currentContent: {},
+      // Podaci za prikaz sadržaja, potrebno ih je inicijalizirati kako getters fukncije ne bi prilikom poziva bacale undefined
+      currentContent: {
+        page: null,
+        results: [],
+        total_results: null,
+        total_pages: null,
+      },
       currentContentList: [],
 
       // Podaci za filtriranje sadržaja
