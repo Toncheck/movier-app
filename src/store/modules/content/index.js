@@ -23,17 +23,20 @@ export default {
       //
       activeFilters: [],
 
+      // Podaci o itemu potrebni za napravit fetch za Details page
+      detailsAboutRecord: {},
+
+      // Object podatka za details page
+      contentDetails: {},
+
       // Podaci za paginaciju
 
       ///////////////////////////////////////////////////////////////////////////////////OLD///////////////////////////////////////////////////////////////////////////
-      detailsAboutRecord: {},
 
       //setovi podataka za home page
-      moviesById: {},
+      /* moviesById: {},
       filters: {},
-      moviesByPage: {},
-      //set podatka za details page
-      contentDetails: {},
+      moviesByPage: {}, */
 
       //Pagination
 

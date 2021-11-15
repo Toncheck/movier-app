@@ -113,10 +113,10 @@ export default {
     return movies.length > 0;
   }, */
 
-  getFilters(state) {
+  /*  getFilters(state) {
     console.log(state.filters);
     return state.filters;
-  },
+  }, */
 
   getContentDetails(state) {
     return state.contentDetails;

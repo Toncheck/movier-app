@@ -32,40 +32,49 @@ export default {
     /* console.log("activeFilters nakon promjene: ", state.activeFilters); */
   },
 
-  /////////////////////////////////////////////////////////////////////OLD/////////////////////////////////////////////////////////////////////////////////////////////
-  //Mutation za spremanje podataka o itemima(filmovi, serije itd. u listu).
-  saveContent(state, payload) {
-    state.content.push(payload);
-    //Ovdje ide push ako su podaci na state spremljeni kao lista
+  ////////////////////////////////////////////////////////////////////UPDATED//////////////////////////////////////////
+  // Reset vrijednosti filtera prilikom klika na Search u Header page
+  resetFilter(state, payload) {
+    state.activeFilters = payload;
   },
 
-  saveLastSearch(state, payload) {
-    state.lastSearch = payload;
-  },
-
-  saveMoviesById(state, payload) {
-    state.moviesById = payload;
-  },
-
-  saveFilters(state, payload) {
-    state.filters = payload;
-  },
-
-  saveMoviesByPage(state, payload) {
-    state.moviesByPage = payload;
-  },
-
-  updateFilters(state, payload) {
-    state.filters[payload.mediaType].checked = payload.checked;
-  },
-
+  // Prilikom klika na Full Synopsis moraju bit spremljeni podaci o mediaType i itemId kako bi se mogao napraviti fetch za Details page
   saveDetailsAboutRecord(state, payload) {
     state.detailsAboutRecord = payload;
   },
 
+  // Spremanje podataka koji se dobiju kao odgovor s API-ja nakon fetcha za Details page
   saveContentDetails(state, payload) {
     state.contentDetails = payload;
   },
+
+  /////////////////////////////////////////////////////////////////////OLD/////////////////////////////////////////////////////////////////////////////////////////////
+  //Mutation za spremanje podataka o itemima(filmovi, serije itd. u listu).
+  /* saveContent(state, payload) {
+    state.content.push(payload);
+    //Ovdje ide push ako su podaci na state spremljeni kao lista
+  }, */
+
+  //Nikad korišteno
+  /* saveLastSearch(state, payload) {
+    state.lastSearch = payload;
+  }, */
+
+  /* saveMoviesById(state, payload) {
+    state.moviesById = payload;
+  }, */
+
+  /* saveFilters(state, payload) {
+    state.filters = payload;
+  }, */
+
+  /* saveMoviesByPage(state, payload) {
+    state.moviesByPage = payload;
+  },
+ */
+  /*  updateFilters(state, payload) {
+    state.filters[payload.mediaType].checked = payload.checked;
+  }, */
 
   //Pagination
   saveCurrentPage(state, payload) {
@@ -78,10 +87,5 @@ export default {
 
   saveCurrentSearch(state, payload) {
     state.currentSearch = payload;
-  },
-
-  ////////////////////////////////////////UPDATED/////////////////////////////////////
-  resetFilter(state, payload) {
-    state.activeFilters = payload;
   },
 };

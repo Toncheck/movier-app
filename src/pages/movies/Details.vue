@@ -122,9 +122,9 @@ export default {
       return this.$store.getters["content/getMediaType"];
     },
 
-    getFilters() {
+    /*  getFilters() {
       return this.$store.getters["content/getFilters"];
-    },
+    }, */
   },
   methods: {
     ////////// Metoda za loadanje sadržaja za ovaj Details page
@@ -134,6 +134,7 @@ export default {
         mediaType: this.mediaType,
       };
 
+      console.log(data);
       //kao data šalje se id, prema tom id-u treba pronaći media_type koji određuje na koji endpoint se vrši upit, mogući su movie, tv ili person
 
       /* console.log(this.getFilters); */
@@ -141,12 +142,12 @@ export default {
       //Prolazak kroz sve vrijednosti za objekt filters. Ako je u određenom filteru pronađen id znači da imamo media_type
 
       //Ovo je bila prva ideja, uzeti media type iz filters. I to radi ako se na details page skoči s home gdje je su bili prikazani itemi. No ako se na details page skoči s favourites, a prije toga nijedan search nije bio napravljen, neće se moći dohvatiti media type. Zbog toga je potrebno utrpati i media type kao podatak koji putuje zajedno sa svim podacima o itemu.
-      for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
+      /* for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
         // console.log(filterValue.movieIds[0], typeof filterValue.movieIds[0]);
         if (filterValue.movieIds.includes(+data.itemId)) {
           data.mediaType = mediaType;
         }
-      }
+      } */
 
       //////////////////////////////////////////////////////////////
 

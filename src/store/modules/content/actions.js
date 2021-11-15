@@ -138,11 +138,11 @@ export default {
 
     // Spremi podatke u tri različita Objecta
     /* console.log(moviesById); */
-    context.commit("saveMoviesById", moviesById);
+    /* context.commit("saveMoviesById", moviesById); */
     /*   console.log(moviesByPage); */
-    context.commit("saveMoviesByPage", moviesByPage);
+    /* context.commit("saveMoviesByPage", moviesByPage); */
     /*  console.log(filters); */
-    context.commit("saveFilters", filters);
+    /* context.commit("saveFilters", filters); */
 
     //Spremi podatake o trenutnoj stranici za paginaciju
     context.commit("saveCurrentPage", +Object.keys(moviesByPage));
@@ -157,10 +157,6 @@ export default {
   /* updateFilters(context, data) {
     context.commit("updateFilters", data);
   }, */
-  ////////// ACTION za pospremanje id-a za detailsPage
-  saveDetailsAboutRecord(context, data) {
-    context.commit("saveDetailsAboutRecord", data);
-  },
 
   //////////////////////////////////////////////////////////////UPDATED//////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -199,8 +195,6 @@ export default {
     context.commit("saveContentDetails", movieDetails);
   },
 
-  //////////////////////////////////////////////////////////////UPDATED///////////////////////////////////////////////
-
   ////////// ACTION za resetiranje filtera
   resetFilter(context, data) {
     //DA
@@ -210,5 +204,10 @@ export default {
     context.commit("saveCurrentPage", null);
     context.commit("saveTotalPages", null);
     context.commit("saveCurrentSearch", "");
+  },
+
+  ////////// ACTION za pospremanje id-a za detailsPage
+  saveDetailsAboutRecord(context, data) {
+    context.commit("saveDetailsAboutRecord", data);
   },
 };
