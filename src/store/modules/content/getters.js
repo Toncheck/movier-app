@@ -11,6 +11,12 @@ export default {
     return state.currentContent;
   },
 
+  ////////// Dohvatu Array currentContentList
+  getCurrentContentList(state) {
+    console.log(state.currentContentList);
+    return state.currentContentList;
+  },
+
   ////////// Filtriraj dohvaćeni sadržaj currentContent sukladno odabranim filterima na komponenti ContentFilter
   getFilteredCurrentContent(_, getters) {
     const activeFilters = getters.createFilterNames;
@@ -35,6 +41,32 @@ export default {
   hasContent(_, getters) {
     const originalContent = getters.getCurrentContent;
     return originalContent.results.length > 0;
+  },
+
+  createListOfPages(_, getters) {
+    const originalContent = getters.getCurrentContent;
+
+    const currentPage = originalContent.page;
+    const totalPages = originalContent.total_pages;
+
+    if (totalPages <= 6) {
+      const listOfPages = Array.from(
+        { length: totalPages },
+        (_, index) => index + 1
+      ); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
+      return listOfPages;
+    } else if (totalPages > 6 && currentPage <= 3) {
+      return [1, 2, 3, "...", totalPages - 1, totalPages];
+    } else if (totalPages > 6 && currentPage >= totalPages - 2) {
+      return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
+    } else {
+      return [1, 2, "...", currentPage, "...", totalPages - 1, totalPages];
+    }
+  },
+
+  getCurrentPageNew(_, getters) {
+    const originalContent = getters.getCurrentContent;
+    return originalContent.page;
   },
 
   //////////////////////////////////////////////////////////////////////////////OLD BUT USEED//////////////////////////
@@ -122,13 +154,13 @@ export default {
     return state.contentDetails;
   },
 
-  getCurrentPage(state) {
+  /* getCurrentPage(state) {
     return state.currentPage;
   },
 
   getTotalPages(state) {
     return state.totalPages;
-  },
+  }, */
 
   getCurrentSearch(state) {
     return state.currentSearch;

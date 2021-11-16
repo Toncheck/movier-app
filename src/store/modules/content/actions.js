@@ -25,11 +25,69 @@ export default {
     // Pozovi mutation koji sprema dohvaćene podatke na Vuex u listu svih do sada dohvaćenih currentContenta za navedeni pojam
     context.commit("saveCurrentContentList", responseData);
 
+    //Spremi podatak o trenutnom searchu
+    context.commit("saveCurrentSearch", data.search);
+
     //Kreiranje liste svih filtera prema media_type za svaki rezultat iz results. Zadatkom je zadano postavljanje samo prvog na kojeg se naišlo u status iscActive: true.
     /* activeFilters na Vuex je predviđen ovakvog izgleda: [ {mediaType: "tv", isActive: true }, {mediaType: "movie", isActive: false}, {mediaType: "person", isActive: false}, ...] */
 
+    context.dispatch("initializeFilters", responseData);
+  },
+  ////////// ACTION za updejtanje activeFilters
+
+  updateFiltersNew(context, data) {
+    context.commit("updateFiltersNew", data);
+  },
+
+  ////////// ACTION za provjeravanje je li sadržaj za odabrani page već downloadan u currentContentList ili nije. Ovisno o tome dispatcha druga, dva actiona.
+
+  getNewContent(context, data) {
+    const currentContentList = context.state.currentContentList;
+    const downloadedPagesList = [];
+
+    console.log(currentContentList);
+
+    currentContentList.forEach((obj) => {
+      downloadedPagesList.push(+obj.page);
+    });
+
+    console.log("data", data);
+    // Ako je odabrani page već downloadan pozovi action za dohvaćanje sadržaja iu currentContentList
+    if (downloadedPagesList.includes(data.page)) {
+      console.log("getContentVuex");
+      context.dispatch("getContentVuex", data);
+    }
+
+    // U suprotmome pozovi action za download sadržaja s API-ja za zahtijevani page
+    else {
+      console.log("getContentAPI");
+      context.dispatch("getContentAPI", data);
+    }
+  },
+
+  ////////// ACTION za dohvaćanje sadržaja s Vuex za već prije downloadani page
+
+  getContentVuex(context, data) {
+    const currentContentList = context.state.currentContentList;
+    // Dohvati sadržaj iz currentContentList i pospremi ga u currentContent kako bi se mogao prikazati
+    console.log("currentContentList", currentContentList);
+
+    const newCurrentData = currentContentList.find(
+      (obj) => obj.page === data.page
+    );
+
+    // Osvježi current Content
+
+    context.commit("saveCurrentContent", newCurrentData);
+
+    context.dispatch("initializeFilters", newCurrentData);
+  },
+
+  ////////// ACTION za inicijalizaciju filtera
+
+  initializeFilters(context, data) {
     //Raspakiraj results
-    const { results } = responseData;
+    const { results } = data;
     //Kreiraj prazan Array
     const filters = [];
 
@@ -54,17 +112,12 @@ export default {
     context.commit("initializeActiveFilters", filtersFirstActive);
     //
   },
-  ////////// ACTION za updejtanje activeFilters
-
-  updateFiltersNew(context, data) {
-    context.commit("updateFiltersNew", data);
-  },
 
   ////////////////////////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////
 
   //ACTION za dobavu podataka nakon searcha u SearchBar
   //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
-  async saveContent(context, data) {
+  /* async saveContent(context, data) {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data.search}&page=${data.page}&include_adult=false`,
       { method: "GET" }
@@ -76,34 +129,34 @@ export default {
       //error ...
     }
 
-    /* Podaci dođu u obliku
-    {page: 1,
-    results: [ 
-        {
-        "poster_path": null,
-        "popularity": 1,
-        "id": 24511,
-        "overview": "",
-        "backdrop_path": null,
-        "vote_average": 0,
-        "media_type": "tv",
-        "first_air_date": "",
-        "origin_country": ["GB"],
-        "genre_ids": [],
-        "original_language": "en",
-        "vote_count": 0,
-        "name": "Bradley",
-        "original_name": "Bradley"
-        }, 
-        {...},
-        {...}, ... ],
-    total_results: 382,
-    total_pages: 20
-    } */
+    // Podaci dođu u obliku
+    // {page: 1,
+    // results: [
+    //     {
+    //     "poster_path": null,
+    //     "popularity": 1,
+    //     "id": 24511,
+    //     "overview": "",
+    //     "backdrop_path": null,
+    //     "vote_average": 0,
+    //     "media_type": "tv",
+    //     "first_air_date": "",
+    //     "origin_country": ["GB"],
+    //     "genre_ids": [],
+    //     "original_language": "en",
+    //     "vote_count": 0,
+    //     "name": "Bradley",
+    //     "original_name": "Bradley"
+    //     },
+    //     {...},
+    //     {...}, ... ],
+    // total_results: 382,
+    // total_pages: 20
+    // }
 
     const { page, results, total_pages } = responseData;
 
-    /* console.log(total_results); */
+    // console.log(total_results);
     //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
 
     const moviesById = {};
@@ -120,15 +173,15 @@ export default {
         mediaType: movie.media_type,
       };
 
-      /* Stvori key imena prema pageu koji je dohvaćen. Ako taj key nema nikakvu vrijednost onda mu zadaj da je to prazna lista */
+      // Stvori key imena prema pageu koji je dohvaćen. Ako taj key nema nikakvu vrijednost onda mu zadaj da je to prazna lista
       moviesByPage[page] = moviesByPage[page] || [];
-      /* if (!moviesByPage[page]) {
-        moviesByPage[page] = [];
-      } */
-      /* Dodaj id za prvi movie u gore kreirani Array */
+      // if (!moviesByPage[page]) {
+      //   moviesByPage[page] = [];
+      // }
+      // Dodaj id za prvi movie u gore kreirani Array
       moviesByPage[page].push(movie.id);
 
-      /* filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.  */
+      // filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.
       filters[movie.media_type] = filters[movie.media_type] || {};
       filters[movie.media_type].checked = true;
       filters[movie.media_type].movieIds =
@@ -137,12 +190,12 @@ export default {
     });
 
     // Spremi podatke u tri različita Objecta
-    /* console.log(moviesById); */
-    /* context.commit("saveMoviesById", moviesById); */
-    /*   console.log(moviesByPage); */
-    /* context.commit("saveMoviesByPage", moviesByPage); */
-    /*  console.log(filters); */
-    /* context.commit("saveFilters", filters); */
+    // console.log(moviesById);
+    // context.commit("saveMoviesById", moviesById);
+    // console.log(moviesByPage);
+    // context.commit("saveMoviesByPage", moviesByPage);
+    //  console.log(filters);
+    // context.commit("saveFilters", filters);
 
     //Spremi podatake o trenutnoj stranici za paginaciju
     context.commit("saveCurrentPage", +Object.keys(moviesByPage));
@@ -152,7 +205,7 @@ export default {
 
     //Spremi podatak o trenutnom searchu
     context.commit("saveCurrentSearch", data.search);
-  },
+  }, */
   ////////// ACTION za updejtanje filtera
   /* updateFilters(context, data) {
     context.commit("updateFilters", data);
@@ -199,11 +252,13 @@ export default {
   resetFilter(context, data) {
     //DA
     context.commit("resetFilter", data);
-
-    //MOŽDA
-    context.commit("saveCurrentPage", null);
-    context.commit("saveTotalPages", null);
     context.commit("saveCurrentSearch", "");
+    context.commit("saveCurrentContent", {
+      page: null,
+      results: [],
+      total_results: null,
+      total_pages: null,
+    });
   },
 
   ////////// ACTION za pospremanje id-a za detailsPage

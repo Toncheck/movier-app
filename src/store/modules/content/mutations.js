@@ -77,13 +77,13 @@ export default {
   }, */
 
   //Pagination
-  saveCurrentPage(state, payload) {
+  /* saveCurrentPage(state, payload) {
     state.currentPage = payload;
   },
 
   saveTotalPages(state, payload) {
     state.totalPages = payload;
-  },
+  }, */
 
   saveCurrentSearch(state, payload) {
     state.currentSearch = payload;

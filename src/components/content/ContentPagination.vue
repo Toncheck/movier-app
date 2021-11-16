@@ -2,49 +2,28 @@
   <div class="pagination-container">
     <div class="pagination-container--withpages" v-if="currentPage">
       <div class="pagination-container__current-search">
-        Your search: {{ currentSearch }}
+        Your search:
+        <div class="pagination-container__current-search--orange">
+          {{ currentSearch }}
+        </div>
       </div>
       <p class="pagination-container__message">
         We found more results - check them out
       </p>
       <ul class="pagination-container__pages">
         <li
-          v-show="!firstPage"
-          @click="goToFirstPage"
-          class="pagination-container__page"
-        >
-          &laquo;
-        </li>
-        <li
-          v-show="!firstPage"
-          @click="goToPreviousPage"
-          class="pagination-container__page"
-        >
-          &lsaquo;
-        </li>
-
-        <li
-          href="#"
+          v-for="page in listOfPages"
           :key="page"
+          :id="page"
           class="pagination-container__page"
-          @click="jumpOnPage(page)"
+          :class="
+            page === currentPage
+              ? 'pagination-container__page--orange'
+              : 'pagination-container__page--grey'
+          "
+          @click="goToSelectedPage"
         >
-          {{ currentPage }}
-        </li>
-
-        <li
-          v-show="!lastPage"
-          @click="goToNextPage"
-          class="pagination-container__page"
-        >
-          &rsaquo;
-        </li>
-        <li
-          v-show="!lastPage"
-          @click="goToLastPage"
-          class="pagination-container__page"
-        >
-          &raquo;
+          {{ page }} {{}}
         </li>
       </ul>
     </div>
@@ -67,46 +46,32 @@ export default {
     };
   },
   methods: {
-    jumpOnPage(page) {
-      this.$store.dispatch("content/loadContent", page);
-    },
-    goToPage(page) {
-      const searchData = {
+    ///////////////////////////////////////////NEW////////////////////////////////////
+
+    // Metoda za pozivanje Actiona koji provjerava je li sadržaj za već odabrani page u Arrayu currentContentList (pristup na state, moguć samo iz actiona, a ne metode). I onda će taj Action pozvati u jednom slučaju Action za dobavu podataka iz currentContentList ili action za dobavu podataka iz getContentAPI
+
+    // S obzirom na to da action getContentAPI za fetch očekuje podatke search i page, potrebno ih je proslijediti
+
+    goToSelectedPage(event) {
+      const data = {
+        page: +event.target.id,
         search: this.currentSearch,
-        page,
       };
-      this.$store.dispatch("content/saveContent", searchData);
-    },
-    goToFirstPage() {
-      this.goToPage(1);
-    },
-    goToLastPage() {
-      this.goToPage(this.totalPages);
-    },
-    goToNextPage() {
-      this.goToPage(this.currentPage + 1);
-    },
-    goToPreviousPage() {
-      this.goToPage(this.currentPage - 1);
+
+      this.$store.dispatch("content/getNewContent", data);
     },
   },
   computed: {
+    ///////////////////////////////////////////////NEW////////////////////////////////
+
+    listOfPages() {
+      return this.$store.getters["content/createListOfPages"];
+    },
+
     currentPage() {
-      return this.$store.getters["content/getCurrentPage"];
-      /*   return 5; */
+      return this.$store.getters["content/getCurrentPageNew"];
     },
-    firstPage() {
-      return this.$store.getters["content/getCurrentPage"] === 1;
-    },
-    totalPages() {
-      return this.$store.getters["content/getTotalPages"];
-    },
-    lastPage() {
-      return (
-        this.$store.getters["content/getCurrentPage"] ===
-        this.$store.getters["content/getTotalPages"]
-      );
-    },
+
     currentSearch() {
       return this.$store.getters["content/getCurrentSearch"];
     },
@@ -123,18 +88,22 @@ export default {
 
   &__current-search {
     margin: 0.2rem 0;
+    &--orange {
+      color: var(--color-secondary-dark);
+      display: inline-block;
+    }
   }
 
   &__message {
     margin-bottom: 0.2rem;
   }
 
-  &--withpages {
-    /* :nth-child(-n + 2) {
-      margin-bottom: 0.2rem;
-    } */
-    border-top: 1px solid var(--color-grey-dark-3);
-  }
+  /* &--withpages {
+    // :nth-child(-n + 2) {
+    //   margin-bottom: 0.2rem;
+    // }
+    // border-top: 1px solid var(--color-grey-dark-3);
+  } */
 
   &__pages {
     display: flex;
@@ -145,8 +114,16 @@ export default {
   &__page {
     padding: 0 0.4rem;
     margin: 0 0.2rem;
-    border: 1px solid var(--color-grey-dark-3);
+    /* border: 1px solid var(--color-secondary-dark); */
+    /* border: 1px solid var(--color-grey-dark-3); */
     cursor: pointer;
+    &--orange {
+      border: 1px solid var(--color-secondary-dark);
+      color: var(--color-secondary-dark);
+    }
+    &--grey {
+      border: 1px solid var(--color-grey-dark-3);
+    }
   }
 
   &--nopages {
