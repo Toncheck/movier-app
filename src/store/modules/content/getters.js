@@ -151,6 +151,7 @@ export default {
   }, */
 
   getContentDetails(state) {
+    /*  console.log(state.contentDetails); */
     return state.contentDetails;
   },
 

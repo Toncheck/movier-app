@@ -91,7 +91,12 @@ export default {
       return `https://image.tmdb.org/t/p/w500${this.posterPath}`;
     },
     pagePath() {
-      return `/details/${this.itemId}`;
+      // 1. Način za definiranje rute - najprimitvniji
+      /* return `/details/${this.itemId}`; */
+      // 2. Naćin za definiranje rute - korištenjem Object zapisa
+      /* return { path: "/details/" + this.itemId }; */
+      // 3. Način definiranje rute - korištenjem Object zapisa i opcije named Routes unutar Routera
+      return { name: "details", params: { id: this.itemId } };
     },
     popularityFixed() {
       return Math.round(this.popularity * 10) / 10;

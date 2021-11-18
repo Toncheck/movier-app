@@ -2,7 +2,7 @@
   <div class="favourites">
     <ul v-if="hasContent" class="favourites__list">
       <contents-item
-        v-for="(value, record) in favourites"
+        v-for="(value, record) in hasContent"
         :key="+record"
         :id="+record"
         :posterPath="value.posterPath"
@@ -31,11 +31,11 @@ export default {
   components: {
     ContentsItem,
   },
-  data() {
+  /*  data() {
     return {
       favourites: null,
     };
-  },
+  }, */
 
   computed: {
     hasContent() {
@@ -44,10 +44,10 @@ export default {
     },
   },
 
-  methods: {
+  /* methods: {
     loadFavourites() {
       //dohvati object movies s local storage
-      /* const record = JSON.parse(localStorage.getItem("869250")); */
+      // const record = JSON.parse(localStorage.getItem("869250"));
       this.favourites = JSON.parse(localStorage.getItem("favourites")) || {};
 
       //prepakiravanje podataka
@@ -56,7 +56,7 @@ export default {
 
   created() {
     this.loadFavourites();
-  },
+  }, */
 };
 </script>
 

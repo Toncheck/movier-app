@@ -49,6 +49,7 @@
 import SearchBar from "../../components/ui/SearchBar.vue";
 
 export default {
+  props: ["id"], // Ovaj prop dolazi iz Routera jer je tamo za ovu komponentu definirano props= true, što kaže Routeru da dynamic parameters moraju biti poslane komponenti kao dio props
   components: {
     SearchBar,
   },
@@ -58,11 +59,6 @@ export default {
   }, */
 
   computed: {
-    //ovo ne radi
-    /* detailsId() {
-      return this.$store.getters.loadDetailsId;
-    }, */
-
     //ako nema posterPatha, loadaj zamjensu sliku iz assets
     imagePath() {
       const posterPath = this.$store.getters["content/getContentDetails"]
@@ -91,6 +87,9 @@ export default {
     },
 
     productionCompanies() {
+      console.log(
+        this.$store.getters["content/getContentDetails"].productionCompanies
+      );
       const companies = [
         ...this.$store.getters["content/getContentDetails"].productionCompanies,
       ];
@@ -129,39 +128,29 @@ export default {
   methods: {
     ////////// Metoda za loadanje sadržaja za ovaj Details page
     loadContentDetails() {
+      // Dohvati podatke o id-u itema i vrsti media typea potrebnima za napraviti fetch
       const data = {
-        itemId: this.$route.params.id,
+        itemId: this.id,
         mediaType: this.mediaType,
       };
 
       console.log(data);
-      //kao data šalje se id, prema tom id-u treba pronaći media_type koji određuje na koji endpoint se vrši upit, mogući su movie, tv ili person
 
-      /* console.log(this.getFilters); */
-
-      //Prolazak kroz sve vrijednosti za objekt filters. Ako je u određenom filteru pronađen id znači da imamo media_type
-
-      //Ovo je bila prva ideja, uzeti media type iz filters. I to radi ako se na details page skoči s home gdje je su bili prikazani itemi. No ako se na details page skoči s favourites, a prije toga nijedan search nije bio napravljen, neće se moći dohvatiti media type. Zbog toga je potrebno utrpati i media type kao podatak koji putuje zajedno sa svim podacima o itemu.
-      /* for (const [mediaType, filterValue] of Object.entries(this.getFilters)) {
-        // console.log(filterValue.movieIds[0], typeof filterValue.movieIds[0]);
-        if (filterValue.movieIds.includes(+data.itemId)) {
-          data.mediaType = mediaType;
-        }
-      } */
-
-      //////////////////////////////////////////////////////////////
-
+      // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
       this.$store.dispatch("content/loadContentDetails", data);
     },
 
+    ////////// Metoda za spremanje itema kao favoruite itema na storage u browser
     saveToFavourite() {
-      const itemId = this.$route.params.id;
+      // primjer dohvaćanja id-a preko props iz Routera, a moguće i preko this.$route.params.id
+      const itemId = this.id;
 
       /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
       const expandedContentDetails = {
         ...this.contentDetails,
         mediaType: this.mediaType,
       };
+      console.log(expandedContentDetails);
 
       //Dohvati podatke s localStorage, ako nema ništa onda kreiraj novi prazni objekt u koji će se spremati budući podaci
 
@@ -171,6 +160,8 @@ export default {
         ...record,
         [itemId]: expandedContentDetails,
       };
+
+      // Spremi podatke na browser u local storage
 
       localStorage.setItem("favourites", JSON.stringify(favourites));
     },

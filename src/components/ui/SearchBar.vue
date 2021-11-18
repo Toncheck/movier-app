@@ -66,7 +66,7 @@ export default {
 
 
       /* OLD */
-      this.$store.dispatch("content/saveContent", searchData);
+      /* this.$store.dispatch("content/saveContent", searchData); */
 
       /* NEW -> dispatchaj action koji vuče podatke s API-ja*/
       this.$store.dispatch('content/getContentAPI', searchData);

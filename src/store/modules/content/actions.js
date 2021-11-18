@@ -226,25 +226,35 @@ export default {
       //error ...
     }
 
+    console.log(responseData);
+
     const movieLoadedDetails = { ...responseData };
 
+    console.log(movieLoadedDetails);
+    console.log(movieLoadedDetails.original_title);
+    console.log(
+      movieLoadedDetails.production_companies.map(
+        (productionCompany) => productionCompany.name
+      )
+    );
+
     const movieDetails = {
-      title: movieLoadedDetails.original_title,
-      overview: movieLoadedDetails.overview,
-      popularity: movieLoadedDetails.popularity,
+      title:
+        movieLoadedDetails.original_title ||
+        movieLoadedDetails.original_name ||
+        "No data",
+      overview: movieLoadedDetails.overview || "No data",
+      popularity: movieLoadedDetails.popularity || "No data",
       posterPath: movieLoadedDetails.poster_path,
       backdropPath: movieLoadedDetails.backdrop_path,
       productionCompanies: movieLoadedDetails.production_companies.map(
         (productionCompany) => productionCompany.name
       ),
-      runtime: movieLoadedDetails.runtime,
-      voteAverage: movieLoadedDetails.vote_average,
+      runtime: movieLoadedDetails.runtime || "No data",
+      voteAverage: movieLoadedDetails.vote_average || "No data",
     };
 
-    //Kako vraća typeof da je object
-    /* console.log(typeof movieDetails.productionCompanies);
-    console.log(movieDetails.mediaType); */
-
+    console.log(movieDetails.productionCompanies);
     context.commit("saveContentDetails", movieDetails);
   },
 
