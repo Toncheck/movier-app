@@ -39,7 +39,7 @@ export default {
     context.commit("updateFiltersNew", data);
   },
 
-  ////////// ACTION za provjeravanje je li sadržaj za odabrani page već downloadan u currentContentList ili nije. Ovisno o tome dispatcha druga, dva actiona.
+  ////////// ACTION za provjeravanje je li sadržaj za odabrani page već downloadan u currentContentList ili nije. Ovisno o tome dispatcha jedan od dva actiona za dohvaćanje sadržaja..
 
   getNewContent(context, data) {
     const currentContentList = context.state.currentContentList;

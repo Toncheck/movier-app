@@ -4,7 +4,10 @@
     <nav class="user-nav">
       <ul class="user-nav__list">
         <li class="user-nav__item">
-          <router-link class="user-nav__link" to="/home" @click="resetFilter"
+          <router-link
+            class="user-nav__link"
+            :to="jumpToHome"
+            @click="resetFilter"
             >Search</router-link
           >
         </li>
@@ -34,6 +37,11 @@ import SearchBar from "../ui/SearchBar.vue";
 export default {
   components: {
     SearchBar,
+  },
+  computed: {
+    jumpToHome() {
+      return { name: "home" };
+    },
   },
   methods: {
     //metoda koja se poziva ako je kliknuto na searc gore u headeru pa da bi se maknuo filter sa stranice

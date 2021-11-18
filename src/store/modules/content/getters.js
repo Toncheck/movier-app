@@ -47,20 +47,42 @@ export default {
     const originalContent = getters.getCurrentContent;
 
     const currentPage = originalContent.page;
+    console.log(originalContent.page);
     const totalPages = originalContent.total_pages;
+    console.log(totalPages);
 
-    if (totalPages <= 6) {
+    if (totalPages <= 7) {
       const listOfPages = Array.from(
         { length: totalPages },
         (_, index) => index + 1
       ); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
       return listOfPages;
-    } else if (totalPages > 6 && currentPage <= 3) {
-      return [1, 2, 3, "...", totalPages - 1, totalPages];
-    } else if (totalPages > 6 && currentPage >= totalPages - 2) {
-      return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
     } else {
-      return [1, 2, "...", currentPage, "...", totalPages - 1, totalPages];
+      if (currentPage <= 2 || currentPage >= totalPages - 1) {
+        return [1, 2, 3, "...", totalPages - 2, totalPages - 1, totalPages];
+      } else if (currentPage === 3) {
+        return [1, 2, 3, 4, "...", totalPages - 1, totalPages];
+      } else if (currentPage === totalPages - 2) {
+        return [
+          1,
+          2,
+          "...",
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      } else {
+        return [
+          1,
+          "..",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      }
     }
   },
 

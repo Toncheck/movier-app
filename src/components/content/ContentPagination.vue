@@ -59,6 +59,7 @@ export default {
       };
 
       this.$store.dispatch("content/getNewContent", data);
+      /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
     },
   },
   computed: {

@@ -127,11 +127,13 @@ export default {
   }
 
   &__left-box {
-    min-width: 15rem;
+    width: 50%;
+    /* max-width: 20rem; */
     margin-bottom: 1rem;
     text-align: center;
 
     @include respond(tab-port) {
+      width: 30%;
       min-width: 15rem;
     }
 
