@@ -11,21 +11,23 @@
         We found more results - check them out
       </p>
       <ul class="pagination-container__pages">
-        <button
-          v-for="(page, index) in listOfPages"
-          :key="index"
-          :id="page"
-          class="pagination-container__page"
-          :disabled="page === '...'"
-          :class="
-            page === currentPage
-              ? 'pagination-container__page--orange'
-              : 'pagination-container__page--grey'
-          "
-          @click="goToSelectedPage"
-        >
-          {{ page }}
-        </button>
+        <li class="pagination-container__page-wrapper">
+          <button
+            v-for="(page, index) in listOfPages"
+            :key="index"
+            :id="page"
+            class="pagination-container__page"
+            :disabled="page === '...'"
+            :class="
+              page === currentPage
+                ? 'pagination-container__page--orange'
+                : 'pagination-container__page--grey'
+            "
+            @click="goToSelectedPage"
+          >
+            {{ page }}
+          </button>
+        </li>
       </ul>
     </div>
     <p class="pagination-container--nopages" v-else>

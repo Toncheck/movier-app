@@ -50,47 +50,35 @@ export default {
     const currentPage = originalContent.page;
     const totalPages = originalContent.total_pages;
 
-    // Lista stranica koje će se prikazati u ContentPagination
-    let listOfPages = [];
+    // Lista stranica koje će se prikazati u ContentPaginatio
 
     if (totalPages <= 7) {
-      listOfPages = Array.from({ length: totalPages }, (_, index) => index + 1); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
+      return Array.from({ length: totalPages }, (_, index) => index + 1); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
+    } else if (currentPage <= 2 || currentPage >= totalPages - 1) {
+      return [1, 2, 3, "...", totalPages - 2, totalPages - 1, totalPages];
+    } else if (currentPage === 3) {
+      return [1, 2, 3, 4, "...", totalPages - 1, totalPages];
+    } else if (currentPage === totalPages - 2) {
+      return [
+        1,
+        2,
+        "...",
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      ];
     } else {
-      if (currentPage <= 2 || currentPage >= totalPages - 1) {
-        listOfPages = [
-          1,
-          2,
-          3,
-          "...",
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      } else if (currentPage === 3) {
-        listOfPages = [1, 2, 3, 4, "...", totalPages - 1, totalPages];
-      } else if (currentPage === totalPages - 2) {
-        listOfPages = [
-          1,
-          2,
-          "...",
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      } else {
-        listOfPages = [
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages,
-        ];
-      }
+      return [
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages,
+      ];
     }
-    return listOfPages;
   },
 
   getCurrentPageNew(_, getters) {

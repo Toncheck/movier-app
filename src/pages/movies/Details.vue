@@ -90,8 +90,10 @@ export default {
       console.log(
         this.$store.getters["content/getContentDetails"].productionCompanies
       );
+      // Mora biti short circuiting inače konzola vrati error jer se sadržaj loada prije nego je fetchan
       const companies = [
-        ...this.$store.getters["content/getContentDetails"].productionCompanies,
+        ...(this.$store.getters["content/getContentDetails"]
+          .productionCompanies || []),
       ];
 
       return companies.length > 0 ? companies : ["No data"];
