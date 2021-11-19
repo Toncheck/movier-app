@@ -46,24 +46,30 @@ export default {
   createListOfPages(_, getters) {
     const originalContent = getters.getCurrentContent;
 
+    // Varijable nužne za prikaz paginacije
     const currentPage = originalContent.page;
-    console.log(originalContent.page);
     const totalPages = originalContent.total_pages;
-    console.log(totalPages);
+
+    // Lista stranica koje će se prikazati u ContentPagination
+    let listOfPages = [];
 
     if (totalPages <= 7) {
-      const listOfPages = Array.from(
-        { length: totalPages },
-        (_, index) => index + 1
-      ); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
-      return listOfPages;
+      listOfPages = Array.from({ length: totalPages }, (_, index) => index + 1); // ovdje je stavljeno _ jer se element ne koristi u callback funkciji
     } else {
       if (currentPage <= 2 || currentPage >= totalPages - 1) {
-        return [1, 2, 3, "...", totalPages - 2, totalPages - 1, totalPages];
+        listOfPages = [
+          1,
+          2,
+          3,
+          "...",
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
       } else if (currentPage === 3) {
-        return [1, 2, 3, 4, "...", totalPages - 1, totalPages];
+        listOfPages = [1, 2, 3, 4, "...", totalPages - 1, totalPages];
       } else if (currentPage === totalPages - 2) {
-        return [
+        listOfPages = [
           1,
           2,
           "...",
@@ -73,9 +79,9 @@ export default {
           totalPages,
         ];
       } else {
-        return [
+        listOfPages = [
           1,
-          "..",
+          "...",
           currentPage - 1,
           currentPage,
           currentPage + 1,
@@ -84,6 +90,7 @@ export default {
         ];
       }
     }
+    return listOfPages;
   },
 
   getCurrentPageNew(_, getters) {

@@ -11,11 +11,12 @@
         We found more results - check them out
       </p>
       <ul class="pagination-container__pages">
-        <li
-          v-for="page in listOfPages"
-          :key="page"
+        <button
+          v-for="(page, index) in listOfPages"
+          :key="index"
           :id="page"
           class="pagination-container__page"
+          :disabled="page === '...'"
           :class="
             page === currentPage
               ? 'pagination-container__page--orange'
@@ -23,8 +24,8 @@
           "
           @click="goToSelectedPage"
         >
-          {{ page }} {{}}
-        </li>
+          {{ page }}
+        </button>
       </ul>
     </div>
     <p class="pagination-container--nopages" v-else>
@@ -53,11 +54,12 @@ export default {
     // S obzirom na to da action getContentAPI za fetch očekuje podatke search i page, potrebno ih je proslijediti
 
     goToSelectedPage(event) {
+      // Ovo ne treba jer na button stavljen dynamic attribute disabled
+      // if (event.target.id === "...") return;
       const data = {
         page: +event.target.id,
         search: this.currentSearch,
       };
-
       this.$store.dispatch("content/getNewContent", data);
       /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
     },
@@ -113,6 +115,8 @@ export default {
   }
 
   &__page {
+    text-decoration: none;
+    background-color: var(--color-white);
     padding: 0 0.4rem;
     margin: 0 0.2rem;
     /* border: 1px solid var(--color-secondary-dark); */
@@ -124,6 +128,7 @@ export default {
     }
     &--grey {
       border: 1px solid var(--color-grey-dark-3);
+      color: var(--color-grey-dark-2);
     }
   }
 
