@@ -28,11 +28,14 @@ export default {
     //Spremi podatak o trenutnom searchu
     context.commit("saveCurrentSearch", data.search);
 
+    // Updejtaj podatak o trenutnoj stranici na Vuexu
+    context.state.currentPage = +data.page;
+
     //Kreiranje liste svih filtera prema media_type za svaki rezultat iz results. Zadatkom je zadano postavljanje samo prvog na kojeg se naišlo u status iscActive: true.
     /* activeFilters na Vuex je predviđen ovakvog izgleda: [ {mediaType: "tv", isActive: true }, {mediaType: "movie", isActive: false}, {mediaType: "person", isActive: false}, ...] */
-
     context.dispatch("initializeFilters", responseData);
   },
+
   ////////// ACTION za updejtanje activeFilters
 
   updateFiltersNew(context, data) {
@@ -45,13 +48,10 @@ export default {
     const currentContentList = context.state.currentContentList;
     const downloadedPagesList = [];
 
-    console.log(currentContentList);
-
     currentContentList.forEach((obj) => {
       downloadedPagesList.push(+obj.page);
     });
 
-    console.log("data", data);
     // Ako je odabrani page već downloadan pozovi action za dohvaćanje sadržaja iu currentContentList
     if (downloadedPagesList.includes(data.page)) {
       console.log("getContentVuex");
@@ -70,7 +70,8 @@ export default {
   getContentVuex(context, data) {
     const currentContentList = context.state.currentContentList;
     // Dohvati sadržaj iz currentContentList i pospremi ga u currentContent kako bi se mogao prikazati
-    console.log("currentContentList", currentContentList);
+    // console.log("currentContentList", currentContentList);
+    // console.log(+data.page);
 
     const newCurrentData = currentContentList.find(
       (obj) => obj.page === data.page
@@ -79,8 +80,13 @@ export default {
     // Osvježi current Content
 
     context.commit("saveCurrentContent", newCurrentData);
+    // console.log(newCurrentData);
 
     context.dispatch("initializeFilters", newCurrentData);
+
+    // Updejtaj podatak o trenutnoj stranici na Vuexu
+    context.state.currentPage = +data.page;
+    console.log("getContentVuex", context, data);
   },
 
   ////////// ACTION za inicijalizaciju filtera
@@ -275,4 +281,22 @@ export default {
   saveDetailsAboutRecord(context, data) {
     context.commit("saveDetailsAboutRecord", data);
   },
+
+  ////////// ACTION za provjeru je li load sadržaja došao zbog promjene stranice
+  /* checkIfNewPage(context, data) {
+    console.log(
+      "stara stranica:",
+      context.state.currentPage,
+      "nova stranica",
+      +data.page
+    );
+    if (context.state.currentPage !== +data.page) {
+      console.log("Nova stranica nakon loaded");
+      context.dispatch("getNewContent", data);
+    } else {
+      console.log("Nije nova stranica nakon loaded");
+      // context.dispatch("getContentVuex", data);
+      return;
+    }
+  }, */
 };

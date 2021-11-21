@@ -23,7 +23,7 @@
                 ? 'pagination-container__page--orange'
                 : 'pagination-container__page--grey'
             "
-            @click="goToSelectedPage"
+            @click="goToSelectedContentPage"
           >
             {{ page }}
           </button>
@@ -55,15 +55,21 @@ export default {
 
     // S obzirom na to da action getContentAPI za fetch očekuje podatke search i page, potrebno ih je proslijediti
 
-    goToSelectedPage(event) {
+    goToSelectedContentPage(event) {
       // Ovo ne treba jer na button stavljen dynamic attribute disabled
       // if (event.target.id === "...") return;
       const data = {
         page: +event.target.id,
         search: this.currentSearch,
       };
+
       this.$store.dispatch("content/getNewContent", data);
+
       /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
+      this.$router.push({
+        name: "home",
+        query: { search: data.search, page: data.page },
+      });
     },
   },
   computed: {

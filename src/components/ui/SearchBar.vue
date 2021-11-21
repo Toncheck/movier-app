@@ -63,12 +63,10 @@ export default {
         page: 1,
       };
 
-      /* OLD */
-      /* this.$store.dispatch("content/saveContent", searchData); */
-
       /* NEW -> dispatchaj action koji vuče podatke s API-ja*/
       this.$store.dispatch("content/getContentAPI", searchData);
 
+      // Resetiraj input
       this.searchInput.value = "";
 
       /*Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. Search Bar je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha. Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti*/
@@ -77,7 +75,10 @@ export default {
       // 1. Način je klasično preko patha
       // this.$router.replace("/home" + "?page=1");
       // 2. Način je preko nested Objecta za query parametar unutar Objecta za routing
-      this.$router.replace({ name: "home", query: { page: 1 } });
+      this.$router.replace({
+        name: "home",
+        query: { search: searchData.search, page: 1 },
+      });
     },
   },
 };

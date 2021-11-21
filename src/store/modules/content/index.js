@@ -40,7 +40,7 @@ export default {
 
       //Pagination
 
-      currentPage: null,
+      currentPage: 1,
       totalPages: null,
       currentSearch: "",
 

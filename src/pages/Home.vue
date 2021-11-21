@@ -55,20 +55,48 @@ export default {
       //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
       return this.$store.getters["content/hasContent"];
     },
-    filteredContent() {
-      /*uvuci sav mogući sadržaj za tu stranicu, a to su svi zapisi unutar nekog objekta sljedećeg oblika 
-      { 147532 : { 
-                  title: Noi non siamo come James Bond,
-                  popularity:  1.976, 
-                  posterPath:  null,
-                  overview: "How two friends, thanks to the strong ..." 
-            },
-        ...
-      }*/
+    /* filteredContent() {
+      // uvuci sav mogući sadržaj za tu stranicu, a to su svi zapisi unutar nekog objekta sljedećeg oblika
+      // { 147532 : {
+      //             title: Noi non siamo come James Bond,
+      //             popularity:  1.976,
+      //             posterPath:  null,
+      //             overview: "How two friends, thanks to the strong ..."
+      //       },
+      //   ...
+      // }
       const content = this.$store.getters["content/getContent"];
 
       return content;
-    },
+    }, */
+  },
+
+  // Inicjalna ideja je pozvati created ako je preko url query parametra pozva, no kako postoji mogućnost da on bude aktiviran i zbog prvog loada pagea kad nema nikakvog url querya potrebno je provjeriti je li takav slučaj i ako je odbaciti to
+
+  created() {
+    console.log("created");
+    const query = this.$route.query;
+    /* console.log(query?.page); */
+    //Ako je istina da je query undefined ili da je page undefined ili da je search undefined tada prekini dobavu podataka. Undefined će biti na početku prilikom prvog tj. inicijalnog učitavanja stranice
+    if (!(query?.page || query?.search)) return;
+    // else je za situaciju u kojoj će za upis kroz url biti aktiviran created pa treba dobaviti novi sadržaj
+    else {
+      this.$store.dispatch(
+        "content/getNewContent",
+        this.$route.query || { search: "", page: null }
+      );
+      console.log("created getNewContent");
+    }
+    console.log("završio created");
+  },
+  updated() {
+    console.log("updated");
+    const query = this.$route.query;
+    if (!(query?.page || query?.search)) return;
+    /* else {
+      this.$store.dispatch("content/checkIfNewPage", query);
+      console.log("updated", query);
+    } */
   },
 };
 </script>
