@@ -31,6 +31,7 @@
 import ContentsItem from "../components/content/ContentsItem.vue";
 import ContentPagination from "../components/content/ContentPagination.vue";
 import ContentFilter from "../components/content/ContentFilter.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -45,29 +46,20 @@ export default {
     };
   },
   computed: {
-    ///////////////////////////////////////////////NEW////////////////////////////////
-    filteredCurrentContent() {
-      return this.$store.getters["content/getFilteredCurrentContent"];
-    },
+    // Pozivanje preko mapHelpera
+    ...mapGetters("content", {
+      filteredCurrentContent: "getFilteredCurrentContent",
+      hasContent: "hasContent",
+    }),
 
-    ////////////////////////////////////////////////OLD///////////////////////////////
-    hasContent() {
+    // Pozivanje klasično
+    /* filteredCurrentContent() {
+      return this.$store.getters["content/getFilteredCurrentContent"];
+    }, */
+
+    /* hasContent() {
       //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
       return this.$store.getters["content/hasContent"];
-    },
-    /* filteredContent() {
-      // uvuci sav mogući sadržaj za tu stranicu, a to su svi zapisi unutar nekog objekta sljedećeg oblika
-      // { 147532 : {
-      //             title: Noi non siamo come James Bond,
-      //             popularity:  1.976,
-      //             posterPath:  null,
-      //             overview: "How two friends, thanks to the strong ..."
-      //       },
-      //   ...
-      // }
-      const content = this.$store.getters["content/getContent"];
-
-      return content;
     }, */
   },
 
@@ -85,9 +77,7 @@ export default {
         "content/getNewContent",
         this.$route.query || { search: "", page: null }
       );
-      console.log("created getNewContent");
     }
-    console.log("završio created");
   },
   updated() {
     console.log("updated");
