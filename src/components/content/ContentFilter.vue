@@ -4,14 +4,14 @@
     <div class="filter__box">
       <span
         class="filter__option"
-        v-for="filter in filterNamesNew"
+        v-for="filter in filterNames"
         :key="filter.mediaType"
       >
         <input
           type="checkbox"
           class="filter__checkbox"
           :id="filter.mediaType"
-          @change="setFilterNew"
+          @change="setFilter"
           :checked="filter.isActive"
         />
 
@@ -19,9 +19,6 @@
           <span class="filter__button"></span>
           <div class="filter__text">{{ filter.mediaType }}</div>
         </label>
-
-        <!-- <span class="filter__button"></span>
-        <label :for="filter" class="filter__label"> {{ filter }}</label> -->
       </span>
     </div>
   </div>
@@ -38,16 +35,7 @@ export default {
     };
   },
   methods: {
-    // METHOD NOT USED
-    /* initializeFilters() {
-      this.filterNamesNew.forEach((element) => {
-        this.filters[element] = this.filters[element] || {};
-      });
-      console.log(this.filters);
-    }, */
-
-    /////////////////////////////////////////////////////////////////////////////NEW///////////////////////////////////////////////////////////////////////////////////
-    setFilterNew(event) {
+    setFilter(event) {
       // Dohvati ime filtera čija je vrijednost promijenjena
       const inputId = event.target.id;
 
@@ -63,48 +51,17 @@ export default {
       // Dispatchaj action i pošalji podatak oblika npr. {tv:true}
       this.$store.dispatch("content/updateFiltersNew", data);
     },
-
-    /////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////
-
-    setFilter() {
-      //Ovo je zu dobivanje id-a iz eventa
-      const inputId = event.target.id;
-
-      //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
-      const isActive = event.target.checked;
-
-      const data = {
-        mediaType: inputId,
-        checked: isActive,
-      };
-      this.$store.dispatch("content/updateFilters", data);
-    },
   },
 
   computed: {
-    /////////////////////////////////////////////////////////////////////////////NEW///////////////////////////////////////////////////////////////////////////////////
-
     // Computed property za dobivanje svih mogućih filtera prema media_type u currentContent
-    filterNamesNew() {
+    filterNames() {
       //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
       return this.$store.getters["content/createFilterNames"];
     },
 
     hasFilters() {
-      return this.filterNamesNew.length > 0;
-    },
-
-    /////////////////////////////////////////////////////////////////////////////OLD///////////////////////////////////////////////////////////////////////////////////
-
-    filterNames() {
-      //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
-      return this.$store.getters["content/getFilterNames"];
-    },
-
-    data() {
-      /* return this.filters.length > 0 ? true : false; */
-      //Ako je objekt filters veći od 0 stavi true, inače false. Ta informacija služi za prikaz cijelog filtera na stranici.
-      return Object.keys(this.filterNames).length > 0 ? true : false;
+      return this.filterNames.length > 0;
     },
   },
 };
@@ -129,17 +86,6 @@ export default {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
-    /* @include respond(phone) {
-      flex-direction: row;
-      padding-left: 0;
-      align-items: center;
-    }
- */
-    //Zašto mi ovo ne radi ovaj selektor?
-    /* &:not(:last-child) {
-      margin-right: 0.5rem;
-    } */
   }
 
   &__option {
@@ -148,7 +94,6 @@ export default {
     padding: 0.5rem 0;
     display: flex;
     cursor: pointer;
-    /* position: relative; */
     min-width: 9%;
   }
 

@@ -52,7 +52,7 @@ export default {
       hasContent: "hasContent",
     }),
 
-    // Pozivanje klasično
+    // Pozivanje klasično,a ne pomoću mapGettersa
     /* filteredCurrentContent() {
       return this.$store.getters["content/getFilteredCurrentContent"];
     }, */
@@ -65,8 +65,9 @@ export default {
 
   // Inicjalna ideja je pozvati created ako je preko url query parametra pozva, no kako postoji mogućnost da on bude aktiviran i zbog prvog loada pagea kad nema nikakvog url querya potrebno je provjeriti je li takav slučaj i ako je odbaciti to
 
+  ///// URL QUERY
   created() {
-    console.log("created");
+    // console.log("created");
     const query = this.$route.query;
     /* console.log(query?.page); */
     //Ako je istina da je query undefined ili da je page undefined ili da je search undefined tada prekini dobavu podataka. Undefined će biti na početku prilikom prvog tj. inicijalnog učitavanja stranice
@@ -80,14 +81,14 @@ export default {
     }
   },
   updated() {
-    console.log("updated");
+    // console.log("updated");
     const query = this.$route.query;
     if (!(query?.page || query?.search)) return;
-    /* else {
+    else {
       this.$store.dispatch("content/checkIfNewPage", query);
-      console.log("updated", query);
-    } */
+    }
   },
+  ///// URL QUERY
 };
 </script>
 

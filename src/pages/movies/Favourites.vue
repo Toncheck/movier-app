@@ -49,8 +49,6 @@ export default {
       //dohvati object movies s local storage
       // const record = JSON.parse(localStorage.getItem("869250"));
       this.favourites = JSON.parse(localStorage.getItem("favourites")) || {};
-
-      //prepakiravanje podataka
     },
   },
 

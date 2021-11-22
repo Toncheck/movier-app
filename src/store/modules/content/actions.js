@@ -232,35 +232,23 @@ export default {
       //error ...
     }
 
-    console.log(responseData);
-
     const movieLoadedDetails = { ...responseData };
-
-    console.log(movieLoadedDetails);
-    console.log(movieLoadedDetails.original_title);
-    console.log(
-      movieLoadedDetails.production_companies.map(
-        (productionCompany) => productionCompany.name
-      )
-    );
 
     const movieDetails = {
       title:
-        movieLoadedDetails.original_title ||
-        movieLoadedDetails.original_name ||
-        "No data",
-      overview: movieLoadedDetails.overview || "No data",
-      popularity: movieLoadedDetails.popularity || "No data",
+        movieLoadedDetails.original_title || movieLoadedDetails.original_name,
+      overview: movieLoadedDetails.overview,
+      popularity: movieLoadedDetails.popularity,
       posterPath: movieLoadedDetails.poster_path,
       backdropPath: movieLoadedDetails.backdrop_path,
-      productionCompanies: movieLoadedDetails.production_companies.map(
-        (productionCompany) => productionCompany.name
-      ),
-      runtime: movieLoadedDetails.runtime || "No data",
-      voteAverage: movieLoadedDetails.vote_average || "No data",
+      productionCompanies:
+        movieLoadedDetails.production_companies?.map(
+          (productionCompany) => productionCompany.name
+        ) || [],
+      runtime: movieLoadedDetails.runtime,
+      voteAverage: movieLoadedDetails.vote_average,
     };
 
-    console.log(movieDetails.productionCompanies);
     context.commit("saveContentDetails", movieDetails);
   },
 
@@ -282,21 +270,16 @@ export default {
     context.commit("saveDetailsAboutRecord", data);
   },
 
+  ///// URL QUERY
   ////////// ACTION za provjeru je li load sadržaja došao zbog promjene stranice
-  /* checkIfNewPage(context, data) {
-    console.log(
-      "stara stranica:",
-      context.state.currentPage,
-      "nova stranica",
-      +data.page
-    );
+  checkIfNewPage(context, data) {
     if (context.state.currentPage !== +data.page) {
-      console.log("Nova stranica nakon loaded");
+      // console.log("Nova stranica nakon loaded");
       context.dispatch("getNewContent", data);
     } else {
-      console.log("Nije nova stranica nakon loaded");
-      // context.dispatch("getContentVuex", data);
+      // console.log("Nije nova stranica nakon loaded");
       return;
     }
-  }, */
+  },
+  ///// URL QUERY
 };

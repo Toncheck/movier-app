@@ -49,8 +49,6 @@ export default {
     };
   },
   methods: {
-    ///////////////////////////////////////////NEW////////////////////////////////////
-
     // Metoda za pozivanje Actiona koji provjerava je li sadržaj za već odabrani page u Arrayu currentContentList (pristup na state, moguć samo iz actiona, a ne metode). I onda će taj Action pozvati u jednom slučaju Action za dobavu podataka iz currentContentList ili action za dobavu podataka iz getContentAPI
 
     // S obzirom na to da action getContentAPI za fetch očekuje podatke search i page, potrebno ih je proslijediti
@@ -66,15 +64,15 @@ export default {
       this.$store.dispatch("content/getNewContent", data);
 
       /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
+      ///// URL QUERY
       this.$router.push({
         name: "home",
         query: { search: data.search, page: data.page },
       });
+      ///// URL QUERY
     },
   },
   computed: {
-    ///////////////////////////////////////////////NEW////////////////////////////////
-
     listOfPages() {
       return this.$store.getters["content/createListOfPages"];
     },
@@ -109,13 +107,6 @@ export default {
     margin-bottom: 0.2rem;
   }
 
-  /* &--withpages {
-    // :nth-child(-n + 2) {
-    //   margin-bottom: 0.2rem;
-    // }
-    // border-top: 1px solid var(--color-grey-dark-3);
-  } */
-
   &__pages {
     display: flex;
     justify-content: center;
@@ -127,8 +118,6 @@ export default {
     background-color: var(--color-white);
     padding: 0 0.4rem;
     margin: 0 0.2rem;
-    /* border: 1px solid var(--color-secondary-dark); */
-    /* border: 1px solid var(--color-grey-dark-3); */
     cursor: pointer;
     &--orange {
       border: 1px solid var(--color-secondary-dark);

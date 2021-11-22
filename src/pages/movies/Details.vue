@@ -22,17 +22,10 @@
         >
           {{ company }}
         </li>
-        <!-- <li class="details__list-item">Production company 2</li>
-        <li class="details__list-item">Production company 3</li>
-        <li class="details__list-item">Production company 4</li>
-        <li class="details__list-item">Production company 5</li> -->
       </ul>
       <div class="details__aside--small-box">
         <h5 class="details__additional-info">Runtime: {{ runtime }}</h5>
       </div>
-      <ul>
-        <li class="details__list-item">ŠTO JE OVO?</li>
-      </ul>
       <div class="details__aside--small-box">
         <h5 class="details__additional-info">
           Vote average: {{ voteAverage }}
@@ -41,7 +34,6 @@
       <button class="details__button" @click="saveToFavourite">
         Add to favourites
       </button>
-      <!-- <button class="" @click="clearStorage">Clear Storage</button> -->
     </div>
   </div>
 </template>
@@ -82,7 +74,7 @@ export default {
       return (
         Math.round(
           this.$store.getters["content/getContentDetails"].popularity * 10
-        ) / 10 || [`No data`]
+        ) / 10 || `No data`
       );
     },
 
@@ -103,7 +95,7 @@ export default {
 
     runtime() {
       let temp = this.$store.getters["content/getContentDetails"].runtime;
-      return temp ? temp.toString() + `M` : `No data`;
+      return temp ? temp.toString() + ` M` : `No data`;
       /* return this.$store.getters["content/getContentDetails"].runtime; */
     },
 
@@ -122,10 +114,6 @@ export default {
     mediaType() {
       return this.$store.getters["content/getMediaType"];
     },
-
-    /*  getFilters() {
-      return this.$store.getters["content/getFilters"];
-    }, */
   },
   methods: {
     ////////// Metoda za loadanje sadržaja za ovaj Details page
@@ -180,10 +168,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* .details__aside::v-deep h6 {
-  background-color: red;
-} */
-
 .details__aside::v-deep .search__input {
   width: 100%;
   font-size: 0.5rem;

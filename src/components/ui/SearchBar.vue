@@ -75,10 +75,13 @@ export default {
       // 1. Način je klasično preko patha
       // this.$router.replace("/home" + "?page=1");
       // 2. Način je preko nested Objecta za query parametar unutar Objecta za routing
+
+      ///// URL QUERY
       this.$router.replace({
         name: "home",
         query: { search: searchData.search, page: 1 },
       });
+      ///// URL QUERY
     },
   },
 };
