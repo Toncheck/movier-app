@@ -1,8 +1,8 @@
 <template>
   <div class="favourites">
-    <ul v-if="hasContent" class="favourites__list">
+    <ul v-if="favourites" class="favourites__list">
       <contents-item
-        v-for="(value, record) in hasContent"
+        v-for="(value, record) in favourites"
         :key="+record"
         :id="+record"
         :posterPath="value.posterPath"
@@ -31,20 +31,21 @@ export default {
   components: {
     ContentsItem,
   },
-  /*  data() {
+  data() {
     return {
-      favourites: null,
+      favourites: {},
     };
-  }, */
+  },
 
-  computed: {
+  // Computed props ne koristiti za rad s Local Storageom
+  /* computed: {
     hasContent() {
       //provjeri ima li kakvog sadržaja u listi za favourites
       return JSON.parse(localStorage.getItem("favourites"));
     },
-  },
+  }, */
 
-  /* methods: {
+  methods: {
     loadFavourites() {
       //dohvati object movies s local storage
       // const record = JSON.parse(localStorage.getItem("869250"));
@@ -54,7 +55,7 @@ export default {
 
   created() {
     this.loadFavourites();
-  }, */
+  },
 };
 </script>
 
