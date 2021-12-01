@@ -11,11 +11,11 @@ export default {
     return state.currentContent;
   },
 
-  ////////// Dohvatu Array currentContentList
-  getCurrentContentList(state) {
-    console.log(state.currentContentList);
-    return state.currentContentList;
-  },
+  //////// Dohvatu Array currentContentList
+  // getCurrentContentList(state) {
+  //   console.log(state.currentContentList);
+  //   return state.currentContentList;
+  // },
 
   ////////// Filtriraj dohvaćeni sadržaj currentContent sukladno odabranim filterima na komponenti ContentFilter
   getFilteredCurrentContent(_, getters) {
@@ -172,21 +172,7 @@ export default {
     return state.contentDetails;
   },
 
-  /* getCurrentPage(state) {
-    return state.currentPage;
-  },
-
-  getTotalPages(state) {
-    return state.totalPages;
-  }, */
-
   getCurrentSearch(state) {
     return state.currentSearch;
   },
-
-  //Ovo ne treba, ali sam ostavio za postaviti pitanje: Zašto se to ne loada prilikom created
-  /* loadDetailsId(state) {
-    console.log(state.detailsId);
-    return state.detailsId;
-  }, */
 };

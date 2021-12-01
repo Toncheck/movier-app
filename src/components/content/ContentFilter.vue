@@ -27,13 +27,9 @@
 <script>
 export default {
   emits: ["change-filter"],
-  data() {
-    return {
-      filters: { none: true, test: true },
-      // filters: { movie: { checked: true, ids: [869250, ...] }, tv: { checked: true, ids: [...] } }
-      // moviesById: { 869250: {}
-    };
-  },
+  /* data() {
+    return {};
+  }, */
   methods: {
     setFilter(event) {
       // Dohvati ime filtera čija je vrijednost promijenjena

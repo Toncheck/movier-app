@@ -38,16 +38,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      //currentPage je podatak koji treba pobrati iz VUEX-a. Na početku je to 0, što znači da nema ništa za prikazati. To je iskorišteno u HTML-u kako bi se korisniku dao feedback, da se nema što prikazati.
-      /* currentPageDummy: 3,
-      lastPageDummy: false,
-      firstPageDummy: false,
-      totalPagesDummy: 6,
-      jumpToPageDummy: null, */
-    };
-  },
+  /* data() {
+    return {};
+  }, */
   methods: {
     // Metoda za pozivanje Actiona koji provjerava je li sadržaj za već odabrani page u Arrayu currentContentList (pristup na state, moguć samo iz actiona, a ne metode). I onda će taj Action pozvati u jednom slučaju Action za dobavu podataka iz currentContentList ili action za dobavu podataka iz getContentAPI
 
@@ -55,7 +48,7 @@ export default {
 
     goToSelectedContentPage(event) {
       // Ovo ne treba jer na button stavljen dynamic attribute disabled
-      // if (event.target.id === "...") return;
+      // if (event.target.id === "...") return;c
       const data = {
         page: +event.target.id,
         search: this.currentSearch,
@@ -65,6 +58,7 @@ export default {
 
       /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
       ///// URL QUERY
+      console.log(`Click on page ${data.page} for ${data.search}`);
       this.$router.push({
         name: "home",
         query: { search: data.search, page: data.page },

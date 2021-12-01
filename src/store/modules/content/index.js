@@ -6,21 +6,19 @@ export default {
   namespaced: true,
   state() {
     return {
-      //////////////////////////////////////////////////////////////////////////////////NEW////////////////////////////////////////////////////////////////////////////
-
       // Podaci za prikaz sadržaja, potrebno ih je inicijalizirati kako getters fukncije ne bi prilikom poziva bacale undefined
+      // trenutno prikazani podaci
       currentContent: {
         page: null,
         results: [],
         total_results: null,
         total_pages: null,
       },
+      // Lista svih trenutno prikazanih podataka za trenutni search
       currentContentList: [],
 
       // Podaci za filtriranje sadržaja
       /* Oblik podatkaa filters = [ { checked: "true", mediaType: "tv" }, {...}, {...}, ... ] */
-
-      //
       activeFilters: [],
 
       // Podaci o itemu potrebni za napravit fetch za Details page
@@ -30,18 +28,7 @@ export default {
       contentDetails: {},
 
       // Podaci za paginaciju
-
-      ///////////////////////////////////////////////////////////////////////////////////OLD///////////////////////////////////////////////////////////////////////////
-
-      //setovi podataka za home page
-      /* moviesById: {},
-      filters: {},
-      moviesByPage: {}, */
-
-      //Pagination
-
       currentPage: 1,
-      totalPages: null,
       currentSearch: "",
 
       //dummy data

@@ -79,9 +79,9 @@ export default {
     },
 
     productionCompanies() {
-      console.log(
-        this.$store.getters["content/getContentDetails"].productionCompanies
-      );
+      // console.log(
+      //   this.$store.getters["content/getContentDetails"].productionCompanies
+      // );
       // Mora biti short circuiting inače konzola vrati error jer se sadržaj loada prije nego je fetchan
       const companies = [
         ...(this.$store.getters["content/getContentDetails"]
@@ -123,8 +123,6 @@ export default {
         itemId: this.id,
         mediaType: this.mediaType,
       };
-
-      console.log(data);
 
       // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
       this.$store.dispatch("content/loadContentDetails", data);

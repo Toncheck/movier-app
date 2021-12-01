@@ -45,7 +45,6 @@ export default {
 
   // Spremanje podataka koji se dobiju kao odgovor s API-ja nakon fetcha za Details page
   saveContentDetails(state, payload) {
-    console.log("CONTENT DETAILS", payload);
     state.contentDetails = payload;
   },
 

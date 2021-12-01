@@ -48,10 +48,10 @@ export default {
     const currentContentList = context.state.currentContentList;
     const downloadedPagesList = [];
 
+    // Izvuci sve postojeće downloadane (prije otvorene) stranice iz currentContentList
     currentContentList.forEach((obj) => {
       downloadedPagesList.push(+obj.page);
     });
-
     // Ako je odabrani page već downloadan pozovi action za dohvaćanje sadržaja iu currentContentList
     if (downloadedPagesList.includes(data.page)) {
       console.log("getContentVuex");
@@ -206,9 +206,6 @@ export default {
     //Spremi podatake o trenutnoj stranici za paginaciju
     context.commit("saveCurrentPage", +Object.keys(moviesByPage));
 
-    //Spremi podatke o ukupnom broju stranica za paginaciju
-    context.commit("saveTotalPages", total_pages);
-
     //Spremi podatak o trenutnom searchu
     context.commit("saveCurrentSearch", data.search);
   }, */
@@ -272,7 +269,7 @@ export default {
 
   ///// URL QUERY
   ////////// ACTION za provjeru je li load sadržaja došao zbog promjene stranice
-  checkIfNewPage(context, data) {
+  /* checkIfNewPage(context, data) {
     if (context.state.currentPage !== +data.page) {
       // console.log("Nova stranica nakon loaded");
       context.dispatch("getNewContent", data);
@@ -280,6 +277,6 @@ export default {
       // console.log("Nije nova stranica nakon loaded");
       return;
     }
-  },
+  }, */
   ///// URL QUERY
 };

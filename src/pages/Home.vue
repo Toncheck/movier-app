@@ -39,12 +39,9 @@ export default {
     ContentPagination,
     ContentFilter,
   },
-  data() {
-    return {
-      //objekt sa svim aktivnim filterima, koliko god ih ima
-      activeFilters: { none: true, test: true },
-    };
-  },
+  /*   data() {
+    return {};
+  }, */
   computed: {
     // Pozivanje preko mapHelpera
     ...mapGetters("content", {
@@ -67,26 +64,27 @@ export default {
 
   ///// URL QUERY
   created() {
-    // console.log("created");
+    console.log("created - HOME.vue");
     const query = this.$route.query;
-    /* console.log(query?.page); */
+    console.log(query?.page);
     //Ako je istina da je query undefined ili da je page undefined ili da je search undefined tada prekini dobavu podataka. Undefined će biti na početku prilikom prvog tj. inicijalnog učitavanja stranice
     if (!(query?.page || query?.search)) return;
     // else je za situaciju u kojoj će za upis kroz url biti aktiviran created pa treba dobaviti novi sadržaj
-    else {
-      this.$store.dispatch(
-        "content/getNewContent",
-        this.$route.query || { search: "", page: null }
-      );
-    }
+    // else {
+    //   this.$store.dispatch(
+    //     "content/getNewContent",
+    //     this.$route.query || { search: "", page: null }
+    //   );
+    // }
   },
+
   updated() {
-    // console.log("updated");
-    const query = this.$route.query;
+    console.log("updated - Home.vue");
+    /*const query = this.$route.query;
     if (!(query?.page || query?.search)) return;
     else {
       this.$store.dispatch("content/checkIfNewPage", query);
-    }
+    }*/
   },
   ///// URL QUERY
 };

@@ -37,14 +37,6 @@ export default {
     };
   },
 
-  // Computed props ne koristiti za rad s Local Storageom
-  /* computed: {
-    hasContent() {
-      //provjeri ima li kakvog sadržaja u listi za favourites
-      return JSON.parse(localStorage.getItem("favourites"));
-    },
-  }, */
-
   methods: {
     loadFavourites() {
       //dohvati object movies s local storage
