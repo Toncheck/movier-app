@@ -119,103 +119,6 @@ export default {
     //
   },
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////
-
-  //ACTION za dobavu podataka nakon searcha u SearchBar
-  //Kontaktiraj API, preuzmi podatke i spremi ih na VUEX
-  /* async saveContent(context, data) {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US&query=${data.search}&page=${data.page}&include_adult=false`,
-      { method: "GET" }
-    );
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      //error ...
-    }
-
-    // Podaci dođu u obliku
-    // {page: 1,
-    // results: [
-    //     {
-    //     "poster_path": null,
-    //     "popularity": 1,
-    //     "id": 24511,
-    //     "overview": "",
-    //     "backdrop_path": null,
-    //     "vote_average": 0,
-    //     "media_type": "tv",
-    //     "first_air_date": "",
-    //     "origin_country": ["GB"],
-    //     "genre_ids": [],
-    //     "original_language": "en",
-    //     "vote_count": 0,
-    //     "name": "Bradley",
-    //     "original_name": "Bradley"
-    //     },
-    //     {...},
-    //     {...}, ... ],
-    // total_results: 382,
-    // total_pages: 20
-    // }
-
-    const { page, results, total_pages } = responseData;
-
-    // console.log(total_results);
-    //kreiraj tri seta podataka koji će poslje služiti za spremanje podataka po različitim ključevima
-
-    const moviesById = {};
-    const moviesByPage = {};
-    const filters = {};
-
-    // for (const movie of results)
-    results.forEach((movie) => {
-      moviesById[movie.id] = {
-        title: movie.original_title,
-        overview: movie.overview,
-        popularity: movie.popularity,
-        posterPath: movie.poster_path,
-        mediaType: movie.media_type,
-      };
-
-      // Stvori key imena prema pageu koji je dohvaćen. Ako taj key nema nikakvu vrijednost onda mu zadaj da je to prazna lista
-      moviesByPage[page] = moviesByPage[page] || [];
-      // if (!moviesByPage[page]) {
-      //   moviesByPage[page] = [];
-      // }
-      // Dodaj id za prvi movie u gore kreirani Array
-      moviesByPage[page].push(movie.id);
-
-      // filters je prazan Object koji će se puniti s informacijama o različitim media_typeovima i prema tome za svaki film. movie ili tv kreira object koji ima dva propertyja: checked i listuId-jeva za filmove koji su pod tim media_typeom. Parametar checked se promijenit kako se klikne na filter.
-      filters[movie.media_type] = filters[movie.media_type] || {};
-      filters[movie.media_type].checked = true;
-      filters[movie.media_type].movieIds =
-        filters[movie.media_type].movieIds || [];
-      filters[movie.media_type].movieIds.push(movie.id);
-    });
-
-    // Spremi podatke u tri različita Objecta
-    // console.log(moviesById);
-    // context.commit("saveMoviesById", moviesById);
-    // console.log(moviesByPage);
-    // context.commit("saveMoviesByPage", moviesByPage);
-    //  console.log(filters);
-    // context.commit("saveFilters", filters);
-
-    //Spremi podatake o trenutnoj stranici za paginaciju
-    context.commit("saveCurrentPage", +Object.keys(moviesByPage));
-
-    //Spremi podatak o trenutnom searchu
-    context.commit("saveCurrentSearch", data.search);
-  }, */
-  ////////// ACTION za updejtanje filtera
-  /* updateFilters(context, data) {
-    context.commit("updateFilters", data);
-  }, */
-
-  //////////////////////////////////////////////////////////////UPDATED//////////////////////////////////////////////////////////////////////////////////////////////////
-
   ////////// ACTION za fetch podataka za details page
   async loadContentDetails(context, data) {
     const response = await fetch(
@@ -279,4 +182,78 @@ export default {
     }
   }, */
   ///// URL QUERY
+
+  //////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////////
+
+  /* content(state) {
+    return state.content;
+  }, */
+  /* hasContent(state) {
+    return state.content && state.content.length > 0;
+  }, */
+
+  //izvuci imena svih postojećih filtera s Vuex-a koliko god ih ima. Imena su jednaka keyevima.
+  /*  getFilterNames(state) {
+    return Object.keys(state.filters);
+  }, */
+
+  //izvuci sadržaj s vuexa
+  /* getContentTwo(state) {
+    const movieIds = [];
+
+    for (const filterValue of Object.values(state.filters)) {
+      if (filterValue.checked) {
+        movieIds.push(...filterValue.movieIds);
+      }
+    }
+
+    //Kreće se po kreiranom movieIdS arrayu i vratit će novi array koji sadrži sve podatke o filmu s tim id-em. Ti podaci su title, overview, popularity i posterPath. -> NEDOSTAJE MI PODATAK O ID-u filma jer je on potreban svakom pojedinom itemu.
+    //console.log(state.moviesById);
+    //console.log(movieIds.map((movieId) => state.moviesById[movieId]));
+
+    return movieIds.map((movieId) => state.moviesById[movieId]);
+  }, */
+
+  /* getContent(state) {
+    //kreiraj prazan array koji će sadržavati samo movieIds za filmove koji su označeni filterom
+    const movieIds = [];
+
+    //Prolazak kroz sve values za objekt filters. Ako je filter checked = true tada se pusha u taj array za filter tog imena u movieIds = [];
+    for (const filterValue of Object.values(state.filters)) {
+      if (filterValue.checked) {
+        movieIds.push(...filterValue.movieIds);
+      }
+    }
+    // console.log(movieIds);
+    // console.log("========================");
+    // console.log(Object.keys(state.filters));
+    // console.log(Object.values(state.filters));
+    // console.log(Object.entries(state.filters));
+    // console.log("========================");
+
+    // Dohvati za sve id-eve koji su označeni filterom. Znači kreira se za svaki item Object u koji je izgleda id: 11331 , mediaType: 'movie', overview: 'DAniel Craig candidly reflects on his ...', popularity: 19.844, posterPath: '/ksfhadhlfasflasfasl', title: 'Being James Bond'. Upravo taj sadržaj će koristiti pozivanjem ovog gettersa koristiti Page home koji će te informacije kroz props slati komponenti ContentsItem koja služi za prikaz podataka o pojedinom Itemu.
+
+    const result = movieIds.map((movieId) => {
+      return { id: movieId, ...state.moviesById[movieId] };
+    });
+
+    //  console.log(result);
+
+    // const result = state.moviesById.map((movie) => {
+    //   const movieId = Object.keys(movie)[0];
+    //   return { id: movieId, ...movie[movieId] };
+    // });
+   
+    return result;
+  }, */
+
+  /* hasContent(_, getters) {
+    const movies = getters.getContent;
+    return movies.length > 0;
+  }, */
+
+  /*  getFilters(state) {
+    console.log(state.filters);
+    return state.filters;
+  }, */
 };

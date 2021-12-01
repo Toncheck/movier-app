@@ -86,11 +86,18 @@ export default {
     return originalContent.page;
   },
 
-  //////////////////////////////////////////////////////////////////////////////OLD BUT USEED//////////////////////////
-
   ////////// Dohvati mediaType kako bi se mogao napraviti fetch za Details page
   getMediaType(state) {
     return state.detailsAboutRecord.mediaType;
+  },
+
+  getContentDetails(state) {
+    /*  console.log(state.contentDetails); */
+    return state.contentDetails;
+  },
+
+  getCurrentSearch(state) {
+    return state.currentSearch;
   },
 
   //////////////////////////////////////////////////////////////////////////////OLD//////////////////////////////////////////////////////////////////////////////////////
@@ -166,13 +173,4 @@ export default {
     console.log(state.filters);
     return state.filters;
   }, */
-
-  getContentDetails(state) {
-    /*  console.log(state.contentDetails); */
-    return state.contentDetails;
-  },
-
-  getCurrentSearch(state) {
-    return state.currentSearch;
-  },
 };
