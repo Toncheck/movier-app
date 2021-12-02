@@ -11,6 +11,11 @@ export default {
     state.currentContentList.push(payload);
   },
 
+  // Mutation za resetCurentContentList
+  resetCurrentContentList(state, payload) {
+    state.currentContentList = payload;
+  },
+
   // Mutation za inicijalizaciju filtera. U početku je to samo prvi media_type koji je pronađen u responseData npr. activeFilters = [tv]
   initializeActiveFilters(state, payload) {
     state.activeFilters = payload;

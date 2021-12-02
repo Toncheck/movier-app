@@ -54,7 +54,7 @@ export default {
         search: this.currentSearch,
       };
 
-      this.$store.dispatch("content/getNewContent", data);
+      // this.$store.dispatch("content/getNewContent", data);
 
       /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
       ///// URL QUERY

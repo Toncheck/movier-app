@@ -48,12 +48,17 @@ export default {
     const currentContentList = context.state.currentContentList;
     const downloadedPagesList = [];
 
+    console.log(data);
+
+    console.log(currentContentList);
     // Izvuci sve postojeće downloadane (prije otvorene) stranice iz currentContentList
     currentContentList.forEach((obj) => {
       downloadedPagesList.push(+obj.page);
     });
+    console.log(downloadedPagesList);
+    console.log(data.page);
     // Ako je odabrani page već downloadan pozovi action za dohvaćanje sadržaja iu currentContentList
-    if (downloadedPagesList.includes(data.page)) {
+    if (downloadedPagesList.includes(+data.page)) {
       console.log("getContentVuex");
       context.dispatch("getContentVuex", data);
     }
@@ -74,7 +79,7 @@ export default {
     // console.log(+data.page);
 
     const newCurrentData = currentContentList.find(
-      (obj) => obj.page === data.page
+      (obj) => obj.page === +data.page
     );
 
     // Osvježi current Content
@@ -163,6 +168,7 @@ export default {
       total_results: null,
       total_pages: null,
     });
+    context.commit("resetCurrentContentList", []);
   },
 
   ////////// ACTION za pospremanje id-a za detailsPage

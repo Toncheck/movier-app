@@ -64,7 +64,11 @@ export default {
       };
 
       /* NEW -> dispatchaj action koji vuče podatke s API-ja*/
-      this.$store.dispatch("content/getContentAPI", searchData);
+      // this.$store.dispatch("content/getContentAPI", searchData);
+
+      // Resetiraj data na Vuexu jer se napravio novi search
+
+      this.$store.dispatch("content/resetFilter", []);
 
       // Resetiraj input
       this.searchInput.value = "";
