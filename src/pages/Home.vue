@@ -1,5 +1,4 @@
 <template>
-  <p>{{ pageNumber }}</p>
   <!-- FILTER -->
   <content-filter></content-filter>
   <!-- CONTENT -->
@@ -84,6 +83,7 @@ export default {
 
   ///// URL QUERY
   created() {
+    console.log("Created - Home");
     this.page = +this.$route.query?.page || null;
     // const query = this.$route.query;
     // console.log(query?.page);
@@ -132,10 +132,16 @@ export default {
     flex-direction: column;
 
     &--title {
-      font-size: 2rem;
+      font-size: 1.5rem;
+      text-align: center;
+
+      @include respond(tab-port) {
+        font-size: 2rem;
+      }
     }
 
     &--message {
+      text-align: center;
       font-size: 1.2rem;
     }
   }

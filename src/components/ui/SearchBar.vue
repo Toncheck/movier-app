@@ -11,7 +11,7 @@
         id="searchinput"
         v-model.trim="searchInput.value"
         autocomplete="off"
-        @blur="clearValidity('searchInput')"
+        @blur="clearValidity()"
       />
       <button class="search__button">
         <svg class="search__icon">
@@ -37,8 +37,8 @@ export default {
     };
   },
   methods: {
-    clearValidity(input) {
-      this[input].isValid = true;
+    clearValidity() {
+      this.searchInput.isValid = true;
     },
     validateForm() {
       this.formIsValid = true;
@@ -81,7 +81,7 @@ export default {
       // 2. Način je preko nested Objecta za query parametar unutar Objecta za routing
 
       ///// URL QUERY
-      this.$router.replace({
+      this.$router.push({
         name: "home",
         query: { search: searchData.search, page: 1 },
       });

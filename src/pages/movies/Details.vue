@@ -1,5 +1,10 @@
 <template>
-  <div class="details">
+  <div v-if="isLoading" class="spinner-container">
+    <base-spinner></base-spinner>
+    <p class="spinner-message">Authenticating...</p>
+  </div>
+
+  <div v-else class="details">
     <div class="details__box">
       <div class="details__photo-box">
         <img :src="imagePath" class="details__photo" alt="Movie cover" />
@@ -20,7 +25,7 @@
           v-for="company in productionCompanies"
           :key="company"
         >
-          {{ company }}
+          {{ company.name }}
         </li>
       </ul>
       <div class="details__aside--small-box">
@@ -39,43 +44,57 @@
 </template>
 <script>
 import SearchBar from "../../components/ui/SearchBar.vue";
+import BaseSpinner from "../../components/ui/BaseSpinner.vue";
 
 export default {
   props: ["id"], // Ovaj prop dolazi iz Routera jer je tamo za ovu komponentu definirano props= true, što kaže Routeru da dynamic parameters moraju biti poslane komponenti kao dio props
   components: {
     SearchBar,
+    BaseSpinner,
   },
 
-  /* data() {
-    return {};
-  }, */
+  data() {
+    return {
+      fetchedData: {},
+      isLoading: false,
+    };
+  },
 
   computed: {
     //ako nema posterPatha, loadaj zamjensu sliku iz assets
     imagePath() {
-      const posterPath = this.$store.getters["content/getContentDetails"]
+      /* const posterPath = this.$store.getters["content/getContentDetails"]
         .posterPath;
 
       return posterPath
         ? `https://image.tmdb.org/t/p/w500${posterPath}`
+        : require(`../../assets/img/no-poster.png`); */
+
+      return this.fetchedData
+        ? `https://image.tmdb.org/t/p/w500${this.fetchedData.poster_path}`
         : require(`../../assets/img/no-poster.png`);
     },
 
     //computed property za svaki pojedini podatak zbog boljeg UX-a
     overview() {
-      return (
+      /* return (
         this.$store.getters["content/getContentDetails"].overview ||
+        `Unfortunately we do not have overview data`
+      ); */
+      return (
+        this.fetchedData.overview ||
         `Unfortunately we do not have overview data`
       );
     },
 
     popularity() {
       /* return Math.round(this.popularity * 10) / 10; */
-      return (
+      /* return (
         Math.round(
           this.$store.getters["content/getContentDetails"].popularity * 10
         ) / 10 || `No data`
-      );
+      ); */
+      return Math.round(this.fetchedData.popularity * 10) / 10 || `No data`;
     },
 
     productionCompanies() {
@@ -83,32 +102,39 @@ export default {
       //   this.$store.getters["content/getContentDetails"].productionCompanies
       // );
       // Mora biti short circuiting inače konzola vrati error jer se sadržaj loada prije nego je fetchan
-      const companies = [
+      /* const companies = [
         ...(this.$store.getters["content/getContentDetails"]
           .productionCompanies || []),
       ];
 
-      return companies.length > 0 ? companies : ["No data"];
+      return companies.length > 0 ? companies : ["No data"]; */
       /* return this.$store.getters["content/getContentDetails"]
         .productionCompanies; */
+
+      const companies = [...(this.fetchedData.production_companies || [])];
+
+      return companies.length > 0 ? companies : ["No data"];
     },
 
     runtime() {
-      let temp = this.$store.getters["content/getContentDetails"].runtime;
-      return temp ? temp.toString() + ` M` : `No data`;
+      /*  let temp = this.$store.getters["content/getContentDetails"].runtime;
+      return temp ? temp.toString() + ` M` : `No data`; */
       /* return this.$store.getters["content/getContentDetails"].runtime; */
+      let temp = this.fetchedData.runtime;
+      return temp ? temp.toString() + ` M` : `No data`;
     },
 
     voteAverage() {
-      return (
+      /* return (
         this.$store.getters["content/getContentDetails"].voteAverage ||
         "No data"
-      );
+      ); */
+      return this.fetchedData.vote_average || "No data";
     },
 
-    contentDetails() {
+    /* contentDetails() {
       return this.$store.getters["content/getContentDetails"];
-    },
+    }, */
 
     ////////// Dohvati pohranjeni mediaType s Vuexa kako bi se mogao napraviti fetch sadržaja za ovaj Details page
     mediaType() {
@@ -116,6 +142,29 @@ export default {
     },
   },
   methods: {
+    /////////////////////////////////////////////NEW//////////////////////////////////
+    async fetchContentDetails() {
+      this.isLoading = true;
+
+      const data = {
+        itemId: this.id,
+        mediaType: this.mediaType,
+      };
+
+      // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
+      const fetchedData = await this.$store.dispatch(
+        "content/fetchContentDetails",
+        data
+      );
+
+      console.log(fetchedData);
+
+      this.fetchedData = fetchedData;
+
+      this.isLoading = false;
+    },
+
+    //////////////////////////////////////////////OLD//////////////////////////////////
     ////////// Metoda za loadanje sadržaja za ovaj Details page
     loadContentDetails() {
       // Dohvati podatke o id-u itema i vrsti media typea potrebnima za napraviti fetch
@@ -128,6 +177,7 @@ export default {
       this.$store.dispatch("content/loadContentDetails", data);
     },
 
+    //////////////////////////////////////////OLD BUT USED////////////////////////////
     ////////// Metoda za spremanje itema kao favoruite itema na storage u browser
     saveToFavourite() {
       // primjer dohvaćanja id-a preko props iz Routera, a moguće i preko this.$route.params.id
@@ -161,11 +211,24 @@ export default {
 
   created() {
     this.loadContentDetails();
+    this.fetchContentDetails();
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10vh;
+}
+
+.spinner-message {
+  text-align: center;
+  color: var(--color-secondary-dark);
+  margin-top: 10vh;
+}
+
 .details__aside::v-deep .search__input {
   width: 100%;
   font-size: 0.5rem;

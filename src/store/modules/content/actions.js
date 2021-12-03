@@ -139,6 +139,8 @@ export default {
 
     const movieLoadedDetails = { ...responseData };
 
+    console.log(movieLoadedDetails);
+
     const movieDetails = {
       title:
         movieLoadedDetails.original_title || movieLoadedDetails.original_name,
@@ -174,6 +176,26 @@ export default {
   ////////// ACTION za pospremanje id-a za detailsPage
   saveDetailsAboutRecord(context, data) {
     context.commit("saveDetailsAboutRecord", data);
+  },
+
+  ////////////////////////////////////////////NEW/////////////////////////////////////
+
+  ////////// ACTION za fetch podataka za details page
+  async fetchContentDetails(context, data) {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${data.mediaType}/${data.itemId}?api_key=5aa3aebfde739945a9abfed69db8db6d&language=en-US`,
+      { method: "GET" }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      //error ...
+    }
+
+    const movieLoadedDetails = { ...responseData };
+
+    return movieLoadedDetails;
   },
 
   ///// URL QUERY
