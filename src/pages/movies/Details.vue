@@ -47,7 +47,7 @@ import SearchBar from "../../components/ui/SearchBar.vue";
 import BaseSpinner from "../../components/ui/BaseSpinner.vue";
 
 export default {
-  props: ["id"], // Ovaj prop dolazi iz Routera jer je tamo za ovu komponentu definirano props= true, što kaže Routeru da dynamic parameters moraju biti poslane komponenti kao dio props
+  props: ["id"],
   components: {
     SearchBar,
     BaseSpinner,
@@ -61,7 +61,6 @@ export default {
   },
 
   computed: {
-    //ako nema posterPatha, loadaj zamjensu sliku iz assets
     imagePath() {
       /* const posterPath = this.$store.getters["content/getContentDetails"]
         .posterPath;
@@ -75,7 +74,6 @@ export default {
         : require(`../../assets/img/no-poster.png`);
     },
 
-    //computed property za svaki pojedini podatak zbog boljeg UX-a
     overview() {
       return (
         this.fetchedData.overview ||

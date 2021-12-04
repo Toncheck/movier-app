@@ -16,6 +16,7 @@
       <router-link
         v-if="id"
         :to="pagePath"
+        replace
         class="btn btn--orange"
         :id="id"
         :mediaType="mediaType"
