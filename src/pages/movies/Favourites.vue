@@ -5,7 +5,7 @@
         v-for="(value, record) in favourites"
         :key="+record"
         :id="+record"
-        :posterPath="value.posterPath"
+        :posterPath="value.poster_path"
         :popularity="value.popularity"
         :title="value.title"
         :summary="value.overview"

@@ -166,7 +166,7 @@ export default {
 
     //////////////////////////////////////////////OLD//////////////////////////////////
     ////////// Metoda za loadanje sadržaja za ovaj Details page
-    loadContentDetails() {
+    /* loadContentDetails() {
       // Dohvati podatke o id-u itema i vrsti media typea potrebnima za napraviti fetch
       const data = {
         itemId: this.id,
@@ -175,7 +175,7 @@ export default {
 
       // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
       this.$store.dispatch("content/loadContentDetails", data);
-    },
+    }, */
 
     //////////////////////////////////////////OLD BUT USED////////////////////////////
     ////////// Metoda za spremanje itema kao favoruite itema na storage u browser
@@ -185,10 +185,9 @@ export default {
 
       /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
       const expandedContentDetails = {
-        ...this.contentDetails,
+        ...this.fetchedData,
         mediaType: this.mediaType,
       };
-      console.log(expandedContentDetails);
 
       //Dohvati podatke s localStorage, ako nema ništa onda kreiraj novi prazni objekt u koji će se spremati budući podaci
 
@@ -210,7 +209,7 @@ export default {
   },
 
   created() {
-    this.loadContentDetails();
+    /*  this.loadContentDetails(); */
     this.fetchContentDetails();
   },
 };
