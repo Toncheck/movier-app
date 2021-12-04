@@ -5,7 +5,6 @@
 </template>
 
 <style lang="scss" scoped>
-//fixed position of footer
 .footer {
   position: fixed;
   left: 0;

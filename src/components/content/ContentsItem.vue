@@ -62,14 +62,11 @@ export default {
   },
   data() {
     return {
-      /*  testId: 234567, */
       itemId: this.id,
     };
   },
   methods: {
-    //metoda koja služi za pospremanje podatka o tome koji je id itema na kojem je kliknuto Full synopsis. To je potrebno kako bi se mogao pronaći media_type i onda kasnije kreirati path za fetch s API-ja
     saveDetailsAboutRecord() {
-      //spremi id na vuex
       this.$store.dispatch("content/saveDetailsAboutRecord", {
         itemId: this.id,
         mediaType: this.mediaType,
@@ -78,30 +75,13 @@ export default {
   },
   computed: {
     imagePath() {
-      //base url + file size + file path
-      /*  "poster_sizes": [
-      "w92",
-      "w154",
-      "w185",
-      "w342",
-      "w500",
-      "w780",
-      "original"
-    ] */
       return `https://image.tmdb.org/t/p/w500${this.posterPath}`;
     },
     pagePath() {
-      // 1. Način za definiranje rute - najprimitvniji
-      /* return `/details/${this.itemId}`; */
-      // 2. Naćin za definiranje rute - korištenjem Object zapisa
-      /* return { path: "/details/" + this.itemId }; */
-      // 3. Način definiranje rute - korištenjem Object zapisa i opcije named Routes unutar Routera
       return { name: "details", params: { id: this.itemId } };
     },
     popularityFixed() {
       return Math.round(this.popularity * 10) / 10;
-      /* Ovo neće raditi */
-      /* return this.popularity.toFixed(1); */
     },
   },
 };
@@ -110,7 +90,7 @@ export default {
 <style lang="scss">
 .item {
   display: flex;
-  /* flex: 0 0 90%; */
+
   padding-top: 1rem;
   border-top: 1px solid var(--color-grey-dark-3);
   justify-content: flex-start;
@@ -128,7 +108,7 @@ export default {
 
   &__left-box {
     width: 50%;
-    /* max-width: 20rem; */
+
     margin-bottom: 1rem;
     text-align: center;
 
@@ -150,7 +130,6 @@ export default {
   }
 
   &__popularity {
-    /* font-size: 0.8rem; */
     font-weight: 500;
     color: var(--color-secondary-dark);
     text-transform: uppercase;

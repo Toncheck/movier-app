@@ -49,43 +49,25 @@ export default {
       }
     },
     submitForm() {
-      /* Validacija unesenog pojma */
       this.validateForm();
 
       if (!this.formIsValid) {
         return;
       }
 
-      /* Pozovi action za dohvaćanje podataka s API-ja te izbriši search pojam*/
-
       const searchData = {
         search: this.searchInput.value,
         page: 1,
       };
 
-      /* NEW -> dispatchaj action koji vuče podatke s API-ja*/
-      // this.$store.dispatch("content/getContentAPI", searchData);
-
-      // Resetiraj data na Vuexu jer se napravio novi search
-
       this.$store.dispatch("content/resetFilter", []);
 
-      // Resetiraj input
       this.searchInput.value = "";
 
-      /*Nakon što je napravljen dispatch podataka skoči natrag na home page kako bi se podaci mogli vidjeti. Search Bar je korišten od dvije stranice pa je zato to potrebno, ako se slučajno nalazimo na favourites kako bismo se vratili na home gdje možemo vidjeti prikaz rezultata searcha. Korištenjem metode replace umjesto push se ne može skočiti natrag na stranicu na kojoj smo bili npr. favourites. Stvar preferencije koje koristiti*/
-
-      // Korištenje query parametra kako bi se prenio podatak o loadanoj stranici
-      // 1. Način je klasično preko patha
-      // this.$router.replace("/home" + "?page=1");
-      // 2. Način je preko nested Objecta za query parametar unutar Objecta za routing
-
-      ///// URL QUERY
       this.$router.push({
         name: "home",
         query: { search: searchData.search, page: 1 },
       });
-      ///// URL QUERY
     },
   },
 };
@@ -101,11 +83,6 @@ type1 {
 }
 
 .search {
-  /* background-color: blue; */
-  /* align-self: center; */
-  /* flex: 0 0 120px; */
-
-  /* centriranje search bara */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +107,7 @@ type1 {
     &:-webkit-autofill:focus,
     &:-webkit-autofill:hover {
       box-shadow: 0 0 0 50px var(--color-white) inset;
-      -webkit-box-shadow: 0 0 0 50px var(--color-white) inset; /* Change the color to your own background color */
+      -webkit-box-shadow: 0 0 0 50px var(--color-white) inset;
       -webkit-text-fill-color: var(--color-black-dark-3);
     }
 
@@ -140,7 +117,6 @@ type1 {
 
     &:focus {
       outline: none;
-      /*    background-color: var(--color-white); */
     }
 
     &::-webkit-input-placeholder {

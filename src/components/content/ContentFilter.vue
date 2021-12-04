@@ -27,32 +27,24 @@
 <script>
 export default {
   emits: ["change-filter"],
-  /* data() {
-    return {};
-  }, */
+
   methods: {
     setFilter(event) {
-      // Dohvati ime filtera čija je vrijednost promijenjena
       const inputId = event.target.id;
 
-      //Ovo je za provjeravanje statusa nad kućicom ,je li izabrana
       const isActive = event.target.checked;
-
-      /* const data = { [inputId]: isActive }; */
 
       const data = {
         mediaType: inputId,
         checked: isActive,
       };
-      // Dispatchaj action i pošalji podatak oblika npr. {tv:true}
+
       this.$store.dispatch("content/updateFiltersNew", data);
     },
   },
 
   computed: {
-    // Computed property za dobivanje svih mogućih filtera prema media_type u currentContent
     filterNames() {
-      //promatraj koji su to sve filteri na vuexu npr. "movie", "tv", ... Koliko god ih ima v-for će proći kroz sve njih i prikazati ih
       return this.$store.getters["content/createFilterNames"];
     },
 

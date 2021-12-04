@@ -1,6 +1,5 @@
 <template>
   <header class="header">
-    <!-- NAVIGATION -->
     <nav class="user-nav">
       <ul class="user-nav__list">
         <li class="user-nav__item">
@@ -25,7 +24,6 @@
     </div>
 
     <div class="search-box">
-      <!-- @load-data="loadData" -->
       <search-bar></search-bar>
     </div>
   </header>
@@ -44,7 +42,6 @@ export default {
     },
   },
   methods: {
-    //metoda koja se poziva ako je kliknuto na searc gore u headeru pa da bi se maknuo filter sa stranice
     resetFilter() {
       this.$store.dispatch("content/resetFilter", []);
     },
@@ -59,7 +56,7 @@ export default {
 .header {
   display: flex;
   flex-direction: column;
-  /* background-color: black; */
+
   background-color: none;
   background-image: linear-gradient(
     var(--color-grey-dark-1),
@@ -74,22 +71,15 @@ export default {
   @include respond(phone) {
     padding: 0 15%;
   }
-  /* flex-wrap: wrap; */
-
-  /* & > * {
-    flex: 0 0 100%;
-  } */
 }
 
 ///////////////////////////////////////////////////////////////////////
 //USER NAV
 
 .user-nav {
-  /* background-color: chartreuse; */
   align-self: center;
   min-width: 100%;
   margin-bottom: 1rem;
-  /* font-size: 1.2rem; */
 
   @include respond(tab-port) {
     align-self: flex-end;
@@ -100,7 +90,7 @@ export default {
   &__list {
     display: flex;
     list-style: none;
-    /* text-align: center; */
+
     justify-content: center;
     min-width: 100%;
     flex-direction: column;
@@ -158,7 +148,6 @@ export default {
     &:link,
     &:visited {
       color: var(--color-white);
-      /* font-size: 1rem; */
 
       text-decoration: none;
       text-transform: uppercase;
@@ -196,7 +185,7 @@ export default {
   }
 }
 /////////////////////////////////////////////////////////////////
-//HEADER TEXT
+//SEARCH BOX
 
 .search-box {
   background-color: var(--color-white);

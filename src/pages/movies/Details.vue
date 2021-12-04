@@ -77,10 +77,6 @@ export default {
 
     //computed property za svaki pojedini podatak zbog boljeg UX-a
     overview() {
-      /* return (
-        this.$store.getters["content/getContentDetails"].overview ||
-        `Unfortunately we do not have overview data`
-      ); */
       return (
         this.fetchedData.overview ||
         `Unfortunately we do not have overview data`
@@ -88,61 +84,29 @@ export default {
     },
 
     popularity() {
-      /* return Math.round(this.popularity * 10) / 10; */
-      /* return (
-        Math.round(
-          this.$store.getters["content/getContentDetails"].popularity * 10
-        ) / 10 || `No data`
-      ); */
       return Math.round(this.fetchedData.popularity * 10) / 10 || `No data`;
     },
 
     productionCompanies() {
-      // console.log(
-      //   this.$store.getters["content/getContentDetails"].productionCompanies
-      // );
-      // Mora biti short circuiting inače konzola vrati error jer se sadržaj loada prije nego je fetchan
-      /* const companies = [
-        ...(this.$store.getters["content/getContentDetails"]
-          .productionCompanies || []),
-      ];
-
-      return companies.length > 0 ? companies : ["No data"]; */
-      /* return this.$store.getters["content/getContentDetails"]
-        .productionCompanies; */
-
       const companies = [...(this.fetchedData.production_companies || [])];
 
       return companies.length > 0 ? companies : ["No data"];
     },
 
     runtime() {
-      /*  let temp = this.$store.getters["content/getContentDetails"].runtime;
-      return temp ? temp.toString() + ` M` : `No data`; */
-      /* return this.$store.getters["content/getContentDetails"].runtime; */
       let temp = this.fetchedData.runtime;
       return temp ? temp.toString() + ` M` : `No data`;
     },
 
     voteAverage() {
-      /* return (
-        this.$store.getters["content/getContentDetails"].voteAverage ||
-        "No data"
-      ); */
       return this.fetchedData.vote_average || "No data";
     },
 
-    /* contentDetails() {
-      return this.$store.getters["content/getContentDetails"];
-    }, */
-
-    ////////// Dohvati pohranjeni mediaType s Vuexa kako bi se mogao napraviti fetch sadržaja za ovaj Details page
     mediaType() {
       return this.$store.getters["content/getMediaType"];
     },
   },
   methods: {
-    /////////////////////////////////////////////NEW//////////////////////////////////
     async fetchContentDetails() {
       this.isLoading = true;
 
@@ -151,7 +115,6 @@ export default {
         mediaType: this.mediaType,
       };
 
-      // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
       const fetchedData = await this.$store.dispatch(
         "content/fetchContentDetails",
         data
@@ -164,32 +127,13 @@ export default {
       this.isLoading = false;
     },
 
-    //////////////////////////////////////////////OLD//////////////////////////////////
-    ////////// Metoda za loadanje sadržaja za ovaj Details page
-    /* loadContentDetails() {
-      // Dohvati podatke o id-u itema i vrsti media typea potrebnima za napraviti fetch
-      const data = {
-        itemId: this.id,
-        mediaType: this.mediaType,
-      };
-
-      // Dispatchaj action koji radi fetch za details i sprema podatke na vuex
-      this.$store.dispatch("content/loadContentDetails", data);
-    }, */
-
-    //////////////////////////////////////////OLD BUT USED////////////////////////////
-    ////////// Metoda za spremanje itema kao favoruite itema na storage u browser
     saveToFavourite() {
-      // primjer dohvaćanja id-a preko props iz Routera, a moguće i preko this.$route.params.id
       const itemId = this.id;
 
-      /* localStorage.setItem("333465", "James Bond: From Russia with Love"); */
       const expandedContentDetails = {
         ...this.fetchedData,
         mediaType: this.mediaType,
       };
-
-      //Dohvati podatke s localStorage, ako nema ništa onda kreiraj novi prazni objekt u koji će se spremati budući podaci
 
       const record = JSON.parse(localStorage.getItem("favourites")) || {};
 
@@ -198,18 +142,11 @@ export default {
         [itemId]: expandedContentDetails,
       };
 
-      // Spremi podatke na browser u local storage
-
       localStorage.setItem("favourites", JSON.stringify(favourites));
     },
-
-    /* clearStorage() {
-      localStorage.clear();
-    }, */
   },
 
   created() {
-    /*  this.loadContentDetails(); */
     this.fetchContentDetails();
   },
 };

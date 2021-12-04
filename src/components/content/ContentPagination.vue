@@ -38,32 +38,18 @@
 
 <script>
 export default {
-  /* data() {
-    return {};
-  }, */
   methods: {
-    // Metoda za pozivanje Actiona koji provjerava je li sadržaj za već odabrani page u Arrayu currentContentList (pristup na state, moguć samo iz actiona, a ne metode). I onda će taj Action pozvati u jednom slučaju Action za dobavu podataka iz currentContentList ili action za dobavu podataka iz getContentAPI
-
-    // S obzirom na to da action getContentAPI za fetch očekuje podatke search i page, potrebno ih je proslijediti
-
     goToSelectedContentPage(event) {
-      // Ovo ne treba jer na button stavljen dynamic attribute disabled
-      // if (event.target.id === "...") return;c
       const data = {
         page: +event.target.id,
         search: this.currentSearch,
       };
 
-      // this.$store.dispatch("content/getNewContent", data);
-
-      /*    this.$router.replace({ name: "home", query: { page: data.page } }); */
-      ///// URL QUERY
       console.log(`Click on page ${data.page} for ${data.search}`);
       this.$router.push({
         name: "home",
         query: { search: data.search, page: data.page },
       });
-      ///// URL QUERY
     },
   },
   computed: {

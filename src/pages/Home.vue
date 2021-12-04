@@ -1,7 +1,6 @@
 <template>
-  <!-- FILTER -->
   <content-filter></content-filter>
-  <!-- CONTENT -->
+
   <div class="home">
     <ul v-if="hasContent" class="home__list">
       <contents-item
@@ -23,7 +22,7 @@
       </p>
     </div>
   </div>
-  <!-- PAGINATION -->
+
   <content-pagination></content-pagination>
 </template>
 
@@ -57,21 +56,10 @@ export default {
     },
   },
   computed: {
-    // Pozivanje preko mapHelpera
     ...mapGetters("content", {
       filteredCurrentContent: "getFilteredCurrentContent",
       hasContent: "hasContent",
     }),
-
-    // Pozivanje klasično,a ne pomoću mapGettersa
-    /* filteredCurrentContent() {
-      return this.$store.getters["content/getFilteredCurrentContent"];
-    }, */
-
-    /* hasContent() {
-      //module je namespaced tako da je u ["content/content"] prvi content namespaced name, a drugi content je ime gettersa
-      return this.$store.getters["content/hasContent"];
-    }, */
 
     pageNumber() {
       const page = +this.page + +this.$route.query?.page;
@@ -79,34 +67,14 @@ export default {
     },
   },
 
-  // Inicjalna ideja je pozvati created ako je preko url query parametra pozva, no kako postoji mogućnost da on bude aktiviran i zbog prvog loada pagea kad nema nikakvog url querya potrebno je provjeriti je li takav slučaj i ako je odbaciti to
-
-  ///// URL QUERY
   created() {
     console.log("Created - Home");
     this.page = +this.$route.query?.page || null;
-    // const query = this.$route.query;
-    // console.log(query?.page);
-    // //Ako je istina da je query undefined ili da je page undefined ili da je search undefined tada prekini dobavu podataka. Undefined će biti na početku prilikom prvog tj. inicijalnog učitavanja stranice
-    // if (!(query?.page || query?.search)) return;
-    // // else je za situaciju u kojoj će za upis kroz url biti aktiviran created pa treba dobaviti novi sadržaj
-    // else {
-    //   this.$store.dispatch(
-    //     "content/getNewContent",
-    //     this.$route.query || { search: "", page: null }
-    //   );
-    // }
   },
 
   updated() {
     console.log("updated - Home.vue");
-    /*const query = this.$route.query;
-    if (!(query?.page || query?.search)) return;
-    else {
-      this.$store.dispatch("content/checkIfNewPage", query);
-    }*/
   },
-  ///// URL QUERY
 };
 </script>
 
@@ -154,8 +122,4 @@ export default {
     background-color: var(--color-secondary);
   }
 }
-
-/* .home__list::v-deep .item__left-box {
-  background-color: red;
-} */
 </style>
