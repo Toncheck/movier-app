@@ -1,6 +1,6 @@
 <template>
   <div class="favourites">
-    <ul v-if="favourites" class="favourites__list">
+    <ul v-if="hasFavourites" class="favourites__list">
       <contents-item
         v-for="(value, record) in favourites"
         :key="+record"
@@ -39,9 +39,13 @@ export default {
 
   methods: {
     loadFavourites() {
-      //dohvati object movies s local storage
-      // const record = JSON.parse(localStorage.getItem("869250"));
       this.favourites = JSON.parse(localStorage.getItem("favourites")) || {};
+    },
+  },
+
+  computed: {
+    hasFavourites() {
+      return Object.entries(this.favourites).length;
     },
   },
 
@@ -64,7 +68,6 @@ export default {
 
   &__no-content {
     min-height: 58vh;
-    /* text-align: center; */
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -72,7 +75,6 @@ export default {
 
     &--title {
       font-size: 2rem;
-      /* display: block; */
     }
 
     &--message {
