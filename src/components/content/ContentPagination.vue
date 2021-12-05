@@ -45,7 +45,6 @@ export default {
         search: this.currentSearch,
       };
 
-      console.log(`Click on page ${data.page} for ${data.search}`);
       this.$router.push({
         name: "home",
         query: { search: data.search, page: data.page },

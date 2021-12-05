@@ -68,12 +68,10 @@ export default {
   },
 
   created() {
-    console.log("Created - Home");
     this.page = +this.$route.query?.page || null;
   },
 
   updated() {
-    console.log("updated - Home.vue");
   },
 };
 </script>

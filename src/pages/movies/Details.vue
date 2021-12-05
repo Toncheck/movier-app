@@ -118,7 +118,6 @@ export default {
         data
       );
 
-      console.log(fetchedData);
 
       this.fetchedData = fetchedData;
 
